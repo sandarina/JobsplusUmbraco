@@ -203,6 +203,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\topbanner-bgr.jpg" />
+    <Content Include="images\topbanner-hp.jpg" />
     <Content Include="packages.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />

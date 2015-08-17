@@ -1,30 +1,30 @@
-﻿2015-08-05 10:43:29,971 [15] INFO  Umbraco.Core.CoreBootManager - [P13332/T1/D2] Umbraco 7.2.8 application starting on PC-SERVIS-KOUR
-2015-08-05 10:43:30,212 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Determining hash of code files on disk
-2015-08-05 10:43:30,270 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Hash determined (took 57ms)
-2015-08-05 10:43:30,282 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of umbraco.interfaces.IApplicationStartupHandler
-2015-08-05 10:43:31,060 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of umbraco.interfaces.IApplicationStartupHandler, found 37 (took 778ms)
-2015-08-05 10:43:31,342 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter
-2015-08-05 10:43:31,352 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter, found 0 (took 9ms)
-2015-08-05 10:43:31,352 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyValueConverter
-2015-08-05 10:43:31,362 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyValueConverter, found 16 (took 9ms)
-2015-08-05 10:43:31,405 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Web.Mvc.SurfaceController
-2015-08-05 10:43:31,413 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Web.Mvc.SurfaceController, found 4 (took 7ms)
-2015-08-05 10:43:31,413 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Web.WebApi.UmbracoApiController
-2015-08-05 10:43:31,422 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Web.WebApi.UmbracoApiController, found 35 (took 8ms)
-2015-08-05 10:43:31,655 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Core.Media.IThumbnailProvider
-2015-08-05 10:43:31,664 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Core.Media.IThumbnailProvider, found 3 (took 8ms)
-2015-08-05 10:43:31,664 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Starting resolution types of Umbraco.Core.Media.IImageUrlProvider
-2015-08-05 10:43:31,675 [15] INFO  Umbraco.Core.PluginManager - [P13332/T1/D2] Completed resolution of types of Umbraco.Core.Media.IImageUrlProvider, found 1 (took 10ms)
-2015-08-05 10:44:16,311 [15] INFO  Umbraco.Core.DatabaseContext - [P13332/T1/D2] CanConnect = False
-2015-08-05 10:44:17,365 [15] INFO  Umbraco.Core.DatabaseContext - [P13332/T1/D2] CanConnect = False
-2015-08-05 10:44:18,366 [15] INFO  Umbraco.Core.DatabaseContext - [P13332/T1/D2] CanConnect = False
-2015-08-05 10:44:19,367 [15] INFO  Umbraco.Core.DatabaseContext - [P13332/T1/D2] CanConnect = False
-2015-08-05 10:44:20,367 [15] INFO  Umbraco.Core.DatabaseContext - [P13332/T1/D2] CanConnect = False
-2015-08-05 10:44:21,417 [15] ERROR Umbraco.Core.UmbracoApplicationBase - [P13332/T1/D2] An unhandled exception occurred
+﻿2015-08-17 13:56:59,547 [1899] INFO  Umbraco.Core.CoreBootManager - [P8260/T2504/D4] Umbraco 7.2.8 application starting on PC-SERVIS-KOUR
+2015-08-17 13:57:00,995 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Determining hash of code files on disk
+2015-08-17 13:57:01,417 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Hash determined (took 420ms)
+2015-08-17 13:57:01,464 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of umbraco.interfaces.IApplicationStartupHandler
+2015-08-17 13:57:04,898 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of umbraco.interfaces.IApplicationStartupHandler, found 37 (took 3433ms)
+2015-08-17 13:57:06,887 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter
+2015-08-17 13:57:06,955 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter, found 0 (took 67ms)
+2015-08-17 13:57:06,955 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyValueConverter
+2015-08-17 13:57:07,268 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyValueConverter, found 16 (took 313ms)
+2015-08-17 13:57:07,525 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Web.Mvc.SurfaceController
+2015-08-17 13:57:07,637 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Web.Mvc.SurfaceController, found 4 (took 112ms)
+2015-08-17 13:57:07,637 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Web.WebApi.UmbracoApiController
+2015-08-17 13:57:07,664 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Web.WebApi.UmbracoApiController, found 35 (took 26ms)
+2015-08-17 13:57:07,973 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Core.Media.IThumbnailProvider
+2015-08-17 13:57:08,020 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Core.Media.IThumbnailProvider, found 3 (took 46ms)
+2015-08-17 13:57:08,020 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Starting resolution types of Umbraco.Core.Media.IImageUrlProvider
+2015-08-17 13:57:08,032 [1899] INFO  Umbraco.Core.PluginManager - [P8260/T2504/D4] Completed resolution of types of Umbraco.Core.Media.IImageUrlProvider, found 1 (took 11ms)
+2015-08-17 13:58:00,367 [1899] INFO  Umbraco.Core.DatabaseContext - [P8260/T2504/D4] CanConnect = False
+2015-08-17 13:58:01,396 [1899] INFO  Umbraco.Core.DatabaseContext - [P8260/T2504/D4] CanConnect = False
+2015-08-17 13:58:02,397 [1899] INFO  Umbraco.Core.DatabaseContext - [P8260/T2504/D4] CanConnect = False
+2015-08-17 13:58:03,398 [1899] INFO  Umbraco.Core.DatabaseContext - [P8260/T2504/D4] CanConnect = False
+2015-08-17 13:58:04,398 [1899] INFO  Umbraco.Core.DatabaseContext - [P8260/T2504/D4] CanConnect = False
+2015-08-17 13:58:05,669 [1899] ERROR Umbraco.Core.UmbracoApplicationBase - [P8260/T2504/D4] An unhandled exception occurred
 Umbraco.Core.Exceptions.UmbracoStartupFailedException: Umbraco cannot start. A connection string is configured but the Umbraco cannot connect to the database.
    v Umbraco.Core.CoreBootManager.EnsureDatabaseConnection()
    v Umbraco.Core.CoreBootManager.Complete(Action`1 afterComplete)
    v Umbraco.Web.WebBootManager.Complete(Action`1 afterComplete)
    v Umbraco.Core.UmbracoApplicationBase.StartApplication(Object sender, EventArgs e)
    v Umbraco.Core.UmbracoApplicationBase.Application_Start(Object sender, EventArgs e)
-2015-08-05 10:45:03,411 [15] INFO  Umbraco.Core.UmbracoApplicationBase - [P13332/T1/D2] Application shutdown. Reason: InitializationError
+2015-08-17 13:58:53,108 [1899] INFO  Umbraco.Core.UmbracoApplicationBase - [P8260/T2504/D4] Application shutdown. Reason: InitializationError
