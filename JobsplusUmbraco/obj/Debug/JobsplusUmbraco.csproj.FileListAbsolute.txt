@@ -26,10 +26,7 @@ C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\Newtonsoft.Json.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\SQLCE4Umbraco.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Data.SqlServerCe.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Data.SqlServerCe.Entity.dll
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Net.Http.Formatting.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Helpers.dll
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Http.dll
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Http.WebHost.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Mvc.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Razor.dll
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.WebPages.Deployment.dll
@@ -60,10 +57,7 @@ C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\MiniProfiler.pdb
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\MiniProfiler.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\Newtonsoft.Json.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\SQLCE4Umbraco.xml
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Net.Http.Formatting.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Helpers.xml
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Http.xml
-C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Http.WebHost.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Mvc.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.Razor.xml
 C:\ProjektyDKO\JobsplusUmbraco\JobsplusUmbraco\bin\System.Web.WebPages.xml

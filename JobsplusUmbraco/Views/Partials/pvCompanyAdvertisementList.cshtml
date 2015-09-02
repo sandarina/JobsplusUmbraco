@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+
+@{ var advertisementList = CurrentPage.Children.Where("Visible").OrderBy("Name").OrderBy("topAdvertisement descending"); }
+
+@if (advertisementList.Any())
+{
+	<div class="col-md-12">
+	@foreach (var advertisement in advertisementList)
+    {
+    	<div class="row @(advertisement.topAdvertisement ? "top" : "")">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							@CurrentPage.Name
+						</div>
+						<div class="row">
+							<a href="@advertisement.Url">@advertisement.Name</a>
+						</div>
+						<div class="row">
+							<span></span><span>,@advertisement.region</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<a href="@advertisement.Url">Detail</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4"><span>Vzdělání</span> @advertisement.requiredEducation</div>
+					<div class="col-md-4"><span>Typ</span> @advertisement.typeOfWork</div>
+					<div class="col-md-4"><span>ZTP</span> @(advertisement.ztp ? "ANO" : "NE") </div>
+				</div>
+			</div>
+		</div>
+    }
+	</div>
+}

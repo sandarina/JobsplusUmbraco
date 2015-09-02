@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{ var home = CurrentPage.Site();}
+@{ var companyList = home.Children("dtCompanyList").Where("Visible"); }
+@if (companyList.Any())
+{
+	<div class="col-md-12">
+	@{ var companiesAll = companyList.First().Children.Where("Visible"); }
+	@foreach (var company in companiesAll.OrderBy("createDate descending").OrderBy("topCompany descending").Take(10))
+	{
+		<div class="row @(company.topCompany ? "top" : "")">
+			<a href="@company.Url">@company.Name</a>
+		</div>
+	}
+	@*@{ var companiesTop = companies.Children.Where("topCompany == true");}
+	@{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
+	</div>
+}

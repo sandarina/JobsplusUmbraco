@@ -22,7 +22,10 @@
                 <li class="@(childPage.IsAncestorOrSelf(CurrentPage) ? "selected" : null)">
                     <a href="@childPage.Url">@childPage.page</a>
                 </li>
-            }           
-        }
+            }          
+        } 
+		<li>
+			@Umbraco.RenderMacro("LoginStatus")
+		</li>
     </ul>
 }

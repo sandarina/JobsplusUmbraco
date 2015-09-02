@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "tBase.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12" style="background-image:url('@(CurrentPage.logoCompany)?height=65')">
+		<span>@CurrentPage.Name</span><br/>
+		<span>@CurrentPage.shortDescriptionCompany</span>
+    </div>
+</div>
+<div class="row">
+	<div id="divAdvertisementList" class="col-md-6">
+		Nabídka práce @{ Html.RenderPartial("pvCountAdvertisementList"); }
+	</div>
+	<div id="divAboutCompany" class="col-md-6">
+		O společnosti
+	</div>
+</div>			
+<div id="advertisementList" class="row">
+	<div class="col-md-12">
+		@{ Html.RenderPartial("pvCompanyAdvertisementList"); }
+	</div>
+</div>
+<div id="aboutCompany" class="row">
+	<div class="col-md-12">
+		@CurrentPage.contentCompany
+	</div>
+</div>
+          
