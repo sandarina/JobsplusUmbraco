@@ -1,0 +1,52 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<JobsplusUmbraco.Models.AdvertisementList>
+@*@model JobsplusUmbraco.Models.AdvertisementList*@
+
+@{
+    var IsTOP = StringToBoolen(@Request.QueryString["IsTOPAdvertisement"]);
+}
+
+@using (Html.BeginForm("Overview", "AdvertisementList"))
+{
+    <fieldset>
+        <div class="col-md-12">
+            <div class="row" style="@(IsTOP ? "display:none" : "")">
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.region, Model.slRegions)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" value="Vyhledat" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var advertisement in Model.lAdvertisements)
+                    {
+                        <div class="row">
+                            <a href="@advertisement.Url">@advertisement.Name</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        
+
+        
+
+        
+
+    </fieldset>
+}
+
+@functions {
+    public static bool StringToBoolen(string item)
+    {
+        return (item == "YES" || item == "TRUE" || item == "1");
+    }
+}
+
+

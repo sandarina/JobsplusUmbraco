@@ -53,10 +53,12 @@
 	
 	
 	$('#btnAdvertisement').click(function() {
-		var url = '@Url.Action("Results", "AdvertisementController")';
+		var url = '@Html.Action("Overview", "AdvertisementList", new JobsplusUmbraco.Models.AdvertisementList { WorkingField = "obor", Region = "region" })';
   		var wf = $('#ddlworkingField').val();
 		var r = $('#ddlregion').val();
-		$('#ListAdvertisemet').load(url, { workingField: wf, region: r });
+		//$('#ListAdvertisemet').load(url, { workingField: wf, region: r });
+		$('#ListAdvertisemet').append(url);
+		$('#ListAdvertisemet').show();
 	});
 	
 	
