@@ -3,28 +3,49 @@
     Layout = "tBase.cshtml";
 }
 
-<div class="row">
-	<div class="col-md-12" style="background-image:url('@(CurrentPage.logoCompany)?height=65')">
-		<span>@CurrentPage.Name</span><br/>
-		<span>@CurrentPage.shortDescriptionCompany</span>
-    </div>
-</div>
-<div class="row">
-	<div id="divAdvertisementList" class="col-md-6">
-		Nabídka práce @{ Html.RenderPartial("pvCountAdvertisementList"); }
+
+<div id="aBody">
+	<div id="tBody" @*style="background-image:url('@(CurrentPage.logoCompany)?height=65')"*@>
+		<div class="col-md-12">
+			<div class="container">
+				<div class="row">
+				<span class="tBody_hlText">@CurrentPage.Name</span>
+				<br/>	
+				<span class="tBody_vText">@CurrentPage.shortDescriptionCompany</span>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="divAboutCompany" class="col-md-6">
-		O společnosti
+	<div id="cBody">
+		<div class="cBody_tabs">
+			<div class="container">
+				<div class="row">
+					<div id="divAdvertisementList" class="col-md-6">
+						Nabídka práce @{ Html.RenderPartial("pvCountChildren"); }
+					</div>
+					<div id="divAboutCompany" class="col-md-6">
+						O společnosti
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cBody_content">
+			<div class="container">
+				<div id="advertisementList" class="row">
+					@{ Html.RenderPartial("pvCompanyAdvertisementList"); }
+				</div>
+				<div id="aboutCompany" class="row">
+					@CurrentPage.contentCompany
+				</div>
+			</div>
+		</div>
 	</div>
-</div>			
-<div id="advertisementList" class="row">
-	<div class="col-md-12">
-		@{ Html.RenderPartial("pvCompanyAdvertisementList"); }
-	</div>
-</div>
-<div id="aboutCompany" class="row">
-	<div class="col-md-12">
-		@CurrentPage.contentCompany
+	<div id="bBody">
+		<div class="container">
+			<div class="row">
+				@{ Html.RenderPartial("pvFirstStepRegistration"); }
+			</div>
+		</div>
 	</div>
 </div>
           

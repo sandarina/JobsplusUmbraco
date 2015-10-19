@@ -173,7 +173,7 @@ html {
 }
 
 .dark {
-	/*background: #1c1c1e;*/
+	background: #1c1c1e;
 }
 
 .dark * {
@@ -392,38 +392,6 @@ html {
 	border-color: transparent transparent transparent #C2357B;
 }
 
-.lightblue {
-	color: rgb(1,110,255);
-}
-	
-.white {
-	color: white;
-}
-	
-.gray83 {
-	color: rgb(83,83,83);
-}
-	
-.fs12 {
-	font-size: 12px;
-}
-		
-.fs13 {
-	font-size: 13px;
-}
-	
-.fs20 {
-	font-size: 20px;
-}
-	
-.fs25 {
-	font-size: 25px;
-}
-		
-.fs35 {
-	font-size: 35px;
-}
-
 .round {
 	border-radius: 50%;
 }
@@ -448,18 +416,6 @@ html {
 	display: inline-block;
 	vertical-align: middle;
 	float: none;
-}
-
-.underline {
-	text-decoration: underline;
-}
-
-.uppercase {
-	text-transform: uppercase;
-}
-	
-.bold {
-	font-weight: bold;
 }
 
 body {
@@ -585,7 +541,7 @@ body {
 }
 
 body {
-	background: rgb(217,255,255);
+	background: transparent;
 	min-height: 100%;
 	min-width: 100%;
 	font-size: 17px;
@@ -597,12 +553,12 @@ body {
 }
 
 header {
-	background: rgb(164,40,162);
+	background: #3fcf3c;
+	padding: 20px 0;
 	position: relative;
 }
 
 header .container {
-	padding: 15px 20px;
 	max-width: 100%;
 	padding: 0;
 }
@@ -611,35 +567,13 @@ header .row {
 	margin: 0;
 }
 
-.tLogo {
-	width: 205px;
-	height: 59px;
-	background-image:url('/media/layout/jobsplus-logo.png');
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: left center;
-}
-
-.tLogo:hover{
+.brand {
 	/*margin: 0 auto;*/
 	width: 205px;
 	height: 59px;
-	background-image:url('/media/layout/jobsplus-logo-mrknuti.png');
-	/*background-image:url('@(home.SiteLogo)?height=65&width=205&bgcolor=000')*/
 	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position: left center;
-}
-			
-.bLogo {
-	width: 205px;
-	height: 59px;
-	background-image:url('/media/layout/jobsplus-logo-footer.png');
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: left center;
-	float: right;
-	padding-top: 20px;
 }
 
 #toggle {
@@ -820,9 +754,9 @@ nav li > ul > li > ul {
 	display: block;
 	margin: 0 auto;
 	padding: 50px 0;
-	/*background-size: cover;
+	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: center center;*/
+	background-position: center center;
 	color: #000;
 }
 
@@ -973,376 +907,6 @@ nav li > ul > li > ul {
 	font-size: 1rem;
 	color: #7f7d7d;
 	transition: all 200ms ease;
-}
-
-#aBody {
-	background: white;
-}
-
-#tBody {
-	/*background-image:url('/media/layout/bgr-hptop.jpg');
-	background-repeat: no-repeat;
-	background-position: top center;
-	background-size: 125% auto;
-	min-height: 402px;*/
-}
-
-#tBody .container {
-	max-width: 100%;
-	
-}
-
-#tBody .row {
-	margin: 125px 0px 0px 0px;
-	text-align: right;
-}
-
-#tBody .tBody_hlText, #tBody .tBody_hlText p {
-	color: white;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 46px;
-}
-
-#tBody .tBody_vText, #tBody .tBody_vText p {
-	color: rgb(150,152,141);
-	text-transform: uppercase;
-	font-size: 20px;
-}
-
-#tBody .txtWorkingField {
-	margin: 45px 0px 0px 0px;
-}
-
-#tBody .txtWorkingField input[type=text] {
-	background: rgba(101,101,101,0.7);
-	border: 1px solid white;
-	border-radius: 10px;
-	padding: 15px 20px 15px 255px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	font-weight: bold;
-	text-align: right;
-}
-
-#tBody .txtRegion {
-	margin: 20px 0px 0px 0px;
-}
-
-#tBody .txtRegion input[type=text] {
-	background: rgba(101,101,101,0.7);
-	border: 1px solid white;
-	border-radius: 10px;
-	padding: 15px 20px 15px 255px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	font-weight: bold;
-	text-align: right;
-}
-
-#tBody .btnRedirect {
-	margin: 20px 0px 0px 0px;
-}
-
-#tBody .btnRedirect input[type=submit] {
-	background: transparent;
-	border: 1px solid white;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	padding: 10px 10px 10px 15px;
-}
-
-#tBody .btnRedirect .sIsZTP {
-	padding: 0px;
-}
-
-#tBody .btnRedirect .chbIsZTP input[type=checkbox] {
-	visibility: hidden;
-}
-
-#tBody .btnRedirect .chbIsZTP {
-	background: transparent;
-	border: 1px solid white;
-	border-radius: 3px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	padding: 10px;
-}
-
-#tBody .btnRedirect .lblIsZTP {
-	padding-left: 20px;
-}
-
-#tBody .btnRedirect .btnFind {
-	padding: 0px;
-}
-
-#cBody {
-}
-
-#cBody .cBody_tabs .container {
-	padding: 20px 20px 0px 20px;
-}
-
-#cBody .cBody_tabs .row {
-	margin: 0px;
-}
-
-.cBody_tabs {
-	background-color: rgb(82,82,82);
-	color: white;
-}
-
-#divTOPAdvertisementList {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divTOPAdvertisementList.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-#divTOPCompanyList {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divTOPCompanyList.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-#divNewsList {	
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divNewsList.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-#divAdvertisementList {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divAdvertisementList.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-
-#divAboutCompany {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divAboutCompany.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-#divDetailAdvertisement {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divDetailAdvertisement.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-#divSimilar {
-	border: 1px solid white;
-	padding: 16px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-}
-
-#divSimilar.selected {
-	border-width: 4px 0px 0px;
-	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
-	
-	padding: 15px 0px;
-	text-transform: uppercase;
-	text-align: center;
-	font-weight: bold;
-	color: black;
-	background-color: white;
-}
-
-.countInfoTabs {
-	background: rgb(128,128,128);
-	color: rgb(82,82,82);
-	padding: 0px 10px;
-	border: 1px solid rgb(128,128,128);
-	border-radius: 10px;
-	font-size: 17px;
-}
-
-.selected .countInfoTabs {
-	background: rgb(212,36,207);
-	color: white;
-	border: 1px solid rgb(212,36,207);
-}
-
-#cBody .cBody_content .container {
-	max-width: 90%;
-}
-
-#bBody {
-	background-color: rgb(178,178,178);
-	min-height: 500px;
-}
-
-#bBody .container {
-	padding-top: 20px;
-}
-
-#bBody .txtRegistration {
-	margin: 0px 75px;
-}
-
-#bBody .txtUsername input[type=text] {
-	background: rgb(197,197,197);
-	border: 1px solid white;
-	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	font-weight: bold;
-	text-align: right;
-	margin-right: 10px;
-}
-
-#bBody .txtPassword input[type=text] {
-	background: rgb(197,197,197);
-	border: 1px solid white;
-	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	font-weight: bold;
-	text-align: right;
-	margin-left: 10px;
-	float: right;
-}
-
-#bBody .chbUP input[type=checkbox] {
-	visibility: hidden;
-}
-
-#bBody .chbUP {
-	background: rgb(197,197,197);
-	border: 1px solid white;
-	border-radius: 3px;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	padding: 10px;
-}
-
-#bBody .lblUP {
-	padding-left: 20px;
-}
-
-#bBody .btnNext input[type=submit] {
-	background: transparent;
-	border: 1px solid white;
-	font-size: 13px;
-	text-transform: uppercase;
-	color: white;
-	padding: 10px 10px 10px 15px;
-	float: right;
-}
-
-footer {
-	background-image:url('/media/layout/bgr-footer.jpg');
-	background-repeat: no-repeat;
-	background-position: top center;
-	background-color: rgb(17,17,17);
-	min-height: 500px;
-}
-
-footer .container {
-	padding-top: 90px;
-	max-width: 90%;
 }
 
 footer ul {
@@ -1551,20 +1115,17 @@ pre {
 	border-color: transparent transparent transparent #C2357B;
 }
 
+header {
+	padding: 15px 0;
+}
+
 header .container {
-	padding: 15px 20px;
+	/*max-width: 960px;*/
+	padding: 0 20px;
 }
 
 #toggle {
 	display: none;
-}
-
-#tBody {
-	background-image:url('/media/layout/bgr-hptop.jpg');
-	background-repeat: no-repeat;
-	background-position: top center;
-	/*background-size: 125% auto;*/
-	min-height: 507px;
 }
 
 nav {

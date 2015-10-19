@@ -8,8 +8,9 @@
 	@{ var companiesAll = companyList.First().Children.Where("Visible"); }
 	@foreach (var company in companiesAll.OrderBy("createDate descending").OrderBy("topCompany descending").Take(10))
 	{
+		var advertisement = company.Children.Where("Visible"); 
 		<div class="row @(company.topCompany ? "top" : "")">
-			<a href="@company.Url">@company.Name</a>
+			<a class="underline lightblue" href="@company.Url">@company.Name</a> <span class="countInfoAdvert">(@advertisement.Count())</span>
 		</div>
 	}
 	@*@{ var companiesTop = companies.Children.Where("topCompany == true");}

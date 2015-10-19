@@ -155,4 +155,3 @@ D:\Programovani\Paveza\JobsplusUmbraco\JobsplusUmbraco\bin\Umbraco.Web.UI.xml
 D:\Programovani\Paveza\JobsplusUmbraco\JobsplusUmbraco\bin\UmbracoExamine.xml
 D:\Programovani\Paveza\JobsplusUmbraco\JobsplusUmbraco\obj\Debug\JobsplusUmbraco.dll
 D:\Programovani\Paveza\JobsplusUmbraco\JobsplusUmbraco\obj\Debug\JobsplusUmbraco.pdb
-D:\Programovani\Paveza\JobsplusUmbraco\JobsplusUmbraco\obj\Debug\JobsplusUmbraco.csprojResolveAssemblyReference.cache

@@ -19,7 +19,7 @@ using Umbraco.Web.Security;
 
 namespace JobsplusUmbraco.Controllers
 {
-    public class AdvertisementListController : SurfaceController //Controller
+    public class FindJobController : RenderMvcController
     {
         #region Properties
         UmbracoHelper umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
@@ -33,14 +33,14 @@ namespace JobsplusUmbraco.Controllers
             {
                 ipcAdvertisements = umbracoHelper.TypedContentSingleAtXPath("//dtAdvertisement");
 
-                
+
                 Node currentNode = Node.GetCurrent();
                 var rootNode = new Node(int.Parse(currentNode.Path.Split(',')[1]));
                 DataTable dtAdvertisement = rootNode.ChildrenAsTable("dtAdvertisement");
-                
+
                 foreach (var rAdvertisement in dtAdvertisement.Rows)
                 {
-                    
+
                 }
 
                 if (ipcAdvertisements != null && ipcAdvertisements.Children.Count() > 0)
@@ -99,11 +99,11 @@ namespace JobsplusUmbraco.Controllers
                     XPathNodeIterator pvRegions = iRegions.Current.SelectChildren("preValue", "");
                     rCollection.Add(new Region { Name = string.Empty, Value = string.Empty });
                     while (pvRegions.MoveNext())
-                    {                   
+                    {
                         rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value });
                     }
                 }
-                
+
                 return rCollection;
             }
         }
@@ -181,7 +181,7 @@ namespace JobsplusUmbraco.Controllers
 
         #region ActionResult
 
-        public ActionResult Overview()
+        public ActionResult tFindJob()
         {
             IEnumerable<SelectListItem> slRegions = GetRegionSelectListItem(string.Empty);
             IEnumerable<SelectListItem> slWorkingFields = GetWorkingFieldSelectListItem(string.Empty);
@@ -208,15 +208,16 @@ namespace JobsplusUmbraco.Controllers
             model.slWorkingFields = slWorkingFields;
             model.lAdvertisements = advertisements;
 
-            return PartialView("AdvertisementList/Overview", model);
+            return CurrentTemplate(model);
         }
 
         [HttpPost]
-        public ActionResult Overview(AdvertisementList model)
+        public ActionResult tFindJob(AdvertisementList model)
         {
             string selectRegion = model.region;
             string selectWorkingField = model.workingField;
-            
+            bool selectIsZTP = model.IsZTP;
+
             IEnumerable<SelectListItem> slRegions = GetRegionSelectListItem(selectRegion);
             IEnumerable<SelectListItem> slWorkingFields = GetWorkingFieldSelectListItem(selectWorkingField);
 
@@ -231,6 +232,7 @@ namespace JobsplusUmbraco.Controllers
                 filter.And().Field("workingField", selectWorkingField);
             if (!String.IsNullOrEmpty(selectRegion))
                 filter.And().Field("region", selectRegion);
+            //filter.And().Field("ztp", selectIsZTP ? "1" : "0");
 
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))
@@ -240,119 +242,49 @@ namespace JobsplusUmbraco.Controllers
             }
 
             model = new AdvertisementList();
+            model.IsZTP = selectIsZTP;
             model.slRegions = slRegions;
             model.slWorkingFields = slWorkingFields;
             model.lAdvertisements = advertisements;
 
-            return PartialView("AdvertisementList/Overview", model);
+            return CurrentTemplate(model);
         }
 
-        public ActionResult Home()
+        public ActionResult tHomeFilter()
         {
             AdvertisementList model = new AdvertisementList();
-            return PartialView("Home", model);
+            //return PartialView("Home", model);
+            return CurrentTemplate(model);
         }
 
         [HttpPost]
-        public void Home(AdvertisementList model)
+        public ActionResult tHomeFilter(AdvertisementList model)
         {
-            //return Overview(model);
-            Response.Redirect("/najít-práci");
+            return tFindJob(model);
+            //Response.Redirect("/najít-práci");
             //return CurrentTemplate(model);
         }
 
-        //
-        // GET: /AdvertisementList/
+        public ActionResult tHome()
+        {
+            AdvertisementList model = new AdvertisementList();
+            //return PartialView("Home", model);
+            return CurrentTemplate(model);
+        }
+
+        [HttpPost]
+        public ActionResult tHome(AdvertisementList model)
+        {
+
+            return tFindJob(model);
+            //Response.Redirect("/najít-práci");
+            //return CurrentTemplate(model);
+        }
+
 
         public ActionResult Index()
         {
             return View();
-        }
-
-        //
-        // GET: /AdvertisementList/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /AdvertisementList/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /AdvertisementList/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /AdvertisementList/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /AdvertisementList/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /AdvertisementList/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /AdvertisementList/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
         #endregion
     }

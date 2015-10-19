@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<JobsplusUmbraco.Models.AdvertisementList>
+
+@using (Html.BeginForm("Home", "Home"))
+{
+    <fieldset>
+        <div class="row txtWorkingField">
+            @Html.TextBox("workingField", Model.workingField ?? "Obor nebo pozice?")
+        </div>
+        <div class="row txtRegion">
+            @Html.TextBox("region", Model.region  ?? "Kde?")
+        </div>
+        <div class="row btnRedirect">
+            <input type="submit" value="Hledat   >" />
+        </div>
+    </fieldset>
+}
+

@@ -1,41 +1,81 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@*inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@
+@using JobsplusUmbraco.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<AdvertisementList>
 @{
     Layout = "tBase.cshtml";
 }
 
-<div class="row">
-	<div class="col-md-12" style="background-image:url('@(CurrentPage.logo)?height=65')">
-		<div class="row">
-			<span>@CurrentPage.shortDescriptionHome</span>
+<div id="aBody">
+	<div id="tBody">
+        <div class="col-md-6"></div>
+		<div class="col-md-6">
+			<div class="container">
+				<div class="row">
+					<span class="tBody_hlText">Práce pro všechny</span>
+					<br/>	
+					<span class="tBody_vText">Práce na plný úvazek, stáže, brigády, ztp</span>
+				</div>
+                @*@Html.Action("Home", "FindJob", new JobsplusUmbraco.Models.AdvertisementList { workingField = "obor", region = "region" })
+                @Html.Action("tHomeFilter", "FindJob")*@
+                @using (Html.BeginForm("tHome", "Home"))
+                {
+                    <fieldset>
+                        <div class="row txtWorkingField">
+                            @Html.TextBox("workingField", Model.workingField ?? "Obor nebo pozice?")
+                        </div>
+                        <div class="row txtRegion">
+                            @Html.TextBox("region", Model.region ?? "Kde?")
+                        </div>
+                        <div class="row btnRedirect">
+                            <div class="col-md-6 sIsZTP left">
+                                <span><span class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP, true)</span><span class="lblIsZTP white fs12 uppercase">ZTP</span></span>
+                            </div>
+                            <div class="col-md-6 btnFind">
+                                <span><input type="submit" value="Hledat   >" /></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+			</div>
 		</div>
-		<div class="row">
-			
+	</div>
+	<div id="cBody">
+		<div class="cBody_tabs">
+			<div class="container">
+				<div class="row">
+					<div id="divTOPAdvertisementList" class="col-md-4">
+						Top Inzerce @{ Html.RenderPartial("pvCountAllAdvertisement"); }
+					</div>
+					<div id="divTOPCompanyList" class="col-md-4">
+						Top Firmy @{ Html.RenderPartial("pvCountAllCompany"); }
+					</div>
+					<div id="divNewsList" class="col-md-4">
+						Aktuality
+					</div>
+				</div>
+			</div>
 		</div>
-    </div>
-</div>
-<div class="row">
-	<div id="divTOPCompanyList" class="col-md-4">
-		TOP FIRMY
+		<div class="cBody_content">
+			<div class="container">
+				<div class="row">
+					<div id="TOPCompanyList">
+						@{ Html.RenderPartial("pvTOPCompanyList"); }
+					</div>		
+					<div id="TOPAdvertisementList">
+						@{ Html.RenderPartial("pvTOPAdvertisementList"); }
+					</div>
+					<div id="NewsList">
+						@{ Html.RenderPartial("pvNewsList"); }
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="divTOPAdvertisementList" class="col-md-4">
-		TOP INZERCE
-	</div>
-	<div id="divNewsList" class="col-md-4">
-		AKTUALITY
-	</div>
-</div>
-<div id="TOPCompanyList" class="row">
-	<div class="col-md-12">
-		@{ Html.RenderPartial("pvTOPCompanyList"); }
-	</div>
-</div>		
-<div id="TOPAdvertisementList" class="row">
-	<div class="col-md-12">
-		@{ Html.RenderPartial("pvTOPAdvertisementList"); }
-	</div>
-</div>
-<div id="NewsList" class="row">
-	<div class="col-md-12">
-		@{ Html.RenderPartial("pvNewsList"); }
+	<div id="bBody">
+		<div class="container">
+			<div class="row">
+				@{ Html.RenderPartial("pvFirstStepRegistration"); }
+			</div>
+		</div>
 	</div>
 </div>

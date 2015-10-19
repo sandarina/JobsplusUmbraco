@@ -1,0 +1,67 @@
+﻿@*inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@
+@using JobsplusUmbraco.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<AdvertisementList>
+@{
+    Layout = "tBase.cshtml";
+    var IsTOP = StringToBoolen(@Request.QueryString["IsTOPAdvertisement"]);
+}
+@using (Html.BeginForm("tFindJob", "FindJob"))
+{
+    <div id="aBody">
+        <div id="tBody" @*style="background-image:url('@(CurrentPage.logoCompany)?height=65')"*@>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-6">
+                <div class="container">
+                    <div class="row">
+                        <span class="tBody_hlText">Najít práci</span>
+                        <br />
+                        <span class="tBody_vText"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cBody">
+            <div class="cBody_content">
+                <div class="container">
+                    <div class="row" style="@(IsTOP ? "display:none" : "")">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.region, Model.slRegions)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.CheckBoxFor(model => model.IsZTP)
+                            <input type="submit" value="Vyhledat" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach (var advertisement in Model.lAdvertisements)
+                            {
+                                <div class="row">
+                                    <a href="@advertisement.Url">@advertisement.Name</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bBody">
+            <div class="container">
+                <div class="row">
+                    @{ Html.RenderPartial("pvFirstStepRegistration"); }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@functions {
+    public static bool StringToBoolen(string item)
+    {
+        return (item == "YES" || item == "TRUE" || item == "1");
+    }
+}
