@@ -1,19 +1,41 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+@using Umbraco.Core.Models
 
-@{ var home = CurrentPage.Site();}
-@{ var companyList = home.Children("dtCompanyList").Where("Visible"); }
+@{ 
+	var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+	var home = CurrentPage.Site();
+   	var companyList = home.Children("dtCompanyList").Where("Visible"); 
+	var companiesSort = new Dictionary<int, bool>();
+}
+
 @if (companyList.Any())
 {
-	<div class="col-md-12">
-	@{ var companiesAll = companyList.First().Children.Where("Visible"); }
-	@foreach (var company in companiesAll.OrderBy("createDate descending").OrderBy("topCompany descending").Take(10))
+	var companiesAll = companyList.First().Children.Where("Visible");
+	foreach (var company in companiesAll)
 	{
-		var advertisement = company.Children.Where("Visible"); 
-		<div class="row @(company.topCompany ? "top" : "")">
-			<a class="underline lightblue" href="@company.Url">@company.Name</a> <span class="countInfoAdvert">(@advertisement.Count())</span>
-		</div>
+		var cContent = company.Children("dtCompanyContent").Where("Visible");
+		if (cContent.Any())
+		{
+			companiesSort.Add(@company.Id, @cContent.First().cTop);
+		}  
 	}
-	@*@{ var companiesTop = companies.Children.Where("topCompany == true");}
-	@{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
-	</div>
+}
+
+
+@foreach (KeyValuePair<int, bool> companySort in companiesSort.OrderByDescending(key => key.Value))
+{
+	var itemCompany = (IPublishedContent)umbracoHelper.TypedContent(@companySort.Key);
+    var cContent = itemCompany.Children().Where("Visible");
+	var IsTop = companySort.Value;
+	if (cContent.Any())
+	{
+		var cAdvertisement = cContent.First().Children.Where("Visible");
+		if (cAdvertisement.Any())
+		{
+			<div class='row @(IsTop ? "top" : "")'>
+				<a class="underline lightblue" href="@itemCompany.Url">@itemCompany.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
+			</div>
+		}
+	}
 }

@@ -1,14 +1,17 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 
 
-@{ var advertisementList = CurrentPage.Children.Where("Visible").OrderBy("Name").OrderBy("topAdvertisement descending"); }
+@{ 
+	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible"); 
+ }
 
-@if (advertisementList.Any())
+@if (cContent.Any())
 {
+	var advertisements = cContent.First().Children.Where("Visible").OrderBy("Name").OrderBy("aTop descending");
 	<div class="col-md-12">
-	@foreach (var advertisement in advertisementList)
+	@foreach (var advertisement in advertisements)
     {
-    	<div class="row @(advertisement.topAdvertisement ? "top" : "")">
+    	<div class="row @(advertisement.aTop ? "top" : "")">
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-8">
@@ -19,7 +22,7 @@
 							<a href="@advertisement.Url">@advertisement.Name</a>
 						</div>
 						<div class="row">
-							<span></span><span>@advertisement.region</span>
+							<span>@advertisement.aCity, </span><span>@advertisement.aRegion</span>
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -29,9 +32,9 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"><span>Vzdělání</span> @advertisement.requiredEducation</div>
-					<div class="col-md-4"><span>Typ</span> @advertisement.typeOfWork</div>
-					<div class="col-md-4"><span>ZTP</span> @(advertisement.ztp ? "ANO" : "NE") </div>
+					<div class="col-md-4"><span>Vzdělání</span> @advertisement.aRequiredEducation</div>
+					<div class="col-md-4"><span>Typ</span> @advertisement.aTypeOfWork</div>
+					<div class="col-md-4"><span>ZTP</span> @(advertisement.aZtp ? "ANO" : "NE") </div>
 				</div>
 			</div>
 		</div>

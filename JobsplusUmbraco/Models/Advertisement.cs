@@ -25,8 +25,7 @@ namespace JobsplusUmbraco.Models
         public Region Region { get; set; }
         public string City { get; set; }
         public bool ZTP { get; set; }
-        public string ShortTextAdvertisement { get; set; }
-        public string ContentAdvertisement { get; set; }
+        public string Content { get; set; }
         public string Advertiser { get; set; }
     }
 }

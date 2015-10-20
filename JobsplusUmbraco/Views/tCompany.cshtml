@@ -1,8 +1,8 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
     Layout = "tBase.cshtml";
+	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
 }
-
 
 <div id="aBody">
 	<div id="tBody" @*style="background-image:url('@(CurrentPage.logoCompany)?height=65')"*@>
@@ -11,7 +11,7 @@
 				<div class="row">
 				<span class="tBody_hlText">@CurrentPage.Name</span>
 				<br/>	
-				<span class="tBody_vText">@CurrentPage.shortDescriptionCompany</span>
+				<span class="tBody_vText">@cContent.cSubTitle</span>
 				</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<div class="container">
 				<div class="row">
 					<div id="divAdvertisementList" class="col-md-6">
-						Nabídka práce @{ Html.RenderPartial("pvCountChildren"); }
+						Nabídka práce @{ Html.RenderPartial("pvCountCompanyAdvertisements"); }
 					</div>
 					<div id="divAboutCompany" class="col-md-6">
 						O společnosti
@@ -35,7 +35,7 @@
 					@{ Html.RenderPartial("pvCompanyAdvertisementList"); }
 				</div>
 				<div id="aboutCompany" class="row">
-					@CurrentPage.contentCompany
+					@cContent.cContent
 				</div>
 			</div>
 		</div>

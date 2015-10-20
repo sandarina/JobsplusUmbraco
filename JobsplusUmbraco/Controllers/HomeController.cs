@@ -157,6 +157,9 @@ namespace JobsplusUmbraco.Controllers
             //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
             var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item["id"]));
 
+            if (itemAdvertisement == null)
+                return null;
+
             Advertisement advertisement = new Advertisement();
             advertisement.ID = itemAdvertisement.Id;
             advertisement.Name = itemAdvertisement.Name;
@@ -164,17 +167,16 @@ namespace JobsplusUmbraco.Controllers
             advertisement.CreateDate = itemAdvertisement.CreateDate;
             advertisement.UpdateDate = itemAdvertisement.UpdateDate;
 
-            advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("topAdvertisement", "0") == "1" ? true : false;
-            advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("typeOfWork", string.Empty);
-            advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("workingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("workingField", string.Empty) };
-            advertisement.RequiredEducation = itemAdvertisement.GetPropertyValue<string>("requiredEducation", string.Empty);
-            advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("region", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("region", string.Empty) };
-            advertisement.City = itemAdvertisement.GetPropertyValue<string>("city", string.Empty);
-            advertisement.ZTP = itemAdvertisement.GetPropertyValue<string>("ztp", "0") == "1" ? true : false;
-            advertisement.ShortTextAdvertisement = itemAdvertisement.GetPropertyValue<string>("shortTextAdvertisement", string.Empty);
-            advertisement.ContentAdvertisement = itemAdvertisement.GetPropertyValue<string>("contentAdvertisement", string.Empty);
+            advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
+            advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);
+            advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
+            advertisement.RequiredEducation = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty);
+            advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
+            advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
+            advertisement.ZTP = itemAdvertisement.GetPropertyValue<string>("aZtp", "0") == "1" ? true : false;
+            advertisement.Content = itemAdvertisement.GetPropertyValue<string>("aContent", string.Empty);
             //advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("advertiser").HasValue ? Members.GetById(itemAdvertisement.GetPropertyValue<int>("advertiser")).Name : string.Empty;
-            advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("advertiser").HasValue ? membershipHelper.GetById(itemAdvertisement.GetPropertyValue<int>("advertiser")).Name : string.Empty;
+            advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("Aadvertiser").HasValue ? membershipHelper.GetById(itemAdvertisement.GetPropertyValue<int>("aAdvertiser")).Name : string.Empty;
 
             return advertisement;
         }
@@ -184,7 +186,6 @@ namespace JobsplusUmbraco.Controllers
         public ActionResult tHome()
         {
             AdvertisementList model = new AdvertisementList();
-            //return PartialView("Home", model);
             return CurrentTemplate(model);
         }
 
@@ -206,16 +207,16 @@ namespace JobsplusUmbraco.Controllers
             filter = criteria.NodeTypeAlias("dtAdvertisement");
 
             if (!String.IsNullOrEmpty(selectWorkingField))
-                filter.And().Field("workingField", selectWorkingField);
+                filter.And().Field("aWorkingField", selectWorkingField);
             if (!String.IsNullOrEmpty(selectRegion))
-                filter.And().Field("region", selectRegion);
-            //filter.And().Field("ztp", selectIsZTP ? "1" : "0");
+                filter.And().Field("aRegion", selectRegion);
+            //filter.And().Field("aZtp", selectIsZTP ? "1" : "0");
 
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))
             {
                 Advertisement advertisement = DynamicToAdverisement(result);
-                advertisements.Add(advertisement);
+                if (advertisement != null) advertisements.Add(advertisement);
             }
 
             model = new AdvertisementList();

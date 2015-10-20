@@ -4,7 +4,7 @@
 }
 
 <div id="aBody">
-	<div id="tBody" @*style="background-image:url('@(CurrentPage.logoCompany)?height=65')"*@>
+	<div id="tBody" @*style="background-image:url('@(CurrentPage.cLogo)?height=65')"*@>
 		<div class="col-md-6">
 			
 		</div>
@@ -13,7 +13,7 @@
 				<div class="row">
 				<span class="tBody_hlText">@CurrentPage.Name</span>
 				<br/>	
-				<span class="tBody_vText">@CurrentPage.typeOfWork | @CurrentPage.region</span>
+				<span class="tBody_vText">@CurrentPage.aTypeOfWork | @CurrentPage.aRegion</span>
 				</div>
 			</div>
 		</div>

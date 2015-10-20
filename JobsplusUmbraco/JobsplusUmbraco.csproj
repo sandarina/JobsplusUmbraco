@@ -235,7 +235,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AdvertisementListController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -349,9 +348,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\404handlers.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AdvertisementList\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\tFindJob.cshtml" />
