@@ -210,7 +210,7 @@ namespace JobsplusUmbraco.Controllers
                 filter.And().Field("aWorkingField", selectWorkingField);
             if (!String.IsNullOrEmpty(selectRegion))
                 filter.And().Field("aRegion", selectRegion);
-            //filter.And().Field("aZtp", selectIsZTP ? "1" : "0");
+            filter.And().Field("aZtp", selectIsZTP ? "1" : "0");
 
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))
