@@ -15,8 +15,7 @@
 					<br/>	
 					<span class="tBody_vText">Práce na plný úvazek, stáže, brigády, ztp</span>
 				</div>
-                @*@Html.Action("Home", "FindJob", new JobsplusUmbraco.Models.AdvertisementList { workingField = "obor", region = "region" })
-                @Html.Action("tHomeFilter", "FindJob")*@
+                
                 @using (Html.BeginForm("tHome", "Home"))
                 {
                     <fieldset>

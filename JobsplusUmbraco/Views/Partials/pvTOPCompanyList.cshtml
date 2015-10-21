@@ -11,6 +11,29 @@
 
 @if (companyList.Any())
 {
+    var companiesAll = companyList.First().Children.Where("Visible");
+	<div class="col-md-12">
+	@foreach (var company in companiesAll.OrderBy("createDate descending").OrderBy("cTop descending").Take(10))
+    {
+        var cContent = company.Children().Where("Visible");
+        if (cContent.Any())
+        {
+            var cAdvertisement = cContent.First().Children.Where("Visible");
+            if (cAdvertisement.Any())
+            {
+                <div class='row @(company.cTop ? "top" : "")'>
+                    <a class="underline lightblue" href="@company.Url">@company.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
+                </div>
+            }
+        }
+    }
+	@*@{ var companiesTop = companies.Children.Where("topCompany == true");}
+	@{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
+	</div>
+}
+
+@*if (companyList.Any())
+{
 	var companiesAll = companyList.First().Children.Where("Visible");
 	foreach (var company in companiesAll)
 	{
@@ -38,4 +61,4 @@
 			</div>
 		}
 	}
-}
+}*@
