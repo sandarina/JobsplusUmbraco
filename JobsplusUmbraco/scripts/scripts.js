@@ -15,6 +15,47 @@
     $('#divAdvertisementList').addClass('selected');
 	$('#divDetailAdvertisement').addClass('selected');
 	
+	
+	if($('#IsZTP').is(":checked")) {
+    	$('#schbIsZTP').addClass('checked');
+    }
+	else {
+		$('#schbIsZTP').removeClass('checked');
+	};
+
+	
+	$('#schbIsZTP').click(function(){
+		if($('#IsZTP').is(":checked")) {
+			$('#IsZTP').prop("checked", false)
+			$('#schbIsZTP').removeClass('checked');
+		}
+		else {
+			$('#IsZTP').prop("checked", true)
+			$('#schbIsZTP').addClass('checked');
+		}
+	});
+	
+	
+		
+	if($('#chbUP').is(":checked")) {
+    	$('#schbUP').addClass('checked');
+    }
+	else {
+		$('#schbUP').removeClass('checked');
+	};
+
+	
+	$('#schbUP').click(function(){
+		if($('#chbUP').is(":checked")) {
+			$('#chbUP').prop("checked", false)
+			$('#schbUP').removeClass('checked');
+		}
+		else {
+			$('#chbUP').prop("checked", true)
+			$('#schbUP').addClass('checked');
+		}
+	});
+	
 	$('#divDetailAdvertisement').click(function(){
 		$('#detailAdvertisement').show();
 		$('#similar').hide();
@@ -77,25 +118,5 @@
 		$('#divTOPAdvertisementList').removeClass('selected');
 		$('#divTOPCompanyList').removeClass('selected');	
 	});
-	
-	
-	/*$('#btnAdvertisement').click(function(){
-    	$('#ListAdvertisemet').show();
-		var url = '<umbraco:Macro runat="server" Alias="pvmGenerateAdvertisementList" language="cshtml" />';
-		var url = '@Umbraco.RenderMacro("pvmGenerateAdvertisementList")';
-		$('#ListAdvertisemet').append(url);
-	});
-	
-	
-	$('#btnAdvertisement').click(function() {
-		var url = '@Url.Action("Results", "AdvertisementController")';
-  		var wf = $('#ddlworkingField').val();
-		var r = $('#ddlregion').val();
-		$('#ListAdvertisemet').load(url, { workingField: wf, region: r });
-	});*/
-	
-	
-	
-	/*object.onclick=function(){myScript};*/
 
 })(jQuery);

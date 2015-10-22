@@ -1059,11 +1059,11 @@ nav li > ul > li > ul {
 	padding: 0px;
 }
 
-#tBody .btnRedirect .chbIsZTP input[type=checkbox] {
+#schbIsZTP input[type=checkbox] {
 	visibility: hidden;
 }
 
-#tBody .btnRedirect .chbIsZTP {
+#schbIsZTP {
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 3px;
@@ -1072,6 +1072,14 @@ nav li > ul > li > ul {
 	color: white;
 	padding: 10px;
 }
+
+#schbIsZTP.checked {
+	background-image:url('/media/layout/fajfka.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+}
+
 
 #tBody .btnRedirect .lblIsZTP {
 	padding-left: 20px;
@@ -1304,11 +1312,11 @@ nav li > ul > li > ul {
 	float: right;
 }
 
-#bBody .chbUP input[type=checkbox] {
+#schbUP input[type=checkbox] {
 	visibility: hidden;
 }
 
-#bBody .chbUP {
+#schbUP {
 	background: rgb(197,197,197);
 	border: 1px solid white;
 	border-radius: 3px;
@@ -1316,6 +1324,13 @@ nav li > ul > li > ul {
 	text-transform: uppercase;
 	color: white;
 	padding: 10px;
+}
+
+#schbUP.checked {
+	background-image:url('/media/layout/fajfka.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: rgb(197,197,197);
 }
 
 #bBody .lblUP {
