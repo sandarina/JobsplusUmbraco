@@ -16,6 +16,8 @@ using Examine;
 using umbraco.cms.businesslogic.member;
 using Umbraco.Web.Security;
 //using umbraco.presentation.nodeFactory;
+using System.Data.SqlClient;
+using System.Configuration;
 
 
 namespace JobsplusUmbraco.Controllers
@@ -180,11 +182,32 @@ namespace JobsplusUmbraco.Controllers
 
             return advertisement;
         }
+
+        public static SqlConnection CreateSQLConnection()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["umbracoDbDSN"].ConnectionString;
+            return new SqlConnection(connectionString);
+        }
+
+        protected void CheckExpiredTop()
+        {
+            using (SqlConnection conn = CreateSQLConnection())
+            {
+                SqlCommand dbCommand = conn.CreateCommand();
+                dbCommand.CommandType = CommandType.StoredProcedure;
+                dbCommand.CommandText = "pUpdateExpiredPropertyData";
+                conn.Open();
+                dbCommand.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
         #endregion
 
         #region ActionResult
         public ActionResult tHome()
         {
+            CheckExpiredTop();
+
             AdvertisementList model = new AdvertisementList();
             return CurrentTemplate(model);
         }
