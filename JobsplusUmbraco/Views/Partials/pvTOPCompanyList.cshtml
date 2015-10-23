@@ -26,10 +26,12 @@
         var cAdvertisementRandom = cContentRandom.First().Children.Where("Visible");
         if (cAdvertisementRandom.Any())
         {
+	    var logo = Umbraco.Media(cContentRandom.First().cLogo);
+	    var background = Umbraco.Media(cContentRandom.First().cBackground);
             <div class="col-md-4">
                 <div class="nahled center">
-                    <div class="row">@*<img src="@cContentRandom.First().cLogo" />*@</div>
-                    <div class="row">@*<img src="@cContentRandom.First().cBackground" />*@</div>
+                    <div class="row"><img src="@logo.Url" alt="@logo.Name" /></div>
+		    <div class="row"><img src="@background.Url" alt="@background.Name" /></div>
                     <div class="row"><a class="underline lightblue" href="@companiesRandom.Url">@companiesRandom.Name</a></div>
                     <div class="row"><span class="countInfoAdvert">@cAdvertisementRandom.Count() inzeráty</span></div>
                 </div>
