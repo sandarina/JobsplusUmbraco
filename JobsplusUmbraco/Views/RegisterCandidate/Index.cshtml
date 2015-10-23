@@ -1,0 +1,103 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MemberCandidate>
+@using JobsplusUmbraco.Models
+
+<div class="container">
+    @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+    {
+        <div class="alert alert-error">
+            @Html.ValidationSummary(false, "Ajaj, něco nám ještě chybí: ")
+        </div>
+    }
+
+    @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit"))
+    {
+        <div class="row">
+            <h3>Přihlašovací údaje</h3>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <div class=" input-group date" id="loginEmail">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Přihlašovací jméno (e-mail)" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control col-mb-6", placeholder = "Heslo" })
+            </div>
+        </div>
+        <div class="row">
+            <h3>Něco málo o Vás...</h3>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control col-mb-6", placeholder = "Jméno" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.TextBoxFor(m => m.Surname, new { @class = "form-control col-mb-6", placeholder = "Příjmení" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <div class="input-group date" id="birthDate">
+                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "Datum narození" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="checkbox col-md-4">
+                <label>
+                    @Html.CheckBoxFor(m => m.RegistrationUP, new { @class = "RegistrationUP" })
+                    @Html.DisplayNameFor(m => m.RegistrationUP)
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <div class="input-group date" id="registrationUPFrom">
+                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "Den registrace" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.TextBoxFor(m => m.Town, new { @class = "form-control col-mb-12", placeholder = "Město" })
+            </div>
+        </div>
+        <div class="row">
+            <button id="RegisterCandidateFormSubmit" type="submit" class="btn btn-primary input-medium">Registrovat</button>
+        </div>
+    }
+
+
+    <script type="text/javascript">
+        $(function () {
+            var d = new Date();
+
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+
+            var datenow = d.getFullYear() + '/' +
+                (month < 10 ? '0' : '') + month + '/' +
+                (day < 10 ? '0' : '') + day;
+
+            $('#birthDate').datetimepicker({
+                viewMode: 'years',
+                format: 'DD.MM.YYYY',
+                locale: 'cs'
+            });
+            $('#registrationUPFrom').datetimepicker({
+                format: 'DD.MM.YYYY',
+                locale: 'cs',
+                minDate: '1.1.1930',
+                maxDate: datenow
+            });
+        });
+    </script>
+
+</div>

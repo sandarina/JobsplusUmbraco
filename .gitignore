@@ -5,33 +5,38 @@
 *.suo
 *.user
 *.sln.docstates
+*.v12.suo
+**/*.v12.suo
+**/*.suo
+**/*.user
+**/*.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-x64/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
-[Aa]pp_[Dd]ata/
+**/[Dd]ebug/
+**/[Dd]ebugPublic/
+**/[Rr]elease/
+**/x64/
+**/build/
+**/bld/
+**/[Bb]in/
+**/[Oo]bj/
+**/[Aa]pp_[Dd]ata/
 
 # Roslyn cache directories
-*.ide/
+**/*.ide/
 
 # MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+**/[Tt]est[Rr]esult**/
+**/[Bb]uild[Ll]og.*
 
 #NUNIT
-*.VisualState.xml
-TestResult.xml
+**/*.VisualState.xml
+**/TestResult.xml
 
 # Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
+**/[Dd]ebugPS/
+**/[Rr]eleasePS/
+**/dlldata.c
 
 *_i.c
 *_p.c

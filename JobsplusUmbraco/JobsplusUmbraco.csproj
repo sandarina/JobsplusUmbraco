@@ -237,11 +237,13 @@
   <ItemGroup>
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegisterCandidateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\AdvertisementList.cs" />
+    <Compile Include="Models\MemberCandidate.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\WorkingField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,8 +253,51 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Config\grid.editors.config.js" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\fanoe.css" />
+    <Content Include="css\images\arrow.png" />
+    <Content Include="css\images\bottom-left-selected.png" />
+    <Content Include="css\images\bottom-left.png" />
+    <Content Include="css\images\bottom-right-selected.png" />
+    <Content Include="css\images\bottom-right.png" />
+    <Content Include="css\images\middle-horizontal-selected.png" />
+    <Content Include="css\images\middle-horizontal.png" />
+    <Content Include="css\images\middle-vertical.png" />
+    <Content Include="css\images\top-left.png" />
+    <Content Include="css\images\top-right.png" />
+    <Content Include="css\jquery.simpledropdown.css" />
+    <Content Include="css\rte.css" />
+    <Content Include="css\style.backup.css" />
+    <Content Include="css\style.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\bootstrap-datetimepicker.js" />
+    <Content Include="scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="scripts\bootstrap.js" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\dropdownSearchable.js" />
+    <Content Include="scripts\fanoe.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="scripts\jquery-1.9.0.js" />
+    <Content Include="scripts\jquery-1.9.0.min.js" />
+    <Content Include="scripts\moment-with-locales.js" />
+    <Content Include="scripts\moment-with-locales.min.js" />
+    <Content Include="scripts\moment.js" />
+    <Content Include="scripts\moment.min.js" />
+    <Content Include="scripts\npm.js" />
+    <Content Include="scripts\scripts.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -263,6 +308,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="scripts\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,6 +397,39 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\tFindJob.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\EditProfileForm.cshtml" />
+    <Content Include="Views\MacroPartials\LoginForm.cshtml" />
+    <Content Include="Views\MacroPartials\LoginStatus.cshtml" />
+    <Content Include="Views\MacroPartials\pvmGenerateAdvertisementList.cshtml" />
+    <Content Include="Views\MacroPartials\RegisterForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RegisterCandidate\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\BottomNavigation.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Partials\MainNavigation.cshtml" />
+    <Content Include="Views\Partials\pvAdvertisementList.cshtml" />
+    <Content Include="Views\Partials\pvCompanyAdvertisementList.cshtml" />
+    <Content Include="Views\Partials\pvCountAllAdvertisement.cshtml" />
+    <Content Include="Views\Partials\pvCountAllCompany.cshtml" />
+    <Content Include="Views\Partials\pvCountChildren.cshtml" />
+    <Content Include="Views\Partials\pvCountCompanyAdvertisements.cshtml" />
+    <Content Include="Views\Partials\pvDetailAdvertisement.cshtml" />
+    <Content Include="Views\Partials\pvFirstStepRegistration.cshtml" />
+    <Content Include="Views\Partials\pvMainNavigation.cshtml" />
+    <Content Include="Views\Partials\pvNewsList.cshtml" />
+    <Content Include="Views\Partials\pvTOPAdvertisementList.cshtml" />
+    <Content Include="Views\Partials\pvTOPCompanyList.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RegisterCandidate\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\jobsplus.pubxml" />
