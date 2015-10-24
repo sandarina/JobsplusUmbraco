@@ -64,8 +64,7 @@ namespace JobsplusUmbraco.Controllers
             // "Candidate" je skupina členů
             memberService.AssignRole(member.Id, "Candidate");
 
-            return RedirectToAction("Success", new { model = model });
+            return Redirect("/registrace-uspesne-dokoncena/");
         }
-
     }
 }

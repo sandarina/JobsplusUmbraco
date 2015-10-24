@@ -30,7 +30,7 @@
                                 <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP, true)</span><span class="lblIsZTP white fs12 uppercase">ZTP</span></span>
                             </div>
                             <div class="col-md-6 btnFind">
-                                <span><input type="submit" value="Hledat   >" /></span>
+                                <span><input type="submit" value="Hledat  >" /></span>
                             </div>
                         </div>
                     </fieldset>
@@ -42,13 +42,13 @@
 		<div class="cBody_tabs">
 			<div class="container">
 				<div class="row">
-					<div id="divTOPAdvertisementList" class="col-md-4">
+					<div id="divTOPAdvertisementList" class="tab col-md-4">
 						Top Inzerce @{ Html.RenderPartial("pvCountAllAdvertisement"); }
 					</div>
-					<div id="divTOPCompanyList" class="col-md-4">
+					<div id="divTOPCompanyList" class="tab col-md-4">
 						Top Firmy @{ Html.RenderPartial("pvCountAllCompany"); }
 					</div>
-					<div id="divNewsList" class="col-md-4">
+					<div id="divNewsList" class="tab col-md-4">
 						Aktuality
 					</div>
 				</div>

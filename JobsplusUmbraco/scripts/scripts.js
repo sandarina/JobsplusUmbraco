@@ -15,6 +15,7 @@
     $('#divAdvertisementList').addClass('selected');
 	$('#divDetailAdvertisement').addClass('selected');
 	
+	$('input.searchbox').attr("autocomplete", "off");
 	
 	if($('#IsZTP').is(":checked")) {
     	$('#schbIsZTP').addClass('checked');
