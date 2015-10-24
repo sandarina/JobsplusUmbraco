@@ -1576,7 +1576,7 @@ pre {
 }
 
 header .container {
-	padding: 15px 20px;
+	padding: 15px 0;
 }
 
 #toggle {
@@ -1589,6 +1589,12 @@ header .container {
 	background-position: top center;
 	/*background-size: 125% auto;*/
 	min-height: 507px;
+}
+#aBody.subpage {
+	background-image:url('/media/layout/bgr-hptop-shadow.png');
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: transparent;
 }
 
 #aBody.subpage #tBody {

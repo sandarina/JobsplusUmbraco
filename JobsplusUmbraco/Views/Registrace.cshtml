@@ -2,7 +2,9 @@
 @{
     Layout = "tBase.cshtml";
 }
-<h1>@CurrentPage.Name</h1>
 
-@Html.Action("Index", "RegisterCandidate")
+<div class="container">
+    <h1>@CurrentPage.Name</h1>
+    @Html.Action("Index", "RegisterCandidate")
+</div>
 	

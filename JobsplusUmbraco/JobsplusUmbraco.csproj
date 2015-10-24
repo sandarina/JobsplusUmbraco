@@ -3004,6 +3004,26 @@
     <Content Include="umbraco\Webservices\TreeDataService.ashx" />
     <Content Include="umbraco\Webservices\UltimatePickerAutoCompleteHandler.ashx" />
     <Content Include="umbraco\Xslt\Web.config" />
+    <Content Include="Views\BlogOverview.cshtml" />
+    <Content Include="Views\BlogPost.cshtml" />
+    <Content Include="Views\dtRichtextPage.cshtml" />
+    <Content Include="Views\Firma.cshtml" />
+    <Content Include="Views\Home.cshtml" />
+    <Content Include="Views\Inzerat.cshtml" />
+    <Content Include="Views\Master.cshtml" />
+    <Content Include="Views\Registrace.cshtml" />
+    <Content Include="Views\RegistraceDokoncena.cshtml" />
+    <Content Include="Views\SeznamFirem.cshtml" />
+    <Content Include="Views\tAdvertisement.cshtml" />
+    <Content Include="Views\tBase.cshtml" />
+    <Content Include="Views\tCompany.cshtml" />
+    <Content Include="Views\tCompanyContent.cshtml" />
+    <Content Include="Views\tCompanyList.cshtml" />
+    <Content Include="Views\TextPage.cshtml" />
+    <Content Include="Views\tHome.cshtml" />
+    <Content Include="Views\tNews.cshtml" />
+    <Content Include="Views\tNewsList.cshtml" />
+    <Content Include="Views\tTextPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

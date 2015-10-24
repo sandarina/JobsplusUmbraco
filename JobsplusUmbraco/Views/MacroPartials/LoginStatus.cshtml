@@ -31,7 +31,7 @@
 @if (loginStatusModel.IsLoggedIn)
 {
     <p>@loginStatusModel.Name</p>
-	<a href="/muj-profil/" class="btn btn-default">Můj profil</a>
+	<a href="/uzivatel/profil/" class="btn btn-default">Můj profil</a>
 
     using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
     {
@@ -42,5 +42,5 @@
 }
 else
 {
-	<a href="/muj-profil/" class="btn btn-default">Přihlásit</a>
+	<a href="/vip-vstup/prihlasit/" class="btn btn-default">Přihlásit</a>
 }
