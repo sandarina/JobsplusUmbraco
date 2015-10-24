@@ -1,15 +1,32 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MemberCandidate>
 @using JobsplusUmbraco.Models
 
-<div class="container">
-    @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+@if (TempData["IsSuccess"] != null && (bool)TempData["IsSuccess"] == true)
+{
+    <div class="row">
+        <div class="col-mb-12 text-center">
+            <h3>Registrace proběhla úspěšně!</h3>
+            <h4>Zbývá jen aktivovat Váš účet ...</h4>
+            <p>
+                Právě jsme zaslali povrzující zprávu na Váš email @TempData["Email"]. Pro aktivaci Vašeho účtu stačí už jen kliknout na odkaz v této zprávě.<br />
+                Poté se již můžete přihlásit a čerpat výhod, které Vám registrace na našem portále přináší ;-)
+            </p>
+            <p>
+                <a href="/" class="btn btn-medium dark">Pokračovat</a>
+            </p>
+        </div>
+    </div>
+}
+else
+{
+    if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
     {
         <div class="alert alert-error">
             @Html.ValidationSummary(false, "Ajaj, něco nám ještě chybí: ")
         </div>
     }
 
-    @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit"))
+    using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit"))
     {
         <div class="row">
             <h3>Přihlašovací údaje</h3>
@@ -94,10 +111,9 @@
             $('#registrationUPFrom').datetimepicker({
                 format: 'DD.MM.YYYY',
                 locale: 'cs',
-                minDate: '1.1.1930',
+                minDate: '1930/1/1',
                 maxDate: datenow
             });
         });
     </script>
-
-</div>
+ }

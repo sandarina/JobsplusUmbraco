@@ -3,9 +3,6 @@
     Layout = "tBase.cshtml";
 }
 <h1>@CurrentPage.Name</h1>
-<div class="row">
-	<div class="col-md-12">
-		@CurrentPage.rpContent
-	</div>
-	@Html.Action("Index", "RegisterCandidate")
-</div>
+
+@Html.Action("Index", "RegisterCandidate")
+	
