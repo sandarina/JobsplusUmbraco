@@ -172,6 +172,14 @@ html {
 	box-sizing: border-box;
 }
 
+.vcenter {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
 .dark {
 	/*background: #1c1c1e;*/
 }
@@ -1001,6 +1009,12 @@ nav li > ul > li > ul {
 	text-align: right;
 }
 
+#aBody.subpage #tBody .row {
+	margin: 75px 0px 0px 0px;
+	text-align: right;
+}
+
+
 #tBody .tBody_hlText, #tBody .tBody_hlText p {
 	color: white;
 	text-transform: uppercase;
@@ -1594,15 +1608,15 @@ header .container {
 	background-image:url('/media/layout/bgr-hptop-shadow.png');
 	background-repeat: repeat-x;
 	background-position: top;
-	background-color: transparent;
+	background-color: #323232;
+	/*background-size: 125% auto;*/
 }
 
 #aBody.subpage #tBody {
 	background-image:url('/media/layout/bgr-hptop-subpage.jpg');
 	background-repeat: no-repeat;
-	background-position: top left;
-	background-color: #323232;
-	/*background-size: 125% auto;*/
+	background-position: 15% 1px;
+	background-color: transparent;
 	min-height: 249px;
 }
 
