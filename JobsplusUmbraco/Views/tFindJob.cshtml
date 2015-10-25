@@ -27,7 +27,7 @@
                 <div class="container">
                     <div class="row" style="@(IsTOP ? "display:none" : "")">
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.region, Model.slRegions)
+                            @Html.DropDownListFor(model => model.region, Model.slRegions, new { @autocomplete = "off" })
                         </div>
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
