@@ -1032,7 +1032,7 @@ nav li > ul > li > ul {
 	margin: 45px 0px 0px 0px;
 }
 
-#tBody .txtWorkingField input[type=text] {
+#tBody .txtWorkingField input.searchbox {
 	background: rgba(101,101,101,0.7);
 	border: 1px solid white;
 	border-radius: 10px;
@@ -1048,7 +1048,7 @@ nav li > ul > li > ul {
 	margin: 20px 0px 0px 0px;
 }
 
-#tBody .txtRegion input[type=text] {
+#tBody .txtRegion input.searchbox {
 	background: rgba(101,101,101,0.7);
 	border: 1px solid white;
 	border-radius: 10px;
@@ -1168,6 +1168,14 @@ nav li > ul > li > ul {
 #cBody .nahled {
 	border: 1px solid rgb(205,205,205);
 	margin: 0px 50px 0px 50px;
+}
+
+#cBody .nahled .obr {
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    max-width: 80%;
 }
 
 #divNewsList {	

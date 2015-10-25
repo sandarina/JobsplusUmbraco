@@ -14,7 +14,7 @@
 
     var max = companiesSortTake.Count();
     Random r = new Random();
-    int rNumber = 5; @*r.Next(0, max);*@
+    int rNumber = r.Next(0, max);
 
 
     var companiesRandom = companiesSortTake[rNumber];
@@ -24,17 +24,23 @@
         var cAdvertisementRandom = cContentRandom.First().Children.Where("Visible");
         if (cAdvertisementRandom.Any())
         {
-            var mediaLogo = Umbraco.Media(cContentRandom.First().cLogo); 
-            var mediaObr = Umbraco.Media(cContentRandom.First().cBackground); 
+            IPublishedContent mediaLogo; IPublishedContent mediaObr;
+            try {
+                mediaLogo = Umbraco.Media(cContentRandom.First().cLogo);
+                mediaObr = Umbraco.Media(cContentRandom.First().cBackground); 
+            }
+            catch {
+                mediaLogo = null; mediaObr = null;
+            }
             <div class="col-md-4">
                 <div class="nahled center">
                     @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
                     {
-                        RenderImage(mediaLogo);
+                        @RenderImage(mediaLogo);
                     }
                     @if (mediaObr != null && mediaObr.DocumentTypeAlias == "Image")
                     {
-                        RenderImage(mediaObr);
+                        @RenderImage(mediaObr);
                     }
                     <div class="row"><a class="underline lightblue" href="@companiesRandom.Url">@companiesRandom.Name</a></div>
                     <div class="row"><span class="countInfoAdvert">@cAdvertisementRandom.Count() inzeráty</span></div>
@@ -73,7 +79,7 @@
 @helper RenderImage(dynamic item)
 {
         <div class="row">
-            <a href="@item.umbracoFile" class="thumbnail">
+            <a href="@item.umbracoFile" class="obr center">
                 <img src="@item.umbracoFile" alt="@item.Name" />
             </a>
         </div>

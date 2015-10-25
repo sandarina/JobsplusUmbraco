@@ -20,14 +20,16 @@
                 {
                     <fieldset>
                         <div class="row txtWorkingField">
-                            @Html.TextBox("workingField", Model.workingField ?? "Obor nebo pozice?")
+                            @*Html.TextBox("workingField", Model.workingField ?? "Obor nebo pozice?")*@
+                            @Html.DropDownListFor(model => model.region, Model.slRegions)
                         </div>
                         <div class="row txtRegion">
-                            @Html.TextBox("region", Model.region ?? "Kde?")
+                            @*Html.TextBox("region", Model.region ?? "Kde?")*@
+                            @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
                         </div>
                         <div class="row btnRedirect">
                             <div class="col-md-6 sIsZTP left">
-                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP, true)</span><span class="lblIsZTP white fs12 uppercase">ZTP</span></span>
+                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP)</span><span class="lblIsZTP white fs12 uppercase">ZTP</span></span>
                             </div>
                             <div class="col-md-6 btnFind">
                                 <span><input type="submit" value="Hledat  >" /></span>
