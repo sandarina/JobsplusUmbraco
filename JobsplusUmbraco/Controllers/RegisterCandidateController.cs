@@ -20,12 +20,6 @@ namespace JobsplusUmbraco.Controllers
         }
 
         [HttpPost]
-        public ActionResult Success(MemberCandidate model)
-        {
-            return PartialView("Success", model);
-        }
-
-        [HttpPost]
         public ActionResult RegisterCandidateSubmit(MemberCandidate model)
         {
             if (!ModelState.IsValid)
@@ -64,8 +58,9 @@ namespace JobsplusUmbraco.Controllers
             // "Candidate" je skupina členů
             memberService.AssignRole(member.Id, "Candidate");
 
-            return RedirectToAction("Success", new { model = model });
+            TempData.Add("IsSuccess", true);
+            TempData.Add("Email", model.Email);
+            return RedirectToCurrentUmbracoPage();
         }
-
     }
 }

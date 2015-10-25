@@ -172,6 +172,14 @@ html {
 	box-sizing: border-box;
 }
 
+.vcenter {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
 .dark {
 	/*background: #1c1c1e;*/
 }
@@ -589,7 +597,7 @@ body {
 }
 
 body {
-	background: rgb(217,255,255);
+	background: #fff;
 	min-height: 100%;
 	min-width: 100%;
 	font-size: 17px;
@@ -636,8 +644,8 @@ header .row {
 }
 			
 .bLogo {
-	width: 205px;
-	height: 59px;
+	width: 150px;
+	height: 50px;
 	background-image:url('/media/layout/jobsplus-logo-footer.png');
 	background-size: 100%;
 	background-repeat: no-repeat;
@@ -1001,6 +1009,12 @@ nav li > ul > li > ul {
 	text-align: right;
 }
 
+#aBody.subpage #tBody .row {
+	margin: 75px 0px 0px 0px;
+	text-align: right;
+}
+
+
 #tBody .tBody_hlText, #tBody .tBody_hlText p {
 	color: white;
 	text-transform: uppercase;
@@ -1120,7 +1134,7 @@ nav li > ul > li > ul {
 #divTOPAdvertisementList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1141,7 +1155,7 @@ nav li > ul > li > ul {
 #divTOPCompanyList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1167,7 +1181,7 @@ nav li > ul > li > ul {
 #divNewsList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1188,7 +1202,7 @@ nav li > ul > li > ul {
 #divAdvertisementList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1210,7 +1224,7 @@ nav li > ul > li > ul {
 #divAboutCompany.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1231,7 +1245,7 @@ nav li > ul > li > ul {
 #divDetailAdvertisement.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1252,7 +1266,7 @@ nav li > ul > li > ul {
 #divSimilar.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
-	border-color: rgb(2013,35,209) white white;
+	border-color: rgb(164,40,162) white white;
 	
 	padding: 15px 0px;
 	text-transform: uppercase;
@@ -1272,7 +1286,7 @@ nav li > ul > li > ul {
 }
 
 .selected .countInfoTabs {
-	background: rgb(212,36,207);
+	background:rgb(164,40,162);
 	color: white;
 	border: 1px solid rgb(212,36,207);
 }
@@ -1283,7 +1297,7 @@ nav li > ul > li > ul {
 
 #bBody {
 	background-color: rgb(178,178,178);
-	min-height: 500px;
+	min-height: 300px;
 }
 
 #bBody .container {
@@ -1576,7 +1590,7 @@ pre {
 }
 
 header .container {
-	padding: 15px 20px;
+	padding: 15px 0;
 }
 
 #toggle {
@@ -1590,6 +1604,22 @@ header .container {
 	/*background-size: 125% auto;*/
 	min-height: 507px;
 }
+#aBody.subpage {
+	background-image:url('/media/layout/bgr-hptop-shadow.png');
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: #323232;
+	/*background-size: 125% auto;*/
+}
+
+#aBody.subpage #tBody {
+	background-image:url('/media/layout/bgr-hptop-subpage.jpg');
+	background-repeat: no-repeat;
+	background-position: 15% 1px;
+	background-color: transparent;
+	min-height: 249px;
+}
+
 
 nav {
 	margin: 0 auto;

@@ -31,17 +31,16 @@
 @if (loginStatusModel.IsLoggedIn)
 {
     <p>@loginStatusModel.Name</p>
+	<a href="/uzivatel/profil/" class="btn btn-default">Můj profil</a>
 
     using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
     {
-         <fieldset>
-             <button class="btn btn-default">Odhlásit</button>
-         </fieldset>
+         <button class="btn btn-default">Odhlásit</button>
     
         @Html.HiddenFor(m => logoutModel.RedirectUrl)
     }
 }
 else
 {
-	<a href="/muj-profil/" class="btn btn-default">Přihlásit</a>
+	<a href="/vip-vstup/prihlasit/" class="btn btn-default">Přihlásit</a>
 }
