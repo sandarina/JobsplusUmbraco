@@ -26,6 +26,10 @@
 	position: relative;
 	z-index: 10000
 }
+.cBody_tabs .col-md-4 {
+    padding-right: 4px;
+    padding-left: 4px;
+}
 .tab {
 	cursor: pointer;
 }
@@ -50,18 +54,71 @@
 .advertisementList {
     text-align: center;
     margin: 0 auto;
+    margin-bottom: 26px;
 }
+    .advertisementList a {
+        color: rgb(164,40,162);
+        text-decoration: underline;
+    }
+    .advertisementList a:hover {
+        text-decoration: none;
+        color: #1e489c;
+    }
+    .advertisementList a.btn {
+        text-decoration: none;
+    }
+    .advertisementList a:hover.btn.violet {
+        text-decoration: none;
+        border: 1px solid #1e489c;
+        color: #1e489c;
+        background: transparent;
+    }
 .advertisementItem {
+    text-align: left;
     border: 1px solid #c4c4c4;
-    margin-top: 10px;
+    margin-top: 26px;
+}
+.advertisementBody {
+    margin: 10px 2px;
 }
 .advertisementBottom {
-    height: 54px;
-    line-height: 54px;
+    line-height: 46px;
     text-transform: uppercase;
     background: #f3f3f3;
+    font-weight: bold;
+    font-size: 14px;
+}
+.advertisementPlace {
+    color: #989898;
+    font-style: italic;
+    font-size: 14px;
+}
+.advertisementPlace span:first-child {
+    color: #666;
+    font-style: normal;
+    font-size: 16px;
 }
 .advertisementBottom span {
     color: #656565;
+    font-weight: normal;
 }
+
+/**** TOP FIRMY HOME ****/
+#TOPCompanyList {
+    min-height: 330px;
+    padding: 26px 0;
+}
+    #TOPCompanyList a {
+        color: rgb(164,40,162);
+        text-decoration: underline;
+    }
+    #TOPCompanyList a:hover {
+        text-decoration: none;
+        color: #1e489c;
+    }
+
+    #TOPCompanyList .nahled {
+        padding: 16px 4px;
+    }
+
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

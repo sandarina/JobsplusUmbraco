@@ -24,20 +24,20 @@
                             <div class="row">
                                 <h4><a href="@itemAdvertisement.Url">@itemAdvertisement.Name</a></h4>
                             </div>
-                            <div class="row">
+                            <div class="row advertisementPlace">
                                 <span>@itemAdvertisement.GetPropertyValue("aCity"), </span><span>@itemAdvertisement.GetPropertyValue("aRegion")</span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-right">
                             <div class="row">
-                                <a href="@itemAdvertisement.Url">Detail</a>
+                                <a href="@itemAdvertisement.Url" class="btn btn-default violet">Detail</a>
                             </div>
                         </div>
                     </div>
                     <div class="row advertisementBottom">
                         <div class="col-md-4"><span>Vzdělání</span> @itemAdvertisement.GetPropertyValue("aRequiredEducation")</div>
-                        <div class="col-md-4"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
-                        <div class="col-md-4"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue("aZtp") == "1" ? "ANO" : "NE") </div>
+                        <div class="col-md-6"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
+                        <div class="col-md-2"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue("aZtp") == "1" ? "ANO" : "NE") </div>
                     </div>
                 </div>
             </div>
