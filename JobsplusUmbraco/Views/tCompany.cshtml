@@ -2,7 +2,7 @@
 @using Umbraco.Core.Models
 @{
     Layout = "tBase.cshtml";
-	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
+    var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
 
     string mediaObr;
     try
@@ -14,11 +14,29 @@
     {
         mediaObr = "/media/layout/bgr-subpage-default.jpg";
     }
+    
+    IPublishedContent mediaLogo;
+    try
+    {
+        mediaLogo = Umbraco.Media(cContent.cLogo);
+        mediaObr = Umbraco.Media(cContent.cBackground);
+    }
+    catch
+    {
+        mediaLogo = null; 
+    }
 }
 
+<style scoped>
+@@media (min-width: 992px) {
+    #tBody {
+        background-image:url('@(mediaObr)') !important;
+    }
+}
+</style>
 
 <div id="aBody" class="subpage-hover">
-    <div id="tBody" style="background-image:url('@(mediaObr)')" @*style="background-image:url('@(cContent.cBackground)?height=65')"*@>
+    <div id="tBody" @*style="background-image:url('@(cContent.cBackground)?height=65')"*@>
         <div class="col-md-12">
             <div class="container">
                 <div class="row">
@@ -54,7 +72,18 @@
                     @{ Html.RenderPartial("pvCompanyAdvertisementList"); }
                 </div>
                 <div id="aboutCompany" class="row">
-                    @cContent.cContent
+                    <div class="col-mb-12"><br />
+                        @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                        {
+                            @RenderImage(mediaLogo);
+                        }
+                        else
+                        {
+                            Response.Write("null");
+                        }
+                        @cContent.cContent
+                        <br />
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,3 +96,11 @@
         </div>
     </div>
 </div>
+@helper RenderImage(dynamic item)
+{
+    <div class="row">
+        <a href="@item.umbracoFile" class="obr center">
+            <img src="@item.umbracoFile" alt="@item.Name" />
+        </a>
+    </div>
+}

@@ -354,6 +354,7 @@
     <Content Include="media\layout\bgr-hptop-shadow.png" />
     <Content Include="media\layout\bgr-hptop-subpage.jpg" />
     <Content Include="media\layout\bgr-hptop.jpg" />
+    <Content Include="media\layout\bgr-subpage-default.jpg" />
     <Content Include="media\layout\bgr-subpage-hover.png" />
     <Content Include="media\layout\fajfka.png" />
     <Content Include="media\layout\jobsplus--layout-v3.jpg" />
