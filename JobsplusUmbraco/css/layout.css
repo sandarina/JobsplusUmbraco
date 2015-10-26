@@ -46,4 +46,22 @@
   		top:-46px;
 	}
 }
+/****** ADVERTISEMENTS *******/
+.advertisementList {
+    text-align: center;
+    margin: 0 auto;
+}
+.advertisementItem {
+    border: 1px solid #c4c4c4;
+    margin-top: 10px;
+}
+.advertisementBottom {
+    height: 54px;
+    line-height: 54px;
+    text-transform: uppercase;
+    background: #f3f3f3;
+}
+.advertisementBottom span {
+    color: #656565;
+}
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

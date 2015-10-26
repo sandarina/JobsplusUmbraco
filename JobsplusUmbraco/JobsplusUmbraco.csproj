@@ -328,6 +328,7 @@
     <Content Include="css\images\top-left.png" />
     <Content Include="css\images\top-right.png" />
     <Content Include="css\jquery.simpledropdown.css" />
+    <Content Include="css\layout.css" />
     <Content Include="css\rte.css" />
     <Content Include="css\style.backup.css" />
     <Content Include="css\style.css" />
