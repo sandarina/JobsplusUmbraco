@@ -180,6 +180,14 @@ html {
     float: none;
 }
 
+#tBody
+{
+    background: #323232 url('/media/layout/bgr-hptop-shadow.png') repeat-x;
+    padding-bottom: 26px;
+    border-bottom: 1px solid #111;
+}
+
+
 .dark {
 	/*background: #1c1c1e;*/
 }
@@ -1631,6 +1639,35 @@ header .container {
         background-color: transparent;
         min-height: 249px;
         width: 100%;
+    }
+
+#aBody.subpage subpage-hover {
+
+}
+#aBody.subpage-hover #tBody {
+    background-image: url('/media/layout/bgr-subpage-default.jpg');
+    background-repeat: no-repeat;
+    background-position: 10% 25%;
+    background-size: 50%;
+    background-color: #323232;
+    min-height: 249px;
+}
+
+
+    #aBody.subpage-hover #tBody > .container {
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: transparent;
+        min-height: 249px;
+        width: 100%;
+    }
+    #aBody.subpage-hover #tBody .col-md-12 {
+        background-image: url('/media/layout/bgr-subpage-hover.png');
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: transparent;
+        min-height: 249px;
     }
 
 

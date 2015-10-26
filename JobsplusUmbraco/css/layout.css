@@ -26,7 +26,12 @@
 	position: relative;
 	z-index: 10000
 }
-.cBody_tabs .col-md-4 {
+.cBody_tabs {
+    margin: 0 auto;
+    text-align: center;
+}
+.cBody_tabs .col-md-4,
+.cBody_tabs .col-md-6 {
     padding-right: 4px;
     padding-left: 4px;
 }
