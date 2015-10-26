@@ -15,7 +15,14 @@
     $('#divAdvertisementList').addClass('selected');
 	$('#divDetailAdvertisement').addClass('selected');
 	
-	$('input.searchbox').attr("autocomplete", "off");
+	$(document).ready(function () {
+	    $(document).on('focus', ':input', function () {
+	        $(this).attr('autocomplete', 'off');
+	    });
+	});
+
+	$('#tBody .txtWorkingField input.searchbox').prop("autocomplete", "off");
+	$('#tBody .txtRegion input.searchbox').prop("autocomplete", "off");
 	
 	if($('#IsZTP').is(":checked")) {
     	$('#schbIsZTP').addClass('checked');
