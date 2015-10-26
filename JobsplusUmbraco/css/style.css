@@ -1605,20 +1605,25 @@ header .container {
 	min-height: 507px;
 }
 #aBody.subpage {
-	background-image:url('/media/layout/bgr-hptop-shadow.png');
-	background-repeat: repeat-x;
-	background-position: top;
-	background-color: #323232;
 	/*background-size: 125% auto;*/
 }
 
 #aBody.subpage #tBody {
-	background-image:url('/media/layout/bgr-hptop-subpage.jpg');
-	background-repeat: no-repeat;
-	background-position: 15% 1px;
-	background-color: transparent;
-	min-height: 249px;
+	background-image:url('/media/layout/bgr-hptop-shadow.png');
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: #323232;
+        min-height: 249px;
 }
+
+    #aBody.subpage #tBody > .container {
+        background-image: url('/media/layout/bgr-hptop-subpage.jpg');
+        background-repeat: no-repeat;
+        background-position: 15% 1px;
+        background-color: transparent;
+        min-height: 249px;
+        width: 100%;
+    }
 
 
 nav {
