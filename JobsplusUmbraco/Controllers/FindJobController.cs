@@ -21,7 +21,7 @@ namespace JobsplusUmbraco.Controllers
 {
     public class FindJobController : RenderMvcController
     {
-        #region Properties        
+        #region Properties
         public bool IsTOP
         {
             get

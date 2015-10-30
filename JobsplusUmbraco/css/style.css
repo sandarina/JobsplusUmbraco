@@ -1331,6 +1331,11 @@ nav li > ul > li > ul {
 	border: 1px solid rgb(212,36,207);
 }
 
+#cBody .cBody_content {
+    min-height: 300px;
+    padding-bottom: 26px;
+}
+
 #cBody .cBody_content .container {
 	max-width: 90%;
 }
@@ -1401,6 +1406,7 @@ nav li > ul > li > ul {
 	text-transform: uppercase;
 	color: white;
 	padding: 10px;
+    cursor: pointer;
 }
 
 #schbUP.checked {

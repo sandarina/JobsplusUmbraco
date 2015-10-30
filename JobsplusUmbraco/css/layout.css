@@ -192,4 +192,24 @@
     padding: 10px 0;
 }
 
+/****** FIND JOB FORM ******/
+#findJobForm {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto 26px;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+    background: #f6f6f6;
+    padding: 12px;
+}
+.noAdvertisements {
+    color: #c6c6c6;
+    font-weight: bold;
+    line-height: 200px;
+    height: 200px;
+    font-size: 40px;
+    text-align: center;
+}
+
+
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */
