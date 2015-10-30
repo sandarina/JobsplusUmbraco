@@ -3,18 +3,14 @@
     Layout = "tBase.cshtml";
 }
 
-<div id="aBody">
+<div id="aBody" class="subpage-hover">
 	<div id="tBody" @*style="background-image:url('@(CurrentPage.cLogo)?height=65')"*@>
-		<div class="col-md-6">
-			
-		</div>
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="container">
-				<div class="row">
-				<span class="tBody_hlText">@CurrentPage.Name</span>
-				<br/>	
-				<span class="tBody_vText">@CurrentPage.aTypeOfWork | @CurrentPage.aRegion</span>
-				</div>
+                <div class="row">
+                    <div class="tBody_hlText">@CurrentPage.Name</div>
+                    <span class="tBody_vText">@CurrentPage.aTypeOfWork | @CurrentPage.aRegion</span>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -22,12 +18,16 @@
 		<div class="cBody_tabs">
 			<div class="container">
 				<div class="row">
-					<div id="divDetailAdvertisement" class="col-md-6">
-						Detail pozice
-					</div>
-					<div id="divSimilar" class="col-md-6">
-						Podobné
-					</div>
+                    <div class="col-md-4">
+                        <div id="divDetailAdvertisement" class="tab">
+                            Detail pozice
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="divSimilar" class="tab">
+                            Podobné
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>

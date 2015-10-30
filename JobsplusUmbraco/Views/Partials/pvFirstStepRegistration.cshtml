@@ -1,36 +1,38 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 	
-				<div class="col-md-12">
-					<div class="row gray83 fs12 bold uppercase text--center">
-						<span class="white fs35">Získat novou práci </span>
-						<span class="fs35 ">nebylo jednodušší...</span>
-						<br/>
-						Od Vaší nové práce a dalších 
-						<span class="white underline">výhod</span> 
-						pro registrované Vás dělí 
-						jen <span class="fs20">3 kroky</span>. 
-						Vše je zcela 
-						<span class="fs20">zdarma</span>.
-					</div>
-					<div class="row gray83 fs25 bold uppercase text--center">
-						<span class="white">Krok 1: </span>Přihlašovací údaje
-					</div>
-					<div class="row txtRegistration">
-						<div class="col-md-6 left">
-							<div class="row">
-								<span class="txtUsername">@Html.TextBox("username", "Přihlašovací jméno")</span>
-							</div>
-							<div class="row">
-								<span id="schbUP" class="chbUP">@Html.CheckBox("chbUP", true)</span><span class="lblUP white fs12 uppercase">Nejsem registrován(a) na ÚP</span>
-							</div>
-						</div>
-						<div class="col-md-6 right">
-							<div class="row">
-								<span class="txtPassword">@Html.TextBox("password", "Heslo")</span>
-							</div>
-							<div class="row">
-								<span class="btnNext"><input type="submit" value="Pokračovat  >" /></span>
-							</div>
-						</div>
-					</div>
-				</div>
+    <div class="container" id="firstStepRegistration">
+        <div class="row gray83 fs16 uppercase text--center" id="firstStepRegistrationTop">
+            <span class="white fs35 bold">Získat novou práci </span>
+            <span class="fs35 bold">nebylo jednodušší...</span>
+            <br />
+            Od Vaší nové práce a dalších
+            <span class="white underline">výhod</span>
+            pro registrované Vás dělí
+            jen <span class="fs20 bold">3 kroky</span>.
+            Vše je zcela
+            <span class="fs20 bold">zdarma</span>.
+        </div>
+        <div class="row gray83 fs25 bold uppercase text--center" id="firstStepRegistrationFormTop">
+            <span class="white">Krok 1: </span>Přihlašovací údaje
+        </div>
+        <div class="row txtRegistration" id="firstStepRegistrationForm">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="txtUsername">@Html.TextBox("firstname", "", new { placeholder = "Jméno" })</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="txtPassword">@Html.TextBox("surname", "", new { placeholder = "Příjmení" })</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <span id="schbUP" class="chbUP">@Html.CheckBox("chbUP", true)</span><span class="lblUP white fs12 uppercase">Nejsem registrován(a) na ÚP</span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="btnNext"><input type="submit" value="Pokračovat  >" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

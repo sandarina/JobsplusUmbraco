@@ -427,6 +427,14 @@ html {
 .fs13 {
 	font-size: 13px;
 }
+		
+.fs14 {
+	font-size: 14px;
+}
+		
+.fs16 {
+	font-size: 16px;
+}
 	
 .fs20 {
 	font-size: 20px;
@@ -483,7 +491,8 @@ html {
 }
 
 body {
-	font-family: "Lato", sans-serif;
+	/*font-family: "Lato", sans-serif;*/
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
 	line-height: 1.4;
 }
 
@@ -1022,9 +1031,23 @@ nav li > ul > li > ul {
 	margin: 75px 0px 0px 0px;
 	text-align: right;
 }
+#aBody.subpage-hover #tBody .row {
+	margin: 75px 0px 0px 0px;
+	text-align: right;
+}
 
 
 #tBody .tBody_hlText, #tBody .tBody_hlText p {
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 46px;
+}
+#aBody.subpage-hover #tBody .tBody_hlText, #aBody.subpage-hover #tBody .tBody_hlText p {
+	font-size: 26px;
+}
+
+#tBody .tBody_hlText::first-line, #tBody .tBody_hlText p::first-line {
 	color: white;
 	text-transform: uppercase;
 	font-weight: bold;
@@ -1329,27 +1352,41 @@ nav li > ul > li > ul {
 	background: rgb(197,197,197);
 	border: 1px solid white;
 	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
+	/*padding: 15px 20px 15px 196px;*/
 	font-size: 13px;
+	height: 40px;
 	text-transform: uppercase;
 	color: white;
 	font-weight: bold;
 	text-align: right;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	margin-right: 10px;
+    min-width: 360px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #bBody .txtPassword input[type=text] {
 	background: rgb(197,197,197);
 	border: 1px solid white;
 	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
+    /*	padding: 15px 20px 15px 196px;*/
 	font-size: 13px;
+	height: 40px;
 	text-transform: uppercase;
 	color: white;
 	font-weight: bold;
 	text-align: right;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	margin-left: 10px;
-	float: right;
+	float: left;
+    min-width: 360px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #schbUP input[type=checkbox] {
@@ -1375,6 +1412,11 @@ nav li > ul > li > ul {
 
 #bBody .lblUP {
 	padding-left: 20px;
+}
+
+#bBody .btnNext {
+    min-width: 360px;
+    width: 100%;
 }
 
 #bBody .btnNext input[type=submit] {
@@ -1844,7 +1886,6 @@ nav li > ul {
 	height: 0;
 	margin: 0;
 }
-
 }
 
 @media (max-width: 992px) and (max-width: 992px) {
@@ -1853,6 +1894,11 @@ nav > ul li.selected ul li a {
 	color: #fff;
 	font-weight: 500;
 }
+
+#bBody .txtPassword input[type=text] {
+	float: right;
+}
+
 
 }
 

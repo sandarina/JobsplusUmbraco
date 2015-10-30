@@ -350,6 +350,7 @@
     <Content Include="js\sh\shCore.css" />
     <Content Include="js\sh\shCore.js" />
     <Content Include="js\sh\shThemeDefault.css" />
+    <Content Include="media\layout\bgr-detailAdvertisementTop.jpg" />
     <Content Include="media\layout\bgr-footer.jpg" />
     <Content Include="media\layout\bgr-hptop-shadow.png" />
     <Content Include="media\layout\bgr-hptop-subpage.jpg" />
