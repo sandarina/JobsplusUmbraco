@@ -65,18 +65,18 @@
 	});
 	
 	$('#divDetailAdvertisement').click(function(){
-		$('#detailAdvertisement').show();
+	    $('#detailAdvertisement').show();
 		$('#similar').hide();
 		
-		$('#divAdvertisementList').addClass('selected');
+		$('#divDetailAdvertisement').addClass('selected');
 		$('#divSimilar').removeClass('selected');
 	});
 	
 	$('#divSimilar').click(function(){
-		$('#detailAdvertisement').hide();
+	    $('#detailAdvertisement').hide();
 		$('#similar').show();
 		
-		$('#divAdvertisementList').removeClass('selected');
+		$('#divDetailAdvertisement').removeClass('selected');
 		$('#divSimilar').addClass('selected');
 	});
 

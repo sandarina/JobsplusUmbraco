@@ -139,15 +139,15 @@ namespace JobsplusUmbraco.Models
             criteria.OrderBy(new string[] { "DateCreate" });
             filter = criteria.NodeTypeAlias("dtAdvertisement");
 
-            if (String.IsNullOrEmpty(region)) region = "Kde?";
-            if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
-
             if (!String.IsNullOrEmpty(workingField))
                 filter.And().Field("aWorkingField", workingField);
             if (!String.IsNullOrEmpty(region))
                 filter.And().Field("aRegion", region);
-            filter.And().Field("aZtp", IsZTP ? "1" : "0");
+            if (IsZTP)
+                filter.And().Field("aZtp", "1");
 
+            if (String.IsNullOrEmpty(region)) region = "Kde?";
+            if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
 
