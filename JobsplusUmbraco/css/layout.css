@@ -26,6 +26,15 @@
 	position: relative;
 	z-index: 10000
 }
+.cBody_tabs {
+    margin: 0 auto;
+    text-align: center;
+}
+.cBody_tabs .col-md-4,
+.cBody_tabs .col-md-6 {
+    padding-right: 4px;
+    padding-left: 4px;
+}
 .tab {
 	cursor: pointer;
 }
@@ -46,4 +55,161 @@
   		top:-46px;
 	}
 }
+/****** ADVERTISEMENTS *******/
+.advertisementList {
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 26px;
+}
+    .advertisementList a {
+        color: rgb(164,40,162);
+        text-decoration: underline;
+    }
+    .advertisementList a:hover {
+        text-decoration: none;
+        color: #1e489c;
+    }
+    .advertisementList a.btn {
+        text-decoration: none;
+    }
+    .advertisementList a:hover.btn.violet {
+        text-decoration: none;
+        border: 1px solid #1e489c;
+        color: #1e489c;
+        background: transparent;
+    }
+.advertisementItem {
+    text-align: left;
+    border: 1px solid #c4c4c4;
+    margin-top: 26px;
+}
+.advertisementBody {
+    margin: 10px 2px;
+}
+.advertisementBottom {
+    line-height: 46px;
+    text-transform: uppercase;
+    background: #f3f3f3;
+    font-weight: bold;
+    font-size: 14px;
+}
+.advertisementPlace {
+    color: #989898;
+    font-style: italic;
+    font-size: 14px;
+}
+.advertisementPlace span:first-child {
+    color: #666;
+    font-style: normal;
+    font-size: 16px;
+}
+.advertisementBottom span {
+    color: #656565;
+    font-weight: normal;
+}
+
+.detailAdvertisement {
+    padding: 26px 0;
+}
+.detailAdvertisement .advertisementItem {
+    margin-top: -1px;
+}
+
+.detailAdvertisementTop {
+    background: #f3f3f3 url('/media/layout/bgr-detailAdvertisementTop.jpg') no-repeat center right;
+    border: 1px solid #c3c3c3;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    color: #111;
+}
+    .detailAdvertisementTop div {
+        background-color: transparent;
+        text-align: center;
+    }
+    .detailAdvertisementTop div:first-child {
+        background-color: transparent;
+        text-align: left;
+    }
+
+    .detailAdvertisementTop .companyName {
+        font-size: 14px;
+        text-transform: none;
+        color: #686868;
+    }
+
+@media (max-width: 992px) {    
+    .detailAdvertisementTop {
+        background-image: none;
+        padding-bottom: 0;
+    }  
+    .detailAdvertisementTop div {
+        background-color: #a528a2;
+        padding: 10px 10px;
+        text-align: right;
+    }
+    .detailAdvertisementTop div:first-child {
+        background-color: #f3f3f3;
+        padding-bottom: 10px;
+    }
+}
+
+/**** TOP FIRMY HOME ****/
+#TOPCompanyList {
+    min-height: 330px;
+    padding: 26px 0;
+}
+    #TOPCompanyList a {
+        color: rgb(164,40,162);
+        text-decoration: underline;
+    }
+    #TOPCompanyList a:hover {
+        text-decoration: none;
+        color: #1e489c;
+    }
+
+    #TOPCompanyList .nahled {
+        padding: 16px 4px;
+    }
+
+/****** FIRST STEP REGISTRATION ******/
+#firstStepRegistrationTop {
+    margin: 0 auto 30px;
+}
+#firstStepRegistrationFormTop {
+    margin: 20px auto;
+}
+
+#firstStepRegistrationForm {
+    text-align: center;
+}
+#firstStepRegistrationForm > div.col-md-10 {
+    display: inline-block;
+    float: none;
+}
+
+#firstStepRegistrationForm .row {
+    padding: 10px 0;
+}
+
+/****** FIND JOB FORM ******/
+#findJobForm {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto 26px;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+    background: #f6f6f6;
+    padding: 12px;
+}
+.noAdvertisements {
+    color: #c6c6c6;
+    font-weight: bold;
+    line-height: 200px;
+    height: 200px;
+    font-size: 40px;
+    text-align: center;
+}
+
+
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

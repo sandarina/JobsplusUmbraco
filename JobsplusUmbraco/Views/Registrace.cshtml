@@ -3,8 +3,31 @@
     Layout = "tBase.cshtml";
 }
 
-<div class="container">
-    <h1>@CurrentPage.Name</h1>
-    @Html.Action("Index", "RegisterCandidate")
+<div id="aBody" class="subpage">
+    <div id="tBody">
+        <div class="container">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <span class="tBody_hlText">@CurrentPage.Name</span>
+                    <br />
+                    <span class="tBody_vText"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cBody">
+        <div class="cBody_content">
+            <div class="container">
+                @Html.Action("Index", "RegisterCandidate")
+            </div>
+        </div>
+    </div>
+    <div id="bBody">
+        <div class="container">
+            <div class="container">
+            </div>
+        </div>
+    </div>
 </div>
-	

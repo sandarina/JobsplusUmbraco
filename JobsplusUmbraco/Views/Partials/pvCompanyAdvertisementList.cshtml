@@ -7,37 +7,37 @@
 
 @if (cContent.Any())
 {
-	var advertisements = cContent.First().Children.Where("Visible").OrderBy("Name").OrderBy("aTop descending");
-	<div class="col-md-12">
-	@foreach (var advertisement in advertisements)
-    {
-    	<div class="row @(advertisement.aTop ? "top" : "")">
-			<div class="col-md-12">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="row">
-							@CurrentPage.Name
-						</div>
-						<div class="row">
-							<a href="@advertisement.Url">@advertisement.Name</a>
-						</div>
-						<div class="row">
-							<span>@advertisement.aCity, </span><span>@advertisement.aRegion</span>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="row">
-							<a href="@advertisement.Url">Detail</a>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4"><span>Vzdělání</span> @advertisement.aRequiredEducation</div>
-					<div class="col-md-4"><span>Typ</span> @advertisement.aTypeOfWork</div>
-					<div class="col-md-4"><span>ZTP</span> @(advertisement.aZtp ? "ANO" : "NE") </div>
-				</div>
-			</div>
-		</div>
-    }
-	</div>
+    var advertisements = cContent.First().Children.Where("Visible").OrderBy("Name").OrderBy("aTop descending");
+    <div class="col-md-12 advertisementList">
+        @foreach (var advertisement in advertisements)
+        {
+            <div class="row advertisementItem @(advertisement.aTop ? "top" : "")">
+                <div class="col-md-12">
+                    <div class="row advertisementBody">
+                        <div class="col-md-8">
+                            <div class="row">
+                                @CurrentPage.Name
+                            </div>
+                            <div class="row">
+                                <a href="@advertisement.Url">@advertisement.Name</a>
+                            </div>
+                            <div class="row advertisementPlace">
+                                <span>@advertisement.aCity, </span><span>@advertisement.aRegion</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <div class="row">
+                                <a href="@advertisement.Url" class="btn btn-default violet">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row advertisementBottom">
+                        <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @advertisement.aRequiredEducation</div>
+                        <div class="col-md-6 col-sm-6"><span>Typ</span> @advertisement.aTypeOfWork</div>
+                        <div class="col-md-2"><span>ZTP</span> @(advertisement.aZtp ? "ANO" : "NE") </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }

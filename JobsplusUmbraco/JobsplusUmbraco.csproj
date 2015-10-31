@@ -328,6 +328,7 @@
     <Content Include="css\images\top-left.png" />
     <Content Include="css\images\top-right.png" />
     <Content Include="css\jquery.simpledropdown.css" />
+    <Content Include="css\layout.css" />
     <Content Include="css\rte.css" />
     <Content Include="css\style.backup.css" />
     <Content Include="css\style.css" />
@@ -349,10 +350,13 @@
     <Content Include="js\sh\shCore.css" />
     <Content Include="js\sh\shCore.js" />
     <Content Include="js\sh\shThemeDefault.css" />
+    <Content Include="media\layout\bgr-detailAdvertisementTop.jpg" />
     <Content Include="media\layout\bgr-footer.jpg" />
     <Content Include="media\layout\bgr-hptop-shadow.png" />
     <Content Include="media\layout\bgr-hptop-subpage.jpg" />
     <Content Include="media\layout\bgr-hptop.jpg" />
+    <Content Include="media\layout\bgr-subpage-default.jpg" />
+    <Content Include="media\layout\bgr-subpage-hover.png" />
     <Content Include="media\layout\fajfka.png" />
     <Content Include="media\layout\jobsplus--layout-v3.jpg" />
     <Content Include="media\layout\jobsplus-logo-footer.png" />

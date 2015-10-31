@@ -11,9 +11,8 @@
 		<div class="col-md-6">
 			<div class="container">
 				<div class="row">
-					<span class="tBody_hlText">Práce pro všechny</span>
-					<br/>	
-					<span class="tBody_vText">Práce na plný úvazek, stáže, brigády, ztp</span>
+                    <div class="tBody_hlText">Práce pro všechny</div>
+                    <div class="tBody_vText">Práce na plný úvazek, stáže, brigády, ztp</div>
 				</div>
                 
                 @using (Html.BeginForm("tHome", "Home"))
@@ -44,16 +43,22 @@
 		<div class="cBody_tabs">
 			<div class="container">
 				<div class="row">
-					<div id="divTOPAdvertisementList" class="tab col-md-4">
-						Top Inzerce @{ Html.RenderPartial("pvCountAllAdvertisement"); }
-					</div>
-					<div id="divTOPCompanyList" class="tab col-md-4">
-						Top Firmy @{ Html.RenderPartial("pvCountAllCompany"); }
-					</div>
-					<div id="divNewsList" class="tab col-md-4">
-						Aktuality
-					</div>
-				</div>
+                    <div class="col-md-4">
+                        <div id="divTOPAdvertisementList" class="tab">
+                            Top Inzerce @{ Html.RenderPartial("pvCountAllAdvertisement"); }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="divTOPCompanyList" class="tab">
+                            Top Firmy @{ Html.RenderPartial("pvCountAllCompany"); }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="divNewsList" class="tab">
+                            Aktuality
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 		<div class="cBody_content">

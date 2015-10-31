@@ -1,24 +1,31 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
-	
-<div class="col-md-12">
-	<div class="row">
-		<div class="col-md-8">
-			@CurrentPage.Parent.Parent.Name
-			<br/>
-			@CurrentPage.Name
-		</div>
-		<div class="col-md-4">
-			<input type="submit" value="Mám zájem o tuto pozici >" />
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8">
-			@CurrentPage.aCity, @CurrentPage.aRegion
-			<br/>
-			@CurrentPage.aContent
-		</div>
-		<div class="col-md-4">
-			
-		</div>
-	</div>	
+@{
+    var company = CurrentPage.Parent.Parent;
+}
+<div class="col-md-12 detailAdvertisement">
+    <div class="row detailAdvertisementTop">
+        <div class="col-md-8">
+            <span class="companyName">@company.Name</span>
+            <br />
+            @CurrentPage.Name
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Mám zájem o tuto pozici >" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 advertisementItem">
+            <div class="advertisementBody">
+                <div class="">@CurrentPage.aCity, @CurrentPage.aRegion</div>
+                <br />
+                @CurrentPage.aContent
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- DETAIL FIRMY -->
+        </div>
+    </div>
 </div>

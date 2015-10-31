@@ -180,6 +180,14 @@ html {
     float: none;
 }
 
+#tBody
+{
+    background: #323232 url('/media/layout/bgr-hptop-shadow.png') repeat-x;
+    padding-bottom: 26px;
+    border-bottom: 1px solid #111;
+}
+
+
 .dark {
 	/*background: #1c1c1e;*/
 }
@@ -419,6 +427,14 @@ html {
 .fs13 {
 	font-size: 13px;
 }
+		
+.fs14 {
+	font-size: 14px;
+}
+		
+.fs16 {
+	font-size: 16px;
+}
 	
 .fs20 {
 	font-size: 20px;
@@ -475,7 +491,8 @@ html {
 }
 
 body {
-	font-family: "Lato", sans-serif;
+	/*font-family: "Lato", sans-serif;*/
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
 	line-height: 1.4;
 }
 
@@ -617,6 +634,7 @@ header .container {
 	padding: 15px 20px;
 	max-width: 100%;
 	padding: 0;
+    width: 100%;
 }
 
 header .row {
@@ -1013,9 +1031,23 @@ nav li > ul > li > ul {
 	margin: 75px 0px 0px 0px;
 	text-align: right;
 }
+#aBody.subpage-hover #tBody .row {
+	margin: 75px 0px 0px 0px;
+	text-align: right;
+}
 
 
 #tBody .tBody_hlText, #tBody .tBody_hlText p {
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 46px;
+}
+#aBody.subpage-hover #tBody .tBody_hlText, #aBody.subpage-hover #tBody .tBody_hlText p {
+	font-size: 26px;
+}
+
+#tBody .tBody_hlText::first-line, #tBody .tBody_hlText p::first-line {
 	color: white;
 	text-transform: uppercase;
 	font-weight: bold;
@@ -1299,6 +1331,11 @@ nav li > ul > li > ul {
 	border: 1px solid rgb(212,36,207);
 }
 
+#cBody .cBody_content {
+    min-height: 300px;
+    padding-bottom: 26px;
+}
+
 #cBody .cBody_content .container {
 	max-width: 90%;
 }
@@ -1320,27 +1357,41 @@ nav li > ul > li > ul {
 	background: rgb(197,197,197);
 	border: 1px solid white;
 	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
+	/*padding: 15px 20px 15px 196px;*/
 	font-size: 13px;
+	height: 40px;
 	text-transform: uppercase;
 	color: white;
 	font-weight: bold;
 	text-align: right;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	margin-right: 10px;
+    min-width: 360px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #bBody .txtPassword input[type=text] {
 	background: rgb(197,197,197);
 	border: 1px solid white;
 	border-radius: 10px;
-	padding: 15px 20px 15px 196px;
+    /*	padding: 15px 20px 15px 196px;*/
 	font-size: 13px;
+	height: 40px;
 	text-transform: uppercase;
 	color: white;
 	font-weight: bold;
 	text-align: right;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	margin-left: 10px;
-	float: right;
+	float: left;
+    min-width: 360px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #schbUP input[type=checkbox] {
@@ -1355,6 +1406,7 @@ nav li > ul > li > ul {
 	text-transform: uppercase;
 	color: white;
 	padding: 10px;
+    cursor: pointer;
 }
 
 #schbUP.checked {
@@ -1366,6 +1418,11 @@ nav li > ul > li > ul {
 
 #bBody .lblUP {
 	padding-left: 20px;
+}
+
+#bBody .btnNext {
+    min-width: 360px;
+    width: 100%;
 }
 
 #bBody .btnNext input[type=submit] {
@@ -1599,6 +1656,8 @@ pre {
 
 header .container {
 	padding: 15px 0;
+    padding-right: 20px;
+    padding-left: 10px;
 }
 
 #toggle {
@@ -1613,20 +1672,54 @@ header .container {
 	min-height: 507px;
 }
 #aBody.subpage {
-	background-image:url('/media/layout/bgr-hptop-shadow.png');
-	background-repeat: repeat-x;
-	background-position: top;
-	background-color: #323232;
 	/*background-size: 125% auto;*/
 }
 
 #aBody.subpage #tBody {
-	background-image:url('/media/layout/bgr-hptop-subpage.jpg');
-	background-repeat: no-repeat;
-	background-position: 15% 1px;
-	background-color: transparent;
-	min-height: 249px;
+	background-image:url('/media/layout/bgr-hptop-shadow.png');
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: #323232;
+        min-height: 249px;
 }
+
+    #aBody.subpage #tBody > .container {
+        background-image: url('/media/layout/bgr-hptop-subpage.jpg');
+        background-repeat: no-repeat;
+        background-position: 15% 1px;
+        background-color: transparent;
+        min-height: 249px;
+        width: 100%;
+    }
+
+#aBody.subpage subpage-hover {
+
+}
+#aBody.subpage-hover #tBody {
+    background-image: url('/media/layout/bgr-subpage-default.jpg');
+    background-repeat: no-repeat;
+    background-position: 10% 25%;
+    background-size: 50%;
+    background-color: #323232;
+    min-height: 249px;
+}
+
+
+    #aBody.subpage-hover #tBody > .container {
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: transparent;
+        min-height: 249px;
+        width: 100%;
+    }
+    #aBody.subpage-hover #tBody .col-md-12 {
+        background-image: url('/media/layout/bgr-subpage-hover.png');
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: transparent;
+        min-height: 249px;
+    }
 
 
 nav {
@@ -1799,7 +1892,6 @@ nav li > ul {
 	height: 0;
 	margin: 0;
 }
-
 }
 
 @media (max-width: 992px) and (max-width: 992px) {
@@ -1808,6 +1900,11 @@ nav > ul li.selected ul li a {
 	color: #fff;
 	font-weight: 500;
 }
+
+#bBody .txtPassword input[type=text] {
+	float: right;
+}
+
 
 }
 

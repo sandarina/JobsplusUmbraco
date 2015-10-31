@@ -7,22 +7,23 @@
 }
 @using (Html.BeginForm("tFindJob", "FindJob"))
 {
-    <div id="aBody" class="subpage">
+    <div id="aBody" class="subpage-hover">
         <div id="tBody" @*style="background-image:url('@(CurrentPage.logoCompany)?height=65')"*@>
-            <div class="col-md-6">
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="container">
                     <div class="row">
-                        <span class="tBody_hlText">Najít práci</span>
-                        <br />
-                        <span class="tBody_vText"></span>
+                        <div class="tBody_hlText">
+                            Najít práci
+                        </div>
+                        <span class="tBody_vText">VYHLEDÁVÁNÍ PRACOVNÍCH MÍST</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="cBody">
-            <div class="cBody_content">
+    </div>
+    <div id="cBody">
+        <div class="cBody_content">
+            <div id="findJobForm">
                 <div class="container">
                     <div class="row" style="@(IsTOP ? "display:none" : "")">
                         <div class="col-md-4">
@@ -36,24 +37,34 @@
                             <input type="submit" value="Vyhledat" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach (var advertisement in Model.lAdvertisements)
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.lAdvertisements.Count() > 0)
+                        {
+                            foreach (var advertisement in Model.lAdvertisements)
                             {
                                 <div class="row">
                                     <a href="@advertisement.Url">@advertisement.Name</a>
                                 </div>
                             }
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="noAdvertisements">pro vyhledání inzerátů použijte filtr</div>
+                        }
                     </div>
                 </div>
             </div>
+
         </div>
-        <div id="bBody">
-            <div class="container">
-                <div class="row">
-                    @{ Html.RenderPartial("pvFirstStepRegistration"); }
-                </div>
+    </div>
+    <div id="bBody">
+        <div class="container">
+            <div class="row">
+                @{ Html.RenderPartial("pvFirstStepRegistration"); }
             </div>
         </div>
     </div>
