@@ -41,13 +41,37 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 advertisementList">
                         @if (Model.lAdvertisements.Count() > 0)
                         {
                             foreach (var advertisement in Model.lAdvertisements)
                             {
-                                <div class="row">
-                                    <a href="@advertisement.Url">@advertisement.Name</a>
+                                <div class='row advertisementItem @(advertisement.TOP ? "top" : "")'>
+                                    <div class="col-md-12">
+                                        <div class="row advertisementBody">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    @advertisement.Company
+                                                </div>
+                                                <div class="row">
+                                                    <h4><a href="@advertisement.Url">@advertisement.Name</a></h4>
+                                                </div>
+                                                <div class="row advertisementPlace">
+                                                    <span>@advertisement.City, </span><span>@advertisement.Region</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <div class="row">
+                                                    <a href="@advertisement.Url" class="btn btn-default violet">Detail</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row advertisementBottom">
+                                            <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @advertisement.RequiredEducation</div>
+                                            <div class="col-md-6 col-sm-6"><span>Typ</span> @advertisement.TypeOfWork</div>
+                                            <div class="col-md-2"><span>ZTP</span> @(advertisement.ZTP ? "ANO" : "NE") </div>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         }

@@ -115,6 +115,7 @@ namespace JobsplusUmbraco.Models
             advertisement.Url = itemAdvertisement.Url;
             advertisement.CreateDate = itemAdvertisement.CreateDate;
             advertisement.UpdateDate = itemAdvertisement.UpdateDate;
+            advertisement.Company = itemAdvertisement.Parent.Parent.Name;
 
             advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
             advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);

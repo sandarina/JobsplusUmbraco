@@ -27,5 +27,6 @@ namespace JobsplusUmbraco.Models
         public bool ZTP { get; set; }
         public string Content { get; set; }
         public string Advertiser { get; set; }
+        public string Company { get; set; }
     }
 }
