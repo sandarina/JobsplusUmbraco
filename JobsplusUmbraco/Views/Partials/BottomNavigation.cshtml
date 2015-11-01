@@ -1,11 +1,38 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{ 
     var home = CurrentPage.Site();
+    var clanky = home.Children("dtFolder").Where("Visible && visibleInBottomNavi == true");
 }
 
-@if (home.Children.Where("Visible").Any())
+<div class="col-md-6 text-right">
+    <strong>Najdete nás</strong>
+    <ul>
+        <li>
+            <a href="https://www.facebook.com/Umbraco" target="_blank">Facebook</a>
+        </li>
+        <li>
+            <a href="https://twitter.com/umbracoproject" target="_blank">Twitter</a>
+        </li>
+    </ul>
+</div>
+
+@if (clanky.Any())
 {
-    @* For each child page under the home node, where the property umbracoNaviHide is not True *@
+    <div class="col-md-6  text-right">
+        <strong>Články</strong>
+        <ul>
+            @foreach (var clanek in clanky.First().Children.Where("Visible"))
+            {
+                <li>
+                    <a href="@clanek.Url">@clanek.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@*if (home.Children.Where("Visible").Any())
+{ && DocumentTypeAlias.Contains(\"dtFolder\")
     foreach (var childPage in home.Children.Where("Visible"))
     {   
         <div class="col-xs-6 col-sm-3">
@@ -16,19 +43,7 @@
             }
         </div>
     }
-}
-
-<div class="col-xs-6 col-sm-3">
-    <strong>Najdete nás</strong>
-    <ul>
-		<li>
-            <a href="https://www.facebook.com/Umbraco" target="_blank">Facebook</a>
-        </li>
-        <li>
-            <a href="https://twitter.com/umbracoproject" target="_blank">Twitter</a>
-        </li>
-    </ul>
-</div>
+}*@
 
 @helper childPages(dynamic pages)
 {

@@ -67,10 +67,16 @@
     <footer class="field dark">
       <div class="container">
         <div class="row">
-			<div class="col-md-12">
-				<div class="bLogo"></div>
-          	</div>
-		  	@*{ Html.RenderPartial("BottomNavigation"); }*@
+            <div class="col-sm-12 col-md-6">
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    @{ Html.RenderPartial("BottomNavigation"); }
+                </div>
+            </div>
+        </div>
+        <div class="row bLogo">
+           <span class="fText">Copyright &copy; jobsplus.cz | Provozovatelem portálu je <span class="underline"><span class="uppercase">Salma plus</span> s.r.o.</span></span>
         </div>
       </div>
     </footer>
