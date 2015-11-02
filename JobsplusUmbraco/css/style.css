@@ -662,13 +662,10 @@ header .row {
 }
 			
 .bLogo {
-	width: 150px;
-	height: 50px;
 	background-image:url('/media/layout/jobsplus-logo-footer.png');
-	background-size: 100%;
 	background-repeat: no-repeat;
-	background-position: left center;
-	float: right;
+    background-size: 15%;
+	background-position: right center;
 	padding-top: 20px;
 }
 
@@ -1448,19 +1445,18 @@ footer {
 }
 
 footer .container {
-	padding-top: 90px;
+	padding-top: 185px;
 	max-width: 90%;
 }
 
 footer ul {
 	margin: 15px auto 0;
-	text-align: center;
+	text-align: right;
 }
 
 footer ul li {
 	position: relative;
 	display: block;
-	text-align: left;
 	padding: 0 0 5px 0;
 	margin: 0;
 	line-height: 1;
@@ -1480,6 +1476,10 @@ footer.dark a:hover {
 	border-bottom: 1px solid #fff !important;
 	padding-bottom: 3px;
 	text-decoration: none;
+}
+
+footer .fText {
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 ul {
