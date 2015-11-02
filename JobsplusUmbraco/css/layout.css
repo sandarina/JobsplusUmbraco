@@ -21,6 +21,7 @@
 }
 .btn-default.violet {
 	border: 1px solid rgb(164,40,162);
+    color: rgb(164,40,162);
 }
 .btn-default.gray {
 	border: 1px solid #444;
@@ -223,5 +224,13 @@
     text-align: center;
 }
 
+.topSign {
+    display: inline-block;
+    background: rgb(164,40,162);
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px 6px;
+}
 
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */
