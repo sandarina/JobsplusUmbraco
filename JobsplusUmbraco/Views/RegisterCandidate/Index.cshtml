@@ -26,7 +26,7 @@ else
         </div>
     }
 
-    using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit"))
+    using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="row">
             <h3>Přihlašovací údaje</h3>
@@ -87,6 +87,11 @@ else
             </div>
         </div>
         <div class="row">
+            <div class="form-group col-md-2">
+                <input type="file" name="cv" placeholder="Životopis" />
+            </div>
+        </div>
+        <div class="row">
             <button id="RegisterCandidateFormSubmit" type="submit" class="btn btn-primary input-medium">Registrovat</button>
         </div>
     }
@@ -116,4 +121,4 @@ else
             });
         });
     </script>
- }
+}
