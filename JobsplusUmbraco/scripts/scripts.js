@@ -2,8 +2,8 @@
 	$('#aboutCompany').hide();
 	$('#advertisementList').show();
 	
-	$('#TOPCompanyList').show();
-	$('#TOPAdvertisementList').hide();
+	$('#TOPCompanyList').hide();
+	$('#TOPAdvertisementList').show();
 	$('#NewsList').hide();
 	
 	$('#ListAdvertisemet').hide();
@@ -19,9 +19,13 @@
 	    $(document).on('focus', ':input', function () {
 	        $(this).attr('autocomplete', 'off');
 	    });
+	    $('#tBody .txtWorkingField input.searchbox').attr("placeholder", "Kde?");
+	    $('#tBody .txtRegion input.searchbox').attr("placeholder", "Obor nebo pozice?");
+	    $('#searchRegions input.searchbox').attr("placeholder", "Kde?");
+	    $('#searchWorkingFields input.searchbox').attr("placeholder", "Obor nebo pozice?");
 	});
 
-	$('#tBody .txtWorkingField input.searchbox').prop("autocomplete", "off");
+	$('#tBody .txtWorkingField input.searchbox').prop("autocomplete", "off"); 
 	$('#tBody .txtRegion input.searchbox').prop("autocomplete", "off");
 	
 	if($('#IsZTP').is(":checked")) {

@@ -52,6 +52,7 @@ namespace JobsplusUmbraco.Models
 
         [DisplayName("Heslo")]
         [Required(ErrorMessage = "Zadejte vaše heslo, kterým se budete přihlašovat.")]
+        [MinLength(4, ErrorMessage="Heslo musí obsahovat alespoň 4 znaky.")]
         public string Password { get; set; }
         #endregion
     }
