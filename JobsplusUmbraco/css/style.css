@@ -1034,7 +1034,8 @@ nav li > ul > li > ul {
 }
 
 
-#tBody .tBody_hlText, #tBody .tBody_hlText p {
+#tBody .tBody_hlText, #tBody .tBody_hlText p, 
+#tBody .tBody_hlText h1 {
 	color: white;
 	text-transform: uppercase;
 	font-weight: bold;
@@ -1051,10 +1052,13 @@ nav li > ul > li > ul {
 	font-size: 46px;
 }
 
-#tBody .tBody_vText, #tBody .tBody_vText p {
+#tBody .tBody_vText, #tBody .tBody_vText p,
+#tBody .tBody_vText h2 
+ {
 	color: rgb(150,152,141);
 	text-transform: uppercase;
 	font-size: 20px;
+    font-weight: normal;
 }
 
 #tBody .txtWorkingField {

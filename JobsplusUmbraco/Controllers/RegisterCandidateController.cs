@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -43,7 +44,14 @@ namespace JobsplusUmbraco.Controllers
             member.SetValue("RegistrationUP", model.RegistrationUP);
             member.SetValue("RegistrationUPFrom", model.RegistrationUPFrom);
             member.SetValue("Town", model.Town);
-            // todo: nagrat zivotopis
+            // todo: nahrat zivotopis
+            if (model.CV.InputStream != null)
+            {
+                var filename = Path.GetFileName(model.CV.FileName);
+                var filepath = Server.MapPath("~/media/cv/") + filename;
+                model.CV.SaveAs(filepath);
+                member.SetValue("CV", filepath);
+            }
             //member.SetValue("CV", model.CV);
 
             // Not yet allowed to log in!

@@ -47,7 +47,7 @@ namespace JobsplusUmbraco.Models
                 {
                     iRegions.MoveNext();
                     XPathNodeIterator pvRegions = iRegions.Current.SelectChildren("preValue", "");
-                    rCollection.Add(new Region { Name = "Kde?", Value = "Kde?" });
+                    rCollection.Add(new Region { Name = "", Value = "" });
                     while (pvRegions.MoveNext())
                     {
                         rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value });
@@ -79,7 +79,8 @@ namespace JobsplusUmbraco.Models
                 {
                     iWorkingFields.MoveNext();
                     XPathNodeIterator pvWorkingFields = iWorkingFields.Current.SelectChildren("preValue", "");
-                    wfCollection.Add(new WorkingField { Name = "Obor nebo pozice?", Value = "Obor nebo pozice?" });
+                    wfCollection.Add(new WorkingField { Name = "", Value = "" });
+                    //wfCollection.Add(new WorkingField { Name = "Obor nebo pozice?", Value = "Obor nebo pozice?" });
                     while (pvWorkingFields.MoveNext())
                     {
                         wfCollection.Add(new WorkingField { Name = pvWorkingFields.Current.Value, Value = pvWorkingFields.Current.Value });
@@ -140,7 +141,7 @@ namespace JobsplusUmbraco.Models
             criteria.OrderBy(new string[] { "DateCreate" });
             filter = criteria.NodeTypeAlias("dtAdvertisement");
 
-            if (!String.IsNullOrEmpty(workingField))
+            if (!String.IsNullOrEmpty(workingField)) 
                 filter.And().Field("aWorkingField", workingField);
             if (!String.IsNullOrEmpty(region))
                 filter.And().Field("aRegion", region);

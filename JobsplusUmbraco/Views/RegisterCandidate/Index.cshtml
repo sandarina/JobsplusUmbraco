@@ -1,6 +1,8 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MemberCandidate>
 @using JobsplusUmbraco.Models
 
+<h2 class="violet-color">Registrace</h2>
+
 @if (TempData["IsSuccess"] != null && (bool)TempData["IsSuccess"] == true)
 {
     <div class="row">
@@ -26,7 +28,7 @@ else
         </div>
     }
 
-    using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit"))
+    using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.RegisterCandidateController>("RegisterCandidateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="row">
             <h3>Přihlašovací údaje</h3>
@@ -76,14 +78,20 @@ else
         <div class="row">
             <div class="form-group col-md-2">
                 <div class="input-group date" id="registrationUPFrom">
-                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "Den registrace" })
+                    @Html.TextBoxFor(m => m.RegistrationUPFrom, new { @class = "form-control", placeholder = "Den registrace" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group col-md-6">
-                @Html.TextBoxFor(m => m.Town, new { @class = "form-control col-mb-12", placeholder = "Město" })
+                @Html.TextBoxFor(m => m.Town, new { @class = "form-control col-mb-12", placeholder = "Město, pod něž spadá Váš úřad práce" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                @Html.LabelFor(m => m.CV)
+               <input type="file" name="cv" placeholder="Životopis" />
             </div>
         </div>
         <div class="row">
@@ -116,4 +124,4 @@ else
             });
         });
     </script>
- }
+}

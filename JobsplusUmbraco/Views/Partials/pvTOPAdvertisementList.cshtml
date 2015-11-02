@@ -2,9 +2,9 @@
 @using Umbraco.Web
 @using Umbraco.Core.Models
 
-@{ 
-	var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
-	var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement"); 
+@{
+    var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+    var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement");
 }
 
 @if (advertisements.Any())
@@ -17,7 +17,24 @@
             <div class='row advertisementItem @(IsTop ? "top" : "")'>
                 <div class="col-md-12">
                     <div class="row advertisementBody">
-                        <div class="col-md-8">
+                        @{
+                            IPublishedContent mediaLogo;
+                            var company = itemAdvertisement.Parent;
+                            string className = "col-md-10 col-sm-12";
+                        }
+                        @try
+                        {
+                            mediaLogo = Umbraco.Media((int)company.GetPropertyValue("cLogo"));
+                        }
+                        catch
+                        {
+                            mediaLogo = null;
+                        }
+                        @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                        {
+                            className = "col-md-8 col-sm-8";
+                        }
+                        <div class="@className">
                             <div class="row">
                                 @itemAdvertisement.Parent.Parent.Name
                             </div>
@@ -28,7 +45,11 @@
                                 <span>@itemAdvertisement.GetPropertyValue("aCity"), </span><span>@itemAdvertisement.GetPropertyValue("aRegion")</span>
                             </div>
                         </div>
-                        <div class="col-md-4 text-right">
+                        @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                        {
+                            @RenderImage(mediaLogo);
+                        }
+                        <div class="col-md-2 col-sm-12 text-right">
                             <div class="row">
                                 <a href="@itemAdvertisement.Url" class="btn btn-default violet">Detail</a>
                             </div>
@@ -48,3 +69,13 @@
 }
 
 
+@helper RenderImage(dynamic item)
+{
+    <div class="col-md-2 col-sm-4" style="height: 90px">
+        <div style="margin: 0 auto">
+            <a href="@item.umbracoFile" class="obr center" style="line-height: 90px; height: 90px">
+                <span><img src="@item.umbracoFile" alt="@item.Name" style="max-height: 90px" /></span>
+            </a>
+        </div>
+    </div>
+}
