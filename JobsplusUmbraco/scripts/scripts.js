@@ -2,8 +2,8 @@
 	$('#aboutCompany').hide();
 	$('#advertisementList').show();
 	
-	$('#TOPCompanyList').show();
-	$('#TOPAdvertisementList').hide();
+	$('#TOPCompanyList').hide();
+	$('#TOPAdvertisementList').show();
 	$('#NewsList').hide();
 	
 	$('#ListAdvertisemet').hide();
@@ -11,7 +11,7 @@
 	$('#detailAdvertisement').show();
 	$('#similar').hide();
 	
-	$('#divTOPCompanyList').addClass('selected');
+	$('#divTOPAdvertisementList').addClass('selected');
     $('#divAdvertisementList').addClass('selected');
 	$('#divDetailAdvertisement').addClass('selected');
 	
