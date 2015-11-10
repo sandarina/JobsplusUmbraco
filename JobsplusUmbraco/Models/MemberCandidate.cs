@@ -27,6 +27,12 @@ namespace JobsplusUmbraco.Models
         [Required(ErrorMessage = "Zadejte vaše datum narození.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd. MM. yyyy}", NullDisplayText = "")]
         public DateTime? BirthDate { get; set; }
+        
+        [DisplayName("Telefon")]
+        public string Phone { get; set; }
+
+        [DisplayName("Poznámky")]
+        public string Comments { get; set; }
 
         [DisplayName("Registrován na úřadu práce?")]
         public bool RegistrationUP { get; set; }
@@ -40,6 +46,9 @@ namespace JobsplusUmbraco.Models
 
         [DisplayName("Životopis")]
         public HttpPostedFileBase CV { get; set; }
+
+        [DisplayName("souhlasím se zpracováním osobních údajů, obchodními podmínkami a podmínkami užití")]
+        public bool Confirm { get; set; }
         #endregion
 
         #region Account

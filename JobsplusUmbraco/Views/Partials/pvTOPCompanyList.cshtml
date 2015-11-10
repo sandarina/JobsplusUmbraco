@@ -7,110 +7,119 @@
     var companyList = home.Children("dtCompanyList").Where("Visible");
     var companiesSort = new Dictionary<int, bool>();
 }
+
 @if (companyList.Any())
 {
-    var companiesAll = companyList.First().Children.Where("Visible");
-    var companiesSortTake = companiesAll.OrderBy("createDate descending").OrderBy("cTop descending").Take(10);
+    var companiesAll = companyList.First().Children.Where("Visible").OrderBy("cTop descending");
+    var topCompanies = companiesAll.Where("cTop");
+    var otherCompanies = companiesAll.Where("cTop == false");
 
-    var max = companiesSortTake.Count();
-    Random r = new Random();
-    int rNumber = r.Next(0, max);
-
-
-    var companiesRandom = companiesSortTake[rNumber];
-    var cContentRandom = companiesRandom.Children().Where("Visible");
-    if (cContentRandom.Any())
-    {
-        var cAdvertisementRandom = cContentRandom.First().Children.Where("Visible");
-        if (cAdvertisementRandom.Any())
+    @:<div class="row">
+        foreach (var company in topCompanies)
         {
-            IPublishedContent mediaLogo; IPublishedContent mediaObr;
-            try {
-                mediaLogo = Umbraco.Media(cContentRandom.First().cLogo);
-                mediaObr = Umbraco.Media(cContentRandom.First().cBackground); 
-            }
-            catch {
-                mediaLogo = null; mediaObr = null;
-            }
-            <div class="col-md-4">
-                <div class="nahled center">
-                    @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
-                    {
-                        @RenderImage(mediaLogo);
-                    }
-                    @if (mediaObr != null && mediaObr.DocumentTypeAlias == "Image")
-                    {
-                        @RenderImage(mediaObr);
-                    }
-                    <div class="row"><a class="underline lightblue" href="@companiesRandom.Url">@companiesRandom.Name</a></div>
-                    <div class="row"><span class="countInfoAdvert">@cAdvertisementRandom.Count() inzeráty</span></div>
-                </div>
-            </div>
+        var cContent = company.Children().Where("Visible");
+        if (cContent.Any())
+        {
+        var cAdvertisement = cContent.First().Children.Where("Visible");
+        if (cAdvertisement.Any())
+        {
+        IPublishedContent mediaLogo; IPublishedContent mediaObr;
+        try
+        {
+        mediaLogo = Umbraco.Media(cContent.First().cLogo);
+        mediaObr = Umbraco.Media(cContent.First().cBackground);
         }
-    }
-
-    <div class="col-md-4">
-        @{ var i = 0; }
-        @foreach (var company in companiesSortTake)
+        catch
         {
-            if (i != rNumber)
+        mediaLogo = null; mediaObr = null;
+        }
+        <div class="col-md-3">
+            <div class="nahled center">
+                @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                {
+                    @RenderImage(mediaLogo, company.Url);
+                }
+                @if (mediaObr != null && mediaObr.DocumentTypeAlias == "Image")
+                {
+                    @RenderImage(mediaObr, company.Url);
+                }
+                <div class="row"><h4><span class="topSign">TOP</span> <a class="underline lightblue" href="@company.Url">@company.Name</a></h4></div>
+                <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @cAdvertisement.Count()</span></div>
+            </div>
+        </div>
+        }
+        }
+        }
+        @:</div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Další firmy:</h4>
+            </div>
+            <div class="col-md-4">
+                @{
+                int i = 0;
+                }
+                @foreach (var company in otherCompanies)
             {
-                var cContent = company.Children().Where("Visible");
+                if (i == otherCompanies.Count() / 2)
+                {
+
+                    @:</div>
+                    @:<div class="col-md-4">
+            }
+                i++;
+            var cContent = company.Children().Where("Visible");
+            if (cContent.Any())
+            {
+            var cAdvertisement = cContent.First().Children.Where("Visible");
+            if (cAdvertisement.Any())
+            {
+                <div class="row">
+                    <a class="underline lightblue" href="@company.Url">@company.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
+                </div>
+            }
+            }
+            }
+
+            </div>
+        </div>
+        }
+
+        @helper RenderImage(dynamic item, string url)
+{
+        <div class="row">
+            <a href="@url" class="obr center" style="height: 100px">
+                <img src="@item.umbracoFile" alt="@item.Name" style="max-height: 100px">
+            </a>
+        </div>
+}
+        @*if (companyList.Any())
+            {
+                var companiesAll = companyList.First().Children.Where("Visible");
+                foreach (var company in companiesAll)
+                {
+                    var cContent = company.Children("dtCompanyContent").Where("Visible");
+                    if (cContent.Any())
+                    {
+                        companiesSort.Add(@company.Id, @cContent.First().cTop);
+                    }
+                }
+            }
+
+
+            @foreach (KeyValuePair<int, bool> companySort in companiesSort.OrderByDescending(key => key.Value))
+            {
+                var itemCompany = (IPublishedContent)umbracoHelper.TypedContent(@companySort.Key);
+                var cContent = itemCompany.Children().Where("Visible");
+                var IsTop = companySort.Value;
                 if (cContent.Any())
                 {
                     var cAdvertisement = cContent.First().Children.Where("Visible");
                     if (cAdvertisement.Any())
                     {
-                        <div class='row @(company.cTop ? "top" : "") @(i == rNumber ? "hidden" : "")'>
-                            <a class="underline lightblue" href="@company.Url">@company.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
+                        <div class='row @(IsTop ? "top" : "")'>
+                            <a class="underline lightblue" href="@itemCompany.Url">@itemCompany.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
                         </div>
                     }
                 }
-            }
-            { i++; }
-        }
-        @*@{ var companiesTop = companies.Children.Where("topCompany == true");}
-            @{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
-    </div>
-    <div class="col-md-4">
-    </div>
-}
-
-@helper RenderImage(dynamic item)
-{
-        <div class="row">
-            <a href="@item.umbracoFile" class="obr center">
-                <img src="@item.umbracoFile" alt="@item.Name" />
-            </a>
-        </div>
-}
-            @*if (companyList.Any())
-                {
-                    var companiesAll = companyList.First().Children.Where("Visible");
-                    foreach (var company in companiesAll)
-                    {
-                        var cContent = company.Children("dtCompanyContent").Where("Visible");
-                        if (cContent.Any())
-                        {
-                            companiesSort.Add(@company.Id, @cContent.First().cTop);
-                        }
-                    }
-                }
-
-
-                @foreach (KeyValuePair<int, bool> companySort in companiesSort.OrderByDescending(key => key.Value))
-                {
-                    var itemCompany = (IPublishedContent)umbracoHelper.TypedContent(@companySort.Key);
-                    var cContent = itemCompany.Children().Where("Visible");
-                    var IsTop = companySort.Value;
-                    if (cContent.Any())
-                    {
-                        var cAdvertisement = cContent.First().Children.Where("Visible");
-                        if (cAdvertisement.Any())
-                        {
-                            <div class='row @(IsTop ? "top" : "")'>
-                                <a class="underline lightblue" href="@itemCompany.Url">@itemCompany.Name</a> <span class="countInfoAdvert">(@cAdvertisement.Count())</span>
-                            </div>
-                        }
-                    }
-                }*@
+            }*@

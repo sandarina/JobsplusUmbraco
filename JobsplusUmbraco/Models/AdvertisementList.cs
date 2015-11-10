@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Umbraco;
 using Umbraco.Web;
 using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
@@ -15,6 +16,7 @@ using System.Data;
 using Examine;
 using umbraco.cms.businesslogic.member;
 using Umbraco.Web.Security;
+using umbraco.MacroEngines;
 
 namespace JobsplusUmbraco.Models
 {
@@ -102,10 +104,11 @@ namespace JobsplusUmbraco.Models
                    };
         }
 
-        public Advertisement DynamicToAdverisement(dynamic item)
+
+        public Advertisement DynamicToAdverisement(Node item)
         {
             //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
-            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item["id"]));
+            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item.Id));
 
             if (itemAdvertisement == null)
                 return null;
@@ -117,6 +120,21 @@ namespace JobsplusUmbraco.Models
             advertisement.CreateDate = itemAdvertisement.CreateDate;
             advertisement.UpdateDate = itemAdvertisement.UpdateDate;
             advertisement.Company = itemAdvertisement.Parent.Parent.Name;
+            advertisement.CompanyUrl = itemAdvertisement.Parent.Parent.Url;
+            dynamic mediaLogo;
+            try
+            {
+                mediaLogo = umbracoHelper.Media(itemAdvertisement.Parent.GetPropertyValue<int>("cLogo"));
+            }
+            catch
+            {
+                mediaLogo = null;
+            }
+            if (mediaLogo != null)
+            {
+                advertisement.CompanyLogo = mediaLogo.umbracoFile;
+            }
+            //advertisement.CompanyLogo =
 
             advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
             advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);
@@ -132,8 +150,69 @@ namespace JobsplusUmbraco.Models
             return advertisement;
         }
 
+        public Advertisement DynamicToAdverisement(dynamic item)
+        {
+            //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
+            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item["id"]));
+
+            if (itemAdvertisement == null)
+                return null;
+
+            Advertisement advertisement = new Advertisement();
+            advertisement.ID = itemAdvertisement.Id;
+            advertisement.Name = itemAdvertisement.Name;
+            advertisement.Url = itemAdvertisement.Url;
+            advertisement.CreateDate = itemAdvertisement.CreateDate;
+            advertisement.UpdateDate = itemAdvertisement.UpdateDate;
+            advertisement.Company = itemAdvertisement.Parent.Parent.Name;
+            advertisement.CompanyUrl = itemAdvertisement.Parent.Parent.Url;
+            dynamic mediaLogo;            
+            try
+            {
+                mediaLogo = umbracoHelper.Media(itemAdvertisement.Parent.GetPropertyValue<int>("cLogo"));
+            }
+            catch
+            {
+                mediaLogo = null;
+            }
+            if (mediaLogo != null)
+            {
+                advertisement.CompanyLogo = mediaLogo.umbracoFile;
+            }
+            //advertisement.CompanyLogo =
+
+            advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
+            advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);
+            advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
+            advertisement.RequiredEducation = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty);
+            advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
+            advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
+            advertisement.ZTP = bool.Parse(itemAdvertisement.GetPropertyValue<string>("aZtp", "0"));
+            advertisement.Content = itemAdvertisement.GetPropertyValue<string>("aContent", string.Empty);
+            //advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("advertiser").HasValue ? Members.GetById(itemAdvertisement.GetPropertyValue<int>("advertiser")).Name : string.Empty;
+            advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("Aadvertiser").HasValue ? membershipHelper.GetById(itemAdvertisement.GetPropertyValue<int>("aAdvertiser")).Name : string.Empty;
+
+            return advertisement;
+        }
+
         public void Fill()
         {
+            /*
+            var rootNode = new Node(-1);
+            var allAdverts = rootNode.ChildrenAsList.Where(x => x.NodeTypeAlias.Equals("dtAdvertisement"));
+
+            if (!String.IsNullOrEmpty(workingField))
+                allAdverts = allAdverts.Where(x => x.GetProperty("aWorkingField").Equals(workingField));
+            if (!String.IsNullOrEmpty(region))
+                allAdverts = allAdverts.Where(x => x.GetProperty("aRegion").Equals(region));
+            if (IsZTP)
+                allAdverts = allAdverts.Where(x => x.GetProperty("aZtp").Equals("1"));
+
+            var excludedDoctypes = new[] { "BlogPost", "NewsArticle" };
+            DynamicNode node = Model; // your start node
+            var childNodes = node.ChildrenAsList.Where(x => !excludedDoctypes.Contains(x.NodeTypeAlias));*/
+
+
             var searcher = ExamineManager.Instance.SearchProviderCollection["InternalSearcher"];
             var criteria = searcher.CreateSearchCriteria(UmbracoExamine.IndexTypes.Content);
             Examine.SearchCriteria.IBooleanOperation filter = null;
@@ -152,7 +231,15 @@ namespace JobsplusUmbraco.Models
             if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
-
+            /*
+            List<Advertisement> advertisements = new List<Advertisement>();
+            foreach (var result in allAdverts)
+            {
+                Advertisement advertisement = this.DynamicToAdverisement(result);
+                if (advertisement != null) advertisements.Add(advertisement);
+            }
+            lAdvertisements = advertisements;
+            * */
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))
             {
@@ -160,6 +247,7 @@ namespace JobsplusUmbraco.Models
                 if (advertisement != null) advertisements.Add(advertisement);
             }
             lAdvertisements = advertisements;
+             
         }
         #endregion
 

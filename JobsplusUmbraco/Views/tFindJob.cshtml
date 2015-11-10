@@ -26,15 +26,18 @@
             <div id="findJobForm">
                 <div class="container">
                     <div class="row" style="@(IsTOP ? "display:none" : "")">
-                        <div class="col-md-4" id="searchRegions">
+                        <div class="col-md-3" id="searchRegions">
                             @Html.DropDownListFor(model => model.region, Model.slRegions)
                         </div>
                         <div class="col-md-4" id="searchWorkingFields">
                             @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
                         </div>
-                        <div class="col-md-4">
-                            @Html.CheckBoxFor(model => model.IsZTP) Pouze ZTP
-                            <input type="submit" value="Vyhledat" />
+                        <div class="col-md-2">
+                            @Html.CheckBoxFor(model => model.IsZTP) <label for="IsZTP">vhodné pro ZTP</label>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <input type="submit" class="btn btn-default violet" value="Vyhledat" />
+                            <a href="/najit-praci/" class="btn btn-default gray">Zrušit filtr</a>
                         </div>
                     </div>
                 </div>
@@ -44,23 +47,53 @@
                     <div class="col-md-12 advertisementList">
                         @if (Model.lAdvertisements.Count() > 0)
                         {
+                            var count =  Model.lAdvertisements.Count();
+                            var txt1 = "Nalezeno";
+                            var txt2 = "pracovních pozic"; 
+                            if (count == 1)
+                            {
+                                txt1 = "Nalezena";
+                                txt2 = "pracovní pozice";
+                            }
+                            else if (count < 5)
+                            {
+                                txt1 = "Nalezeny";
+                                txt2 = "pracovní pozice";
+                            }
+                            <div class="info">@txt1 <b><i>@Model.lAdvertisements.Count()</i></b> @txt2 odpovdající Vašim požadavkům.</div>
                             foreach (var advertisement in Model.lAdvertisements)
                             {
                                 <div class='row advertisementItem @(advertisement.TOP ? "top" : "")'>
                                     <div class="col-md-12">
                                         <div class="row advertisementBody">
-                                            <div class="col-md-8">
+                                            <div class="@(!string.IsNullOrEmpty(advertisement.CompanyLogo) ? "col-md-8" : "col-md-10") col-sm-8 advertisementName">
                                                 <div class="row">
                                                     @advertisement.Company
                                                 </div>
                                                 <div class="row">
-                                                    <h4><a href="@advertisement.Url">@advertisement.Name</a></h4>
+                                                    <h4>
+                                                        @if (advertisement.TOP)
+                                                        {
+                                                            <span class="topSign">TOP</span>
+                                                        }
+                                                        <a href="@advertisement.Url"><b>@advertisement.Name</b></a>
+                                                    </h4>
                                                 </div>
                                                 <div class="row advertisementPlace">
                                                     <span>@advertisement.City, </span><span>@advertisement.Region.Name</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 text-right">
+                                            @if (!string.IsNullOrEmpty(advertisement.CompanyLogo))
+                                            {
+                                                <div class="col-md-2 col-sm-4 advertisementCompany" style="height: 90px">
+                                                    <div style="margin: 0 auto">
+                                                        <a href="@advertisement.CompanyUrl" class="obr center" style="line-height: 90px; height: 90px">
+                                                            <span><img src="@advertisement.CompanyLogo" alt="@advertisement.Company" style="max-height: 90px" /></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="col-md-2 text-right">
                                                 <div class="row">
                                                     <a href="@advertisement.Url" class="btn btn-default violet">Detail</a>
                                                 </div>

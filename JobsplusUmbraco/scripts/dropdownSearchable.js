@@ -15,7 +15,7 @@
 
               // Setup default text field and class
               if (opts.textField == null) {
-                  $t.before("<input type='textbox' id='__searchit" + $counter + "'><br>");
+                  $t.before("<input type='textbox' id='__searchit" + $counter + "'>");
                   opts.textField = $('#__searchit' + $counter);
               }
               if (opts.textField.length > 1) opts.textField = $(opts.textField[0]);
@@ -35,6 +35,7 @@
                       .css("overflow", "hidden")
                       .css("border", "solid grey 1px")
                       .css("position", "absolute")
+                      .css("z-index", "10000")
                       .hide();
                   if (opts.dropDownClass) opts.wrp.addClass(opts.dropDownClass);
               }
@@ -138,7 +139,7 @@
           dropDownClass: null,
           size: 5,
           filtered: true,
-          noElementText: "No elements found",
+          noElementText: "... nic nenalezeno ...",
           //MY CODE------------------------------------------
           selected: false
           //MY CODE ENDS ------------------------------------

@@ -99,6 +99,12 @@
 .advertisementBody {
     margin: 10px 2px;
 }
+.advertisementName{
+    z-index: 1000;
+}
+.advertisementCompany {
+    z-index: 1200;
+}
 .advertisementBottom {
     line-height: 46px;
     text-transform: uppercase;
@@ -149,6 +155,10 @@
         font-size: 14px;
         text-transform: none;
         color: #686868;
+    }
+
+    .detailAdvertisementTop input {
+        margin-top: 6px;
     }
 
 @media (max-width: 992px) {    
@@ -231,6 +241,21 @@
     font-weight: bold;
     text-align: center;
     padding: 4px 6px;
+}
+
+.loggedInButtons {
+    width: 440px;
+    text-align: right;
+}
+.loggedInButtons p {
+   padding-right: 10px;
+   line-height: 34px;
+    color: #fff;
+}
+.loggedInButtons .left,
+.loggedInButtons form
+ {
+    display: inline-block;
 }
 
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

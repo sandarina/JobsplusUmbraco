@@ -16,13 +16,7 @@
     Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
 
     var logoutModel = new PostRedirectModel();
-    
-    @*
-        Here you can specify a redirect URL for after logging out, by default umbraco will simply
-        redirect to the current page. Example to redirect to the home page:
-        
-        logoutModel.RedirectUrl = "/"; 
-    *@
+    logoutModel.RedirectUrl = "/"; 
 }
 
 @* NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed *@
@@ -30,15 +24,16 @@
 
 @if (loginStatusModel.IsLoggedIn)
 {
-    <p>@loginStatusModel.Name</p>
-	<a href="/uzivatel/profil/" class="btn btn-default">Můj profil</a>
+    <div class="loggedInButtons">
+        <p class="left">@loginStatusModel.Name</p>
+        <a href="/uzivatel/profil/" class="btn btn-default left">Můj profil</a>
+        @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout", new { @class = "left" }))
+        {
+        <button class="btn btn-default">Odhlásit</button>
 
-    using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
-    {
-         <button class="btn btn-default">Odhlásit</button>
-    
         @Html.HiddenFor(m => logoutModel.RedirectUrl)
-    }
+        }
+    </div>
 }
 else
 {

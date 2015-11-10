@@ -35,7 +35,7 @@
                         {
                             className = "col-md-8 col-sm-8";
                         }
-                        <div class="@className">
+                        <div class="@className advertisementName">
                             <div class="row">
                                 @itemAdvertisement.Parent.Parent.Name
                             </div>
@@ -66,7 +66,7 @@
                     <div class="row advertisementBottom">
                         <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @itemAdvertisement.GetPropertyValue("aRequiredEducation")</div>
                         <div class="col-md-6 col-sm-6"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
-                        <div class="col-md-2"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue("aZtp") == "1" ? "ANO" : "NE") </div>
+                        <div class="col-md-2"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue<bool>("aZtp") == true ? "ANO" : "NE") </div>
                     </div>
                 </div>
             </div>
@@ -75,21 +75,21 @@
             @{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
     </div>
     if (count > 0)
-    { 
-    <div class="col-md-12 text-center">
-        <a href="/najit-praci/" class="btn btn-default violet">Dalších <b><i>@count</i></b> inzerátů</a>
-    </div>
+    {
+        <div class="col-md-12 col-sm-12 advertisementCompany text-center">
+            <a href="/najit-praci/" class="btn btn-default violet">Dalších <b><i>@count</i></b> inzerátů</a>
+        </div>
     }
 }
 
 
-        @helper RenderImage(dynamic item, string url)
+@helper RenderImage(dynamic item, string url)
 {
-        <div class="col-md-2 col-sm-4" style="height: 90px">
-            <div style="margin: 0 auto">
-                <a href="@url" class="obr center" style="line-height: 90px; height: 90px">
-                    <span><img src="@item.umbracoFile" alt="@item.Name" style="max-height: 90px" /></span>
-                </a>
-            </div>
-        </div>
+<div class="col-md-2 col-sm-4" style="height: 90px">
+    <div style="margin: 0 auto">
+        <a href="@url" class="obr center" style="line-height: 90px; height: 90px">
+            <span><img src="@item.umbracoFile" alt="@item.Name" style="max-height: 90px" /></span>
+        </a>
+    </div>
+</div>
 }

@@ -27,10 +27,10 @@
                             @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
                         </div>
                         <div class="row btnRedirect">
-                            <div class="col-md-6 sIsZTP left">
-                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP)</span><span class="lblIsZTP white fs12 uppercase">ZTP</span></span>
+                            <div class="col-md-8 sIsZTP left">
+                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP)</span><span class="lblIsZTP white fs12 uppercase">vhodné pro ZTP</span></span>
                             </div>
-                            <div class="col-md-6 btnFind">
+                            <div class="col-md-4 btnFind">
                                 <span><input type="submit" value="Hledat  >" /></span>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
 				<div class="row">
                     <div class="col-md-4">
                         <div id="divTOPAdvertisementList" class="tab">
-                            Inzeráty na práci @{ Html.RenderPartial("pvCountAllAdvertisement"); }
+                            Volné pracovní pozice @{ Html.RenderPartial("pvCountAllAdvertisement"); }
                         </div>
                     </div>
                     <div class="col-md-4">

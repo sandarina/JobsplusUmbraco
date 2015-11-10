@@ -1,0 +1,140 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MemberCandidate>
+@using JobsplusUmbraco.Models
+@{
+    var success = TempData["EditCandidateIsSuccess"] != null;
+}
+<br />
+<div class="row">
+    @if (Members.IsLoggedIn())
+    {
+        if (success)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Provedené změny Vašeho profilu jsou úspěšně uloženy!
+            </div>
+        }
+    }
+    <div class="col-md-2">
+        <h2 class="violet-color">Můj profil</h2>
+    </div>
+    <div class="col-md-10">
+        @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+        {
+            <div class="alert alert-error">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                <b>@Html.ValidationSummary(false, "Ajaj, něco nám ještě chybí: ")</b>
+            </div>
+        }
+
+        @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.EditCandidateController>("EditCandidateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.Email)
+            @Html.HiddenFor(m => m.Password)
+            @Html.HiddenFor(m => m.Confirm)
+
+            <div class="row">
+                <h3>Něco málo o Vás...</h3>
+            </div><br />
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control col-mb-6", placeholder = "Jméno" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control col-mb-6", placeholder = "Příjmení" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <div class="input-group date" id="birthDate">
+                        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", placeholder = "Datum narození" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <div class="input-group date" id="phone">
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Telefon" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="checkbox col-md-12">
+                    <label>
+                        @Html.CheckBoxFor(m => m.RegistrationUP, new { @class = "RegistrationUP" })
+                        @Html.DisplayNameFor(m => m.RegistrationUP)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <div class="input-group date" id="registrationUPFrom">
+                        @Html.TextBoxFor(m => m.RegistrationUPFrom, new { @class = "form-control", placeholder = "Den registrace" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-8">
+                    @Html.TextBoxFor(m => m.Town, new { @class = "form-control col-mb-12", placeholder = "Město, pod něž spadá Váš úřad práce" })
+                </div>
+            </div><br />
+            <div class="row">
+                <h3>Životopis</h3>
+                @if (!string.IsNullOrEmpty(TempData["EditCandidateCV"]))
+                {
+                    <p>životopis existuje</p>
+                }
+                <p>Pro nahrátí nebo změnu Vašeho životopisu použijte pole níže:</p>
+            </div><br />
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <input type="file" name="cv" placeholder="Životopis" />
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="input-group date" id="comments" style="width: 100%">
+                        @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", placeholder = "Poznámky", rows = 5, style = "width:100%" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h4 class="violet-color">Důležité sdělení!</h4>
+                <p class="violet-color">Vážení zájemci o pracovní pozici, na této stránce aktuálně pracujeme. Již brzy budete moci údaje na svům profilu upravovat.</p>
+                <p class="violet-color">Děkujeme za pochopení!</p>
+                <!--<button id="EditCandidateFormSubmit" type="submit" class="btn btn-primary input-medium">Uložit změny</button>-->
+            </div>
+
+
+            <script type="text/javascript">
+                $(function () {
+                    var d = new Date();
+
+                    var month = d.getMonth() + 1;
+                    var day = d.getDate();
+
+                    var datenow = d.getFullYear() + '/' +
+                        (month < 10 ? '0' : '') + month + '/' +
+                        (day < 10 ? '0' : '') + day;
+
+                    $('#birthDate').datetimepicker({
+                        viewMode: 'years',
+                        format: 'DD.MM.YYYY',
+                        locale: 'cs'
+                    });
+                    $('#registrationUPFrom').datetimepicker({
+                        format: 'DD.MM.YYYY',
+                        locale: 'cs',
+                        minDate: '1930/1/1',
+                        maxDate: datenow
+                    });
+                });
+            </script>
+        }
+    </div>
+</div>
+

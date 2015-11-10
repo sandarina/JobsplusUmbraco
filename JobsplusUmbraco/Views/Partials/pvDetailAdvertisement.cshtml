@@ -10,7 +10,7 @@
             @CurrentPage.Name
         </div>
         <div class="col-md-4">
-            <input type="submit" value="Mám zájem o tuto pozici >" class="btn btn-default" />
+            <input type="submit" value="MÁM ZÁJEM o tuto pozici >" class="btn btn-default" />
         </div>
     </div>
     <div class="row">
@@ -20,12 +20,58 @@
                 <br />
                 @CurrentPage.aContent
             </div>
-            <div class="col-md-4">
-
+            <div class="row advertisementBottom">
+                <div class="col-md-6 col-sm-6"><span>Vzdělání</span> @CurrentPage.aRequiredEducation</div>
+                <div class="col-md-4 col-sm-6"><span>Typ</span> @CurrentPage.aTypeOfWork</div>
+                <div class="col-md-2"><span>ZTP</span>  @(CurrentPage.aZtp == true ? "ANO" : "NE") </div>
             </div>
         </div>
         <div class="col-md-4">
             <!-- DETAIL FIRMY -->
+            @{
+                var cContent = company.Children().Where("Visible");
+            }
+            @if (cContent.Any())
+            {
+                var cAdvertisement = cContent.First().Children.Where("Visible");
+                if (cAdvertisement.Any())
+                {
+                    IPublishedContent mediaLogo; IPublishedContent mediaObr;
+                    try
+                    {
+                        mediaLogo = Umbraco.Media(cContent.First().cLogo);
+                        mediaObr = Umbraco.Media(cContent.First().cBackground);
+                    }
+                    catch
+                    {
+                        mediaLogo = null; mediaObr = null;
+                    }
+                    <br /><h3 class="center">O společnosti</h3><br />
+                    <div class="detailAdvertisementCompany">
+                        <div class="nahled center">
+                            <br />
+                            @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                            {
+                                @RenderImage(mediaLogo, company.Url);
+                            }
+                            @if (mediaObr != null && mediaObr.DocumentTypeAlias == "Image")
+                            {
+                                @RenderImage(mediaObr, company.Url);
+                            }
+                            <div class="row"><h4>@if (company.cTop) { <span class="topSign">TOP</span> }<a class="underline lightblue" href="@company.Url">@company.Name</a></h4></div>
+                            <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @cAdvertisement.Count()</span></div><br />
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
+@helper RenderImage(dynamic item, string url)
+{
+    <div class="row">
+        <a href="@url" class="obr center" style="height: 100px">
+            <img src="@item.umbracoFile" alt="@item.Name" style="max-height: 100px">
+        </a>
+    </div>
+}

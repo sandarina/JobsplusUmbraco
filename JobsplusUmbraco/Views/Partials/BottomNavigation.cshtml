@@ -8,10 +8,7 @@
     <strong>Najdete nás</strong>
     <ul>
         <li>
-            <a href="https://www.facebook.com/Umbraco" target="_blank">Facebook</a>
-        </li>
-        <li>
-            <a href="https://twitter.com/umbracoproject" target="_blank">Twitter</a>
+			<a href="#">Facebookové stránky. <br />Již brzy!</a>
         </li>
     </ul>
 </div>
@@ -19,7 +16,7 @@
 @if (clanky.Any())
 {
     <div class="col-md-6  text-right">
-        <strong>Články</strong>
+        <strong>Ostatní</strong>
         <ul>
             @foreach (var clanek in clanky.First().Children.Where("Visible"))
             {

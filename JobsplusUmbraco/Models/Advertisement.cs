@@ -28,5 +28,7 @@ namespace JobsplusUmbraco.Models
         public string Content { get; set; }
         public string Advertiser { get; set; }
         public string Company { get; set; }
+        public string CompanyUrl { get; set; }
+        public string CompanyLogo { get; set; }
     }
 }

@@ -22,7 +22,9 @@
 	    $('#tBody .txtWorkingField input.searchbox').attr("placeholder", "Kde?");
 	    $('#tBody .txtRegion input.searchbox').attr("placeholder", "Obor nebo pozice?");
 	    $('#searchRegions input.searchbox').attr("placeholder", "Kde?");
+	    $('#searchRegions input.searchbox').addClass("form-control");
 	    $('#searchWorkingFields input.searchbox').attr("placeholder", "Obor nebo pozice?");
+	    $('#searchWorkingFields input.searchbox').addClass("form-control");
 	});
 
 	$('#tBody .txtWorkingField input.searchbox').prop("autocomplete", "off"); 
