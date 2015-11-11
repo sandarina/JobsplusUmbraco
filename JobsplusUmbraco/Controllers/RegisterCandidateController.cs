@@ -57,27 +57,27 @@ namespace JobsplusUmbraco.Controllers
             if (model.CV != null && model.CV.InputStream != null)
             {
                 var filename = Path.GetFileName(model.CV.FileName);
-                var path = Server.MapPath("~/media/cv/");
-                var dir = new DirectoryInfo(path);
+                var path = "/media/cv/";
+                var fullPath = Server.MapPath("~" + path);
+                var dir = new DirectoryInfo(fullPath);
                 if (!dir.Exists)
                     dir.Create();
                 path += RemoveDiacritics(model.Surname).ToLower() + "_" + model.BirthDate.Value.ToString("yyyy-MM-dd") + "/";
-                var dirUser = new DirectoryInfo(path);
+                var dirUser = new DirectoryInfo(fullPath);
                 if (!dirUser.Exists)
                     dirUser.Create();
 
-                var filepath = path + filename;
                 try 
                 { 
-                    model.CV.SaveAs(filepath); 
+                    model.CV.SaveAs(fullPath + filename); 
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě: <br /><h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
                     return CurrentUmbracoPage();
                 }
-                
-                member.SetValue("CV", filepath);
+
+                member.SetValue("CV", path + filename);
             }
             //member.SetValue("CV", model.CV);
 
