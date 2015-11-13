@@ -35,62 +35,62 @@
     <![endif]-->
   </head>
 
-  <body>
+<body>
     <header>
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-8 col-sm-12 col-md-4">
-			<a href="@home.Url">
-            	<div class="tLogo"></div>
-			</a>
-          </div>
-          <div class="col-sm-12 col-md-8">
-				<div class="login-buttons pull-right">
-						@Umbraco.RenderMacro("LoginStatus")
-				</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-sm-12 col-md-4">
+                    <a href="@home.Url">
+                        <div class="tLogo"></div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-8">
+                    <div class="login-buttons pull-right">
+                        @Umbraco.RenderMacro("LoginStatus")
+                    </div>
 
-            <nav>
-			  
-              @{ Html.RenderPartial("pvMainNavigation"); }
-            </nav>
-          </div>
-        </div>
-      </div>
+                    <nav>
 
-      <div id="toggle" class="toggle">
-        <a href="#" class="cross"><span></span></a>
-      </div>
-    </header>
-	
-    @RenderBody()
-
-    <footer class="field dark">
-      <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <div class="row">
-                    @{ Html.RenderPartial("BottomNavigation"); }
+                        @{ Html.RenderPartial("pvMainNavigation"); }
+                    </nav>
                 </div>
             </div>
         </div>
-        <div class="row bLogo">
-           <span class="fText">Copyright &copy; jobsplus.cz | Provozovatelem portálu je <a href="http://www.salmaplus.cz/" target="_blank">SALMA PLUS s.r.o.</a>
+
+        <div id="toggle" class="toggle">
+            <a href="#" class="cross"><span></span></a>
         </div>
-      </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="field dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="row">
+                        @{ Html.RenderPartial("BottomNavigation"); }
+                    </div>
+                </div>
+            </div>
+            <div class="row bLogo">
+                <span class="fText">Copyright &copy; jobsplus.cz | Provozovatelem portálu je <a href="http://www.salmaplus.cz/" target="_blank">SALMA PLUS s.r.o.</a>
+            </div>
+        </div>
     </footer>
-    
+
     <!-- Javascripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.min.js"></script>
-	<script src="/scripts/fanoe.js"></script>
-	<script src="/scripts/scripts.js"></script>
-	<script src="/scripts/dropdownSearchable.js"></script>
+    <script src="/scripts/fanoe.js"></script>
+    <script src="/scripts/scripts.js"></script>
+    <script src="/scripts/dropdownSearchable.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js" type="text/javascript"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/localization/messages_cs.js" type="text/javascript"></script>
     <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.js" type="text/javascript"></script>
-  </body>
+</body>
 </html>

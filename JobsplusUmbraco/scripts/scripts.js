@@ -1,4 +1,9 @@
-(function($) {
+(function ($) {
+
+    $('#advertisementReply').on('shown.bs.modal', function () {
+        $('#EditCandidateFormSubmit').focus()
+    })
+
 	$('#aboutCompany').hide();
 	$('#advertisementList').show();
 	

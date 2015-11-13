@@ -2,6 +2,30 @@
 @{
     var company = CurrentPage.Parent.Parent;
 }
+
+<div class="modal fade" id="advertisementReply">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mám zájem o tuto pozici ...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-in">
+                    @Html.Action("Index", "AdvertisementReplyForm", new { sendToEmail = "info@salmaplus.cz" })
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (TempData["AdvertisementReplyJS"] != null)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#advertisementReply').modal('show');
+        });
+    </script>
+}
 <div class="col-md-12 detailAdvertisement">
     <div class="row detailAdvertisementTop">
         <div class="col-md-8">
@@ -10,7 +34,7 @@
             @CurrentPage.Name
         </div>
         <div class="col-md-4">
-            <input type="submit" value="MÁM ZÁJEM o tuto pozici >" class="btn btn-default" />
+            <input type="submit" value="MÁM ZÁJEM o tuto pozici >" data-toggle="modal" data-target="#advertisementReply" class="btn btn-default" />
         </div>
     </div>
     <div class="row">
@@ -58,7 +82,12 @@
                             {
                                 @RenderImage(mediaObr, company.Url);
                             }
-                            <div class="row"><h4>@if (company.cTop) { <span class="topSign">TOP</span> }<a class="underline lightblue" href="@company.Url">@company.Name</a></h4></div>
+                            <div class="row">
+                                <h4>
+                                    @if (company.cTop)
+                                    { <span class="topSign">TOP</span> }<a class="underline lightblue" href="@company.Url">@company.Name</a>
+                                </h4>
+                            </div>
                             <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @cAdvertisement.Count()</span></div><br />
                         </div>
                     </div>

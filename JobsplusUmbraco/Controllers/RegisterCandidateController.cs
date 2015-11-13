@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -62,14 +60,15 @@ namespace JobsplusUmbraco.Controllers
                 var dir = new DirectoryInfo(fullPath);
                 if (!dir.Exists)
                     dir.Create();
-                path += RemoveDiacritics(model.Surname).ToLower() + "_" + model.BirthDate.Value.ToString("yyyy-MM-dd") + "/";
+                path += JobsplusHelpers.RemoveDiacritics(model.Surname).ToLower() + "_" + model.BirthDate.Value.ToString("yyyy-MM-dd") + "/";
+                fullPath = Server.MapPath("~" + path); 
                 var dirUser = new DirectoryInfo(fullPath);
                 if (!dirUser.Exists)
                     dirUser.Create();
 
-                try 
-                { 
-                    model.CV.SaveAs(fullPath + filename); 
+                try
+                {
+                    model.CV.SaveAs(fullPath + filename);
                 }
                 catch (Exception ex)
                 {
@@ -96,23 +95,6 @@ namespace JobsplusUmbraco.Controllers
             TempData.Add("RegisterCandidateIsSuccess", true);
             TempData.Add("Email", model.Email);
             return RedirectToCurrentUmbracoPage();
-        }
-
-        static string RemoveDiacritics(string text)
-        {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
-
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }

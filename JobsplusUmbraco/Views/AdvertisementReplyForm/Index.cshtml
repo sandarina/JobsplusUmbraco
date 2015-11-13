@@ -1,0 +1,135 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<AdvertisementReplyForm>
+@using JobsplusUmbraco.Models
+@using Umbraco.Web.Controllers
+@using Umbraco.Web.Models
+
+@{    
+    var loginStatusModel = Members.GetCurrentLoginStatus();
+    var loginModel = new LoginModel();
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+@if (TempData["AdvertisementReplyIsSuccess"] != null && (bool)TempData["AdvertisementReplyIsSuccess"] == true)
+{
+    <div class="row">
+        <h2>Vaše reakce byl úspěšně odeslána!</h2><br />
+        <p>
+            Děkujeme, že jste se projevili zájem o tuto pracovní pozici, Vaše údaje budou poskytnuty
+            INZERUJÍCÍMU zaměstnavateli, který se Vám v brzké době ozve.
+        </p>
+    </div>
+}
+else
+{
+    if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+    {
+        <div class="alert alert-danger" role="alert">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                    Ajaj, něco nám ještě chybí:
+                </div>
+            </div>
+            <div class="row">
+                <br />
+                <div class="col-md-12">
+                    <b>@Html.ValidationSummary(false)</b>
+                </div>
+            </div>
+        </div>
+    }
+
+    if (Model.AdvertisementNodeId == null)
+    {
+        <p>Litujeme, ale nacházíte se na stránce, která není v detailu inzerátu. Reakce na inzerát není možná!</p>
+    }
+    else
+    {
+        if (Model.CandidateMemberId != null)
+        {
+            using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementReplyFormController>("AdvertisementReplyCandidateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.SendToEmail)
+                @Html.HiddenFor(m => m.CandidateMemberId)
+                @Html.HiddenFor(m => m.AdvertisementNodeId)
+                @Html.HiddenFor(m => m.AdvertisementName)
+                @Html.HiddenFor(m => m.AdvertisementUrl)
+                @Html.HiddenFor(m => m.CVPath)
+                <!-- INFO DKO
+                <div class="row">
+                    <h3>@Model.AdvertisementName</h3>
+                    <p>AdvertisementUrl: @Model.AdvertisementUrl</p>
+                    <p>AdvertisementNodeId: @Model.AdvertisementNodeId</p>
+                    <p>CandidateMemberId: @Model.CandidateMemberId</p>
+                    <p>SendToEmail: @Model.SendToEmail</p>
+                </div>-->
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class=" input-group date" id="loginEmail">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Váš e-mail" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        @if (!string.IsNullOrEmpty(@Model.CVPath))
+                        {
+                            <p>Váš aktuální životopis, který bude odeslán: <a href="@Model.CVPath" class="btn btn-default violet" target="_blank">Zobrazit životopis</a></p>
+                        }
+                        else
+                        {
+                            <p>Zatím jste nenahráli Váš životopis, ale můžete to napravit nyní. Životopis Vám uložíme do profilu a příště již tento krok nebude nutný.</p>
+                            <input type="file" name="NewCV" placeholder="Životopis" />
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div class="input-group date" id="comments" style="width: 100%">
+                            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "Poznámky", rows = 5, style = "width:100%" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <table style="width:100%">
+                            <tr>
+                                <td style="width: 25px; vertical-align: top">@Html.CheckBoxFor(m => m.Confirm, new { @class = "Confirm" })</td>
+                                <td><label for="Confirm">souhlasím se zpracováním osobních údajů, <a href="/clanky/obchodni-podminky/" target="_blank">obchodní podmínkami</a> a <a href="/clanky/podminky-uziti/" target="_blank">podmínky užití</a></label></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="AdvertisementReplyCandidateSubmit" type="submit" class="btn btn-default violet">Odeslat</button>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Na inzerát mohou reagovat pouze registrovaní uživatelé.</p><br />
+            <h3>Přihlásit se</h3><br />
+            using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+            {
+                <div class="form-group">
+                    @Html.ValidationSummary("loginModel", true)
+
+                    @Html.LabelFor(m => loginModel.Username, "E-mail (přihlašovací jméno)")
+                    @Html.TextBoxFor(m => loginModel.Username, new { @class = "form-control", placeholder = "Email" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => loginModel.Password, "Heslo")
+                    @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control", placeholder = "Heslo" })
+                </div>
+                <button class="btn btn-default violet">Přihlásit se</button>
+            }<br />
+            <p>Nemáte dosud založený účet? Není nic jednoduššího než se <a href="/vip-vstup/registrace/">zaregistrovat</a>. Zabere to jen minutku...</p>
+        }
+    }
+}
+

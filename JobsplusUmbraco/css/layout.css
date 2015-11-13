@@ -1,3 +1,7 @@
+/***** BOOTSTRAP MODAL *****/
+.modal-dialog { z-index: 20000; }
+.modal-body-in { margin: 0 20px }
+
 .violet-color {
     color: rgb(164,40,162);
 }

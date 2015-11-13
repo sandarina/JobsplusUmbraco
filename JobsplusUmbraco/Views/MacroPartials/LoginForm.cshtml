@@ -20,8 +20,6 @@
     Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
     Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
 }
-
-@* NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed *@
 @Html.RenderJsHere()
 
 <h2 class="violet-color uppercase">Přihlásit se</h2>
@@ -53,8 +51,8 @@ else
     <div>
         <p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p>
         <div class="row">
-            <div class="col-mb-6"><a href="/uzivatel/profil/" class="btn btn-default violet">Můj profil</a></div>
-            <div class="col-mb-6">
+            <div class="col-md-6"><a href="/uzivatel/profil/" class="btn btn-default violet">Můj profil</a></div>
+            <div class="col-md-6">
                 @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
                 {
                     <button class="btn btn-default gray">Odhlásit</button>
