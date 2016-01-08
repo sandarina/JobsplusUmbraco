@@ -115,8 +115,8 @@ namespace JobsplusUmbraco.Controllers
             mail.IsBodyHtml = true;
             mail.Body = "<p>Dobrý den,<br />na webu jobsplus.cz projevil uživatel zájem o pracovní pozici. Prosím věnujte poroznost následujícím údajům a ozvěte se uživateli, co nejdříve.</p><br /><br />" +
                 "<p><b>Pozice</b><p>"+
-                "<p><a href=\"" + model.AdvertisementUrl + "\">" + model.AdvertisementName + "</a> (" + model.AdvertisementUrl + ")</p><br />" +
-                "<p><b>Zájemce</a><b><p>" + member.Name + "</p><br />" +
+                "<p><a href=\"http://www.jobsplus.cz" + model.AdvertisementUrl + "\">" + model.AdvertisementName + "</a> (http://www.jobsplus.cz" + model.AdvertisementUrl + ")</p><br />" +
+                "<p><b>Zájemce</a></b><p>" + member.Name + "</p><br />" +
                 "<p><b>Email zájemce</b><p>" + member.Email + "</p><br />" +
                 "<p><b>Zpráva od zájemce</b></p>" +
                 "<p>" + model.Comment + "</p><br /><br />" +
@@ -137,7 +137,7 @@ namespace JobsplusUmbraco.Controllers
             #endregion
 
             #region Odeslat email zajemci
-            var mailCandidate = new MailMessage("info@jobsplus.cz", member.Email);
+            var mailCandidate = new MailMessage("info@jobsplus.cz", model.Email);
             if (!string.IsNullOrEmpty(filepath))
             {
                 var atachementPath = Server.MapPath("~" + filepath);
@@ -149,8 +149,8 @@ namespace JobsplusUmbraco.Controllers
             mailCandidate.IsBodyHtml = true;
             mailCandidate.Body = "<p>Dobrý den,<br />děkujeme Vám za projevený zájem o pracovní pozici na webu jobsplus.cz. Vaše údaje byly úspěšně odeslány inzerujícímu zaměstnavateli, který Vás bude v brzké době kontaktovat.</p><br /><br />" +
                  "<p><b>Pozice</b><p>" +
-                "<p><a href=\"" + model.AdvertisementUrl + "\">" + model.AdvertisementName + "</a> (" + model.AdvertisementUrl + ")</p><br />" +
-                "<p><b>Zájemce</a><b><p>" + member.Name + "</p><br />" +
+                "<p><a href=\"http://www.jobsplus.cz" + model.AdvertisementUrl + "\">" + model.AdvertisementName + "</a> (http://www.jobsplus.cz" + model.AdvertisementUrl + ")</p><br />" +
+                "<p><b>Zájemce</a></b><p>" + member.Name + "</p><br />" +
                 "<p><b>Email zájemce</b><p>" + member.Email + "</p><br />" +
                 "<p><b>Zpráva od zájemce</b></p>" +
                 "<p>" + model.Comment + "</p><br /><br />" +

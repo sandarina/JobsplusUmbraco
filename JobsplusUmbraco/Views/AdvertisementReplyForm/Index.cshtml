@@ -13,11 +13,19 @@
 @if (TempData["AdvertisementReplyIsSuccess"] != null && (bool)TempData["AdvertisementReplyIsSuccess"] == true)
 {
     <div class="row">
-        <h2>Vaše reakce byl úspěšně odeslána!</h2><br />
+        <div class="alert alert-success" role="alert">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> &nbsp;
+                    Vaše reakce byl úspěšně odeslána!
+                </div>
+            </div>
+        </div>
         <p>
             Děkujeme, že jste se projevili zájem o tuto pracovní pozici, Vaše údaje budou poskytnuty
             INZERUJÍCÍMU zaměstnavateli, který se Vám v brzké době ozve.
-        </p>
+        </p><br />
+        <p><button type="button" class="btn btn-default violet" data-dismiss="modal">Zavřít</button></p>
     </div>
 }
 else
