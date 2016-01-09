@@ -1061,6 +1061,10 @@ nav li > ul > li > ul {
     font-weight: normal;
 }
 
+#workingField, #region {
+    z-index: 1000;
+}
+
 #tBody .txtWorkingField {
 	margin: 45px 0px 0px 0px;
 }

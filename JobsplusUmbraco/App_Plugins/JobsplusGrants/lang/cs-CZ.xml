@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="cs" intName="Czech" localName="česky" lcid="5" culture="cs-CZ">
+  <creator>
+    <name>Darina Kourilova</name>
+    <link>http://www.sandarina.cz</link>
+  </creator>
+  <area alias="sections">
+    <key alias="JobsplusGrants">Dotace</key>
+  </area>
+</language>

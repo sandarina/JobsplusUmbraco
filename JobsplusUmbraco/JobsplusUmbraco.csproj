@@ -310,9 +310,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\grantsdashboard.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.controller.js" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.html" />
+    <Content Include="App_Plugins\JobsplusGrants\grants.resource.js" />
     <Content Include="App_Plugins\Grid\Config\FanoeConfig.txt" />
     <Content Include="App_Plugins\Grid\Editors\Views\media_with_description.html" />
     <Content Include="App_Plugins\Grid\Editors\Views\quote_with_description.html" />
+    <Content Include="App_Plugins\JobsplusGrants\lang\cs-CZ.xml" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dashboard\memberListView.controller.js" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dashboard\memberListView.html" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\edit.html" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\filter.html" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.edit.controller.js" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.filter.controller.js" />
+    <Content Include="App_Plugins\MemberManager\css\memberListView.css" />
+    <Content Include="App_Plugins\MemberManager\resources\member.resource.js" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -386,6 +399,8 @@
     <Content Include="App_Plugins\Grid\Editors\Render\quote_with_description.cshtml" />
     <Content Include="App_Browsers\Form.browser" />
     <Content Include="App_Browsers\w3cvalidator.browser" />
+    <Content Include="App_Plugins\MemberManager\package.manifest" />
+    <None Include="App_Plugins\JobsplusGrants\package.manifest" />
     <None Include="Properties\PublishProfiles\Jobsplus-Publish Local.pubxml" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\jquery-1.9.0.js" />
@@ -3109,6 +3124,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\jobsplus.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jobsplus.Core\Jobsplus.Backoffice.csproj">
+      <Project>{fb318342-bb85-47d5-aed8-f84de380fa1d}</Project>
+      <Name>Jobsplus.Backoffice</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
