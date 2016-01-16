@@ -48,7 +48,7 @@ namespace JobsplusUmbraco.Models
         public string Comment { get; set; }
 
         /// <summary>
-        /// Email, na který dojde reakce zájemce o pracovní pozici.
+        /// Email správce aplikace, na který dojde reakce zájemce o pracovní pozici.
         /// </summary>
         public string SendToEmail { get; set; }
 

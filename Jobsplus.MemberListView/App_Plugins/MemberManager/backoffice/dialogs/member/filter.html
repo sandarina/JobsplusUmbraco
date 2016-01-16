@@ -10,16 +10,16 @@
     <div class="umb-panel-body with-footer">
         <div class="umb-pane filter-options">
             <div class="umb-el-wrap">
-                <label class="control-label"><localize key="Search">Search</localize></label>
+                <label class="control-label">Search</label>
                 <div class="controls controls-row">
                     <input type="text" ng-model="filter.filter" />
                 </div>
             </div>
             <div class="umb-el-wrap">
-                <label class="control-label"><localize key="MemberType">Member Type</localize></label>
+                <label class="control-label">Member Type</label>
                 <div class="controls controls-row">
                     <select ng-model="filter.memberType">
-                        <option value="">- <localize key="All">All</localize> -</option>
+                        <option value="">- All -</option>
                         <option ng-repeat="memberType in memberTypes" ng-value="{{memberType.alias}}">{{memberType.name}}</option>
                     </select>
                 </div>
@@ -28,9 +28,9 @@
                 <label class="control-label">Approved</label>
                 <div class="controls controls-row">
                     <select ng-model="filter.f_umbracoMemberApproved">
-                        <option value="">- <localize key="All">All</localize> -</option>
-                        <option value="true,1"><localize key="ApprovedOnly">Approved Only</localize></option>
-                        <option value="false,0"><localize key="SuspendedOnly">Suspended Only</localize></option>
+                        <option value="">- All -</option>
+                        <option value="true,1">Approved Only</option>
+                        <option value="false,0">Suspended Only</option>
                     </select>
                 </div>
             </div>
@@ -38,26 +38,10 @@
                 <label class="control-label">Locked Out</label>
                 <div class="controls controls-row">
                     <select ng-model="filter.f_umbracoMemberLockedOut">
-                        <option value="">- <localize key="All">All</localize> -</option>
-                        <option value="true,1"><localize key="LockedOutOnly">Locked Out Only</localize></option>
-                        <option value="false,0"><localize key="ActiveOnly">Active Only</localize></option>
+                        <option value="">- All -</option>
+                        <option value="true,1">Locked Out Only</option>
+                        <option value="false,0">Active Only</option>
                     </select>
-                </div>
-            </div>
-            <div class="umb-el-wrap">
-                <label class="control-label">Registrovaný na ÚP?</label>
-                <div class="controls controls-row">
-                    <select ng-model="filter.f_RegistrationUP">
-                        <option value="">- <localize key="All">All</localize> -</option>
-                        <option value="1">Ano</option>
-                        <option value="0">Ne</option>
-                    </select>
-                </div>
-            </div>
-            <div class="umb-el-wrap">
-                <label class="control-label">Pouze z životopisem</label>
-                <div class="controls controls-row">
-                    <input type="checkbox" ng-model="filter.f_CV" ng-true-value="[a* TO z*]" ng-false-value="" />
                 </div>
             </div>
             <!--
@@ -82,7 +66,7 @@
                 </a>
                 <div class="btn-group dropup">
                     <a class="btn btn-success" href="#" ng-click="filterSearch()" prevent-default>
-                        <localize key="general_apply_filter">Apply Filter</localize>                        
+                        Apply Filter
                     </a>
                 </div>
             </div>

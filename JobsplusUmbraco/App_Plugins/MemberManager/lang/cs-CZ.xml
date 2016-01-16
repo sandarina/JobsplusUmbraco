@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="cs" intName="Czech" localName="česky" lcid="5" culture="cs-CZ">
+  <creator>
+    <name>Darina Kourilova</name>
+    <link>http://www.sandarina.cz</link>
+  </creator>
+  <area alias="MemberManager">
+    <key alias="All">Vše</key>
+    <key alias="LockedOutOnly">Pouze uzamčení</key>
+    <key alias="ActiveOnly">Pouze aktivní</key>
+    <key alias="ApprovedOnly">Pouze potvrzení</key>
+    <key alias="Search">Hledat</key>
+    <key alias="OnlyWithCV">Pouze s životopisem</key>
+    <key alias="general_apply_filter">Aplikovat filtr</key>
+  </area>
+</language>

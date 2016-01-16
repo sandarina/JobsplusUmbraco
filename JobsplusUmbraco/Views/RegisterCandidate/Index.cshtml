@@ -40,7 +40,7 @@
                     </div>
                     <div class="row"><br />
                         <div class="col-md-12">
-                            <b>@Html.ValidationSummary(false)</b>
+                            @HttpUtility.HtmlDecode(@Html.ValidationSummary(false).ToString()).ToMvcHtmlString()
                         </div>
                     </div>
                 </div>

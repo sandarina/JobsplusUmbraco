@@ -23,6 +23,41 @@ namespace Jobsplus.Backoffice.Models
                 db.CreateTable<Grant>(false);
             }
 
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusRegions"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<Region>(false);
+            }
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusDistricts"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<District>(false);
+            }
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusEmployDepartments"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<EmployDepartment>(false);
+            }          
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusGrantDefinitions"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<GrantDefinition>(false);
+            }  
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusGrantsGrantDefinitions"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<GrantGrantDefinition>(false);
+            }  
+            
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace JobsplusUmbraco
 {
@@ -29,6 +30,17 @@ namespace JobsplusUmbraco
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+    }
+}
+
+namespace System
+{
+    public static class StringExtension
+    {
+        public static MvcHtmlString ToMvcHtmlString(this string value)
+        {
+            return MvcHtmlString.Create(value);
         }
     }
 }

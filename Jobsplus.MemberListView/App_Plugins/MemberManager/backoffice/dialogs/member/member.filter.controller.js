@@ -46,13 +46,6 @@
         if ($scope.filter.f_umbracoMemberLockedOut) {
             displaySearch.push({ title: "Locked Out", value: $scope.filter.f_umbracoMemberLockedOut == "true,1" ? "Locked Out" : "Active" });
         }
-        if ($scope.filter.f_RegistrationUP) {
-            displaySearch.push({ title: "Registrovany na UP", value: $scope.filter.f_RegistrationUP == "1" ? "Ano" : "Ne" });
-        }
-        if ($scope.filter.f_CV) {
-            displaySearch.push({ title: "Pouze z zivotopisem", value: $scope.filter.f_CV != "" ? "Ano" : "" });
-        }
-
 
         return {
             filter: $scope.filter.filter,
@@ -60,8 +53,6 @@
             display: displaySearch,
             f_umbracoMemberApproved: !$scope.filter.f_umbracoMemberApproved ? "" : $scope.filter.f_umbracoMemberApproved,
             f_umbracoMemberLockedOut: !$scope.filter.f_umbracoMemberLockedOut ? "" : $scope.filter.f_umbracoMemberLockedOut,
-            f_RegistrationUP: !$scope.filter.f_RegistrationUP ? "" : $scope.filter.f_RegistrationUP,
-            f_CV: $scope.filter.f_CV != "" ? "[a* TO z*]" : "",
             //f_location: _processFilterList(displaySearch, "Locations", $scope.filter.f_location)
         };
     }

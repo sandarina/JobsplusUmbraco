@@ -106,6 +106,10 @@
       <HintPath>..\packages\Lucene.Net.2.9.4.1\lib\net40\Lucene.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MemberListView, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MemberListView.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=1.0.1559.20655, Culture=neutral">
       <HintPath>..\packages\UmbracoCms.Core.7.3.0\lib\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>True</Private>
@@ -325,6 +329,7 @@
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.edit.controller.js" />
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.filter.controller.js" />
     <Content Include="App_Plugins\MemberManager\css\memberListView.css" />
+    <Content Include="App_Plugins\MemberManager\lang\cs-CZ.xml" />
     <Content Include="App_Plugins\MemberManager\resources\member.resource.js" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
@@ -3087,7 +3092,9 @@
     <Content Include="Config\metablogConfig.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\ExamineIndex.config" />
+    <Content Include="Config\ExamineIndex.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\tFindJob.cshtml" />
