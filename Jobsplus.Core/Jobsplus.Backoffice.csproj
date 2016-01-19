@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\GrantsApiController.cs" />
+    <Compile Include="Controllers\JobTemplateApiController.cs" />
     <Compile Include="Models\RegisterEvents.cs" />
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
