@@ -17,13 +17,6 @@ namespace Jobsplus.Backoffice.Models
             var db = new DatabaseSchemaHelper(ctx.Database, applicationContext.ProfilingLogger.Logger, ctx.SqlSyntax);
 
             //Check if the DB table does NOT exist
-            if (!db.TableExist("JobsplusGrants"))
-            {
-                //Create DB table - and set overwrite to false
-                db.CreateTable<Grant>(false);
-            }
-
-            //Check if the DB table does NOT exist
             if (!db.TableExist("JobsplusRegions"))
             {
                 //Create DB table - and set overwrite to false
@@ -35,6 +28,13 @@ namespace Jobsplus.Backoffice.Models
             {
                 //Create DB table - and set overwrite to false
                 db.CreateTable<District>(false);
+            }
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusGrants"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<Grant>(false);
             }
 
             //Check if the DB table does NOT exist
@@ -57,7 +57,6 @@ namespace Jobsplus.Backoffice.Models
                 //Create DB table - and set overwrite to false
                 db.CreateTable<GrantGrantDefinition>(false);
             }  
-            
         }
     }
 }

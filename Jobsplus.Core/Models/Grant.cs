@@ -9,6 +9,67 @@ using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Jobsplus.Backoffice.Models
 {
+
+    /// <summary>
+    /// Kraje
+    /// </summary>
+    [TableName("JobsplusRegions")]
+    [PrimaryKey("Id", autoIncrement = true)]
+    public class Region
+    {
+        #region Ctor
+        public Region() { }
+        #endregion
+
+        #region Properties
+        [PrimaryKeyColumn(AutoIncrement = true)]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Název
+        /// </summary>
+        public string Name { get; set; }
+        #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    /// <summary>
+    /// Okres
+    /// </summary>
+    [TableName("JobsplusDistricts")]
+    [PrimaryKey("Id", autoIncrement = true)]
+    public class District
+    {
+        #region Ctor
+        public District() { }
+        #endregion
+
+        #region Properties
+        [PrimaryKeyColumn(AutoIncrement = true)]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Název
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Kraj
+        /// </summary>
+        [ForeignKey(typeof(Region))]
+        public int RegionId { get; set; }
+        #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
     #region Grants
     
     /// <summary>
@@ -39,7 +100,8 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Kraj
         /// </summary>
-        public Region RegionId { get; set; }
+        [ForeignKey(typeof(Region))]
+        public int RegionId { get; set; }
         #endregion
 
         public override string ToString()
@@ -66,7 +128,8 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Id dotačního programu
         /// </summary>
-        public Grant GrantId { get; set; }
+        [ForeignKey(typeof(Grant))]
+        public int GrantId { get; set; }
 
         /// <summary>
         /// Název
@@ -113,70 +176,13 @@ namespace Jobsplus.Backoffice.Models
     [TableName("JobsplusGrantsGrantDefinitions")]
     public class GrantGrantDefinition
     {         
-        public Grant GrantId { get; set; }
-
-        public GrantDefinition GrantDefinitionId { get; set; }
+        [ForeignKey(typeof(Grant))]
+        public int GrantId { get; set; }
+        
+        [ForeignKey(typeof(GrantDefinition))]
+        public int GrantDefinitionId { get; set; }
     }
     #endregion
-
-    /// <summary>
-    /// Kraje
-    /// </summary>
-    [TableName("JobsplusRegions")]
-    [PrimaryKey("Id", autoIncrement = true)]
-    public class Region
-    {
-        #region Ctor
-        public Region() { }
-        #endregion
-
-        #region Properties
-        [PrimaryKeyColumn(AutoIncrement = true)]
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Název
-        /// </summary>
-        public string Name { get; set; }
-        #endregion
-
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
-    
-    /// <summary>
-    /// Okres
-    /// </summary>
-    [TableName("JobsplusDistricts")]
-    [PrimaryKey("Id", autoIncrement = true)]
-    public class District
-    {
-        #region Ctor
-        public District() { }
-        #endregion
-
-        #region Properties
-        [PrimaryKeyColumn(AutoIncrement = true)]
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Název
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Kraj
-        /// </summary>
-        public int RegionId { get; set; }
-        #endregion
-
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
 
     /// <summary>
     /// Úřad práce
