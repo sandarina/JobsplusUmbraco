@@ -45,7 +45,7 @@ namespace Jobsplus.Backoffice.Models
             }          
 
             //Check if the DB table does NOT exist
-            /*if (!db.TableExist("JobsplusGrantDefinitions"))
+            if (!db.TableExist("JobsplusGrantDefinitions"))
             {
                 //Create DB table - and set overwrite to false
                 db.CreateTable<GrantDefinition>(false);
@@ -56,7 +56,7 @@ namespace Jobsplus.Backoffice.Models
             {
                 //Create DB table - and set overwrite to false
                 db.CreateTable<GrantGrantDefinition>(false);
-            }*/  
+            }
             
         }
     }
