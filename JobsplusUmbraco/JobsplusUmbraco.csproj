@@ -3069,6 +3069,9 @@
     <Content Include="Views\tProfilUzivatele.cshtml" />
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
+    <Content Include="Views\Partials\pvNewsListAll.cshtml" />
+    <Content Include="Views\EditaceFiremniStranky.cshtml" />
+    <Content Include="Views\pvTOPAdvertisementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
