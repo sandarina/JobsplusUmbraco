@@ -61,7 +61,7 @@
             f_umbracoMemberApproved: !$scope.filter.f_umbracoMemberApproved ? "" : $scope.filter.f_umbracoMemberApproved,
             f_umbracoMemberLockedOut: !$scope.filter.f_umbracoMemberLockedOut ? "" : $scope.filter.f_umbracoMemberLockedOut,
             f_RegistrationUP: !$scope.filter.f_RegistrationUP ? "" : $scope.filter.f_RegistrationUP,
-            f_CV: $scope.filter.f_CV != "" ? "[a* TO z*]" : "",
+            f_CV: $scope.filter.f_CV != "" ? "[* to *]" : "",
             //f_location: _processFilterList(displaySearch, "Locations", $scope.filter.f_location)
         };
     }

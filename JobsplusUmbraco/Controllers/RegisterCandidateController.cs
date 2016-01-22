@@ -42,7 +42,7 @@ namespace JobsplusUmbraco.Controllers
 
             // Candidate je typ členského účtu
             var name = model.Firstname + " " + model.Surname;
-            var member = memberService.CreateMember(model.Email, model.Email, name, "Candidate");
+            var member = memberService.CreateMember(model.Email, model.Email, name, "Zájemce o práci");
             var filepath = "";
 
             // profilové údaje uživatele - úplný seznam je v /umbraco/Členové/Typy členů/Zájemce o práci
@@ -57,12 +57,13 @@ namespace JobsplusUmbraco.Controllers
             // todo: nahrat zivotopis
             if (model.CV != null && model.CV.InputStream != null)
             {
-                var filename = Path.GetFileName(model.CV.FileName);
+                var filename = "zivotopis_" + DateTime.Now.ToString("yyyy-MM-dd") + Path.GetExtension(model.CV.FileName);
                 var path = "/media/cv/";
                 var fullPath = Server.MapPath("~" + path);
                 var dir = new DirectoryInfo(fullPath);
                 if (!dir.Exists)
                     dir.Create();
+ 
                 path += JobsplusHelpers.RemoveDiacritics(model.Surname).ToLower() + "_" + model.BirthDate.Value.ToString("yyyy-MM-dd") + "/";
                 fullPath = Server.MapPath("~" + path); 
                 var dirUser = new DirectoryInfo(fullPath);
@@ -95,7 +96,7 @@ namespace JobsplusUmbraco.Controllers
             memberService.SavePassword(member, model.Password);
 
             // "Candidate" je skupina členů
-            memberService.AssignRole(member.Id, "Candidate");
+            memberService.AssignRole(member.Id, "Zájemce o práci");
 
 
 

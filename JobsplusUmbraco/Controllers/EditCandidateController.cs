@@ -84,7 +84,7 @@ namespace JobsplusUmbraco.Controllers
             // todo: nahrat zivotopis
             if (model.CV != null && model.CV.InputStream != null)
             {
-                var filename = Path.GetFileName(model.CV.FileName);
+                var filename = "zivotopis_" + DateTime.Now.ToString("yyyy-MM-dd") + Path.GetExtension(model.CV.FileName);
                 var path = "/media/cv/";
                 var fullPath = Server.MapPath("~" + path);
                 var dir = new DirectoryInfo(fullPath);

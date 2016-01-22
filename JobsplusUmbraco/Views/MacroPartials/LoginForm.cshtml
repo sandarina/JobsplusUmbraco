@@ -6,11 +6,17 @@
 @using Umbraco.Web
 @using Umbraco.Web.Models
 @using Umbraco.Web.Controllers
+@using JobsplusUmbraco.Models
+@using JobsplusUmbraco.Controllers
 
 @{
-
+    // macro params
+    var roleName = Model.MacroParameters["RoleName"].ToString();
+    var roleMainNodeId = Model.MacroParameters["RoleMainNodeId"];
+    var mainNode = Umbraco.Content(roleMainNodeId);
+    // other
     var loginStatusModel = Members.GetCurrentLoginStatus();
-    var loginModel = new LoginModel();
+    var loginModel = new JobsplusUmbraco.Models.LoginModel(roleName);
     var logoutModel = new PostRedirectModel();
     logoutModel.RedirectUrl = "/";
 
@@ -22,12 +28,12 @@
 }
 @Html.RenderJsHere()
 
-<h2 class="violet-color uppercase">Přihlásit se</h2>
+<h2 class="violet-color uppercase">Přihlásit se - @roleName</h2>
 <p>Pro vstup do VIP zóny se přihlašte pomocí emailu a&nbsp;hesla, které jste si&nbsp;zvolili při&nbsp;registraci.</p><br />
 
 @if (!loginStatusModel.IsLoggedIn)
 {
-    using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+    using (Html.BeginUmbracoForm<LoginController>("HandleLogin"))
     {
         <div class="form-group">
             @Html.ValidationSummary("loginModel", true)
@@ -41,25 +47,45 @@
             @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control", placeholder = "Heslo" })
             @Html.ValidationMessageFor(m => loginModel.Password)
         </div>
-        <button class="btn btn-default violet">Přihlásit se</button>
+        @Html.HiddenFor(m => loginModel.RoleName);
+    <button class="btn btn-default violet">Přihlásit se</button>
 
     }
 }
 else
 {
-    <br /><br />
     <div>
-        <p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p>
-        <div class="row">
-            <div class="col-md-6"><a href="/uzivatel/profil/" class="btn btn-default violet">Můj profil</a></div>
-            <div class="col-md-6">
-                @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
-                {
-                    <button class="btn btn-default gray">Odhlásit</button>
+        <div class="well"><p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p><br />
+            <div class="row">
+                <div class="col-md-6">
+                    @{
+    var roles = Roles.GetRolesForUser(loginStatusModel.Username);
+                    }
+                    @if (roles.Count() > 0)
+                    {
+                        <p>Váš účet má následující role:</p>
+                        <ul>
+                            @foreach (var role in roles)
+                            {
+                                <li>@role</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Nemáte přiřazeny žádné role.</p>
+                    }
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="@mainNode.Url" class="btn btn-primary">V.I.P zóna</a>
+                    @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
+                    {
+                        <button class="btn btn-default gray">Odhlásit</button>
 
-                    @Html.HiddenFor(m => logoutModel.RedirectUrl)
-                }
+                        @Html.HiddenFor(m => logoutModel.RedirectUrl)
+                    }
+                </div>
             </div>
-        </div><br />
-    </div>
+            </div>
+        </div>
 }

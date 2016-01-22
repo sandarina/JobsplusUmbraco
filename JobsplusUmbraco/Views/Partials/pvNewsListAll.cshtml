@@ -1,13 +1,13 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
-@{ var home = CurrentPage.Site();}
-@{ var newsList = home.Children("dtNewsList").Where("Visible"); }
+@{ 
+  	var newsList = CurrentPage.Children("dtNews").Where("Visible"); 
+}
 @if (newsList.Any())
 {
     <br />
     <div class="col-md-12">
-        @{ var newsAll = newsList.First().Children.Where("Visible"); }
         <div class="row">
-            @foreach (var news in newsAll.OrderBy("createDate descending"))
+            @foreach (var news in newsList.OrderBy("createDate descending"))
             {
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">

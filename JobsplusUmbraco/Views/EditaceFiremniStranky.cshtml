@@ -2,6 +2,7 @@
 @{
     Layout = "tBase.cshtml";
 }
+
 <div id="aBody" class="subpage-hover">
     <div id="tBody">
         <div class="col-md-12">
@@ -11,25 +12,23 @@
                         <h1>@CurrentPage.Name</h1>
                     </div>
                     <div class="tBody_vText">
-                        <h2>&nbsp;</h2>
+                        <h2>@CurrentPage.pageDescription.ToUpper()</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-		<div class="cBody_content">
-			<div class="container">
-				<div class="row">
-						@{ Html.RenderPartial("pvNewsListAll"); }
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="bBody">
-		<div class="container">
-			<div class="row">
-				@{ Html.RenderPartial("pvFirstStepRegistration"); }
-			</div>
-		</div>
-	</div>
+    <div id="cBody">
+        <div class="cBody_content">
+            <div class="container">
+                @Html.Action("Index", "EditCompanyPage")
+            </div>
+        </div>
+    </div>
+    <div id="bBody">
+        <div class="container">
+            <div class="container">
+            </div>
+        </div>
+    </div>
