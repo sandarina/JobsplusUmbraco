@@ -312,6 +312,7 @@
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditCandidateController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\JobTemplatesController.cs" />
     <Compile Include="Controllers\RegisterCandidateController.cs" />
@@ -3096,6 +3097,7 @@
     <Folder Include="media\cv\" />
     <Folder Include="usercontrols\" />
     <Folder Include="Views\JobsplusLogin\" />
+    <Folder Include="Views\Job\" />
     <Folder Include="xslt\" />
   </ItemGroup>
   <ItemGroup>
