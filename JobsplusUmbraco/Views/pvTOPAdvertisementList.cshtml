@@ -1,0 +1,50 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+@using Umbraco.Core.Models
+
+@{ 
+	var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+	var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement"); 
+}
+
+@if (advertisements.Any())
+{
+    <div class="col-md-12 advertisementList">
+        @foreach (var advertisement in advertisements.OrderBy("createDate descending").OrderBy("aTop descending").Take(10))
+        {
+            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(@advertisement.Id));
+            var IsTop = Convert.ToBoolean(itemAdvertisement.GetPropertyValue("aTop"));
+            <div class='row advertisementItem @(IsTop ? "top" : "")'>
+                <div class="col-md-12">
+                    <div class="row advertisementBody">
+                        <div class="col-md-8">
+                            <div class="row">
+                                @itemAdvertisement.Parent.Parent.Name
+                            </div>
+                            <div class="row">
+                                <a href="@itemAdvertisement.Url">@itemAdvertisement.Name</a>
+                            </div>
+                            <div class="row">
+                                <span>@itemAdvertisement.GetPropertyValue("aCity"), </span><span>@itemAdvertisement.GetPropertyValue("aRegion")</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <a href="@itemAdvertisement.Url">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row advertisementBottom">
+                        <div class="col-md-4"><span>Vzdělání</span> @itemAdvertisement.GetPropertyValue("aRequiredEducation")</div>
+                        <div class="col-md-4"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
+                        <div class="col-md-4"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue("aZtp") == "1" ? "ANO" : "NE") </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        @*@{ var companiesTop = companies.Children.Where("topCompany == true");}
+            @{ var companiesNoTop = companies.Children.Where("topCompany != true");}*@
+    </div>
+}
+

@@ -1,0 +1,106 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    var company = CurrentPage.Parent.Parent;
+}
+
+<div class="modal fade" id="advertisementReply">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mám zájem o tuto pozici ...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-in">
+                    @Html.Action("Index", "AdvertisementReplyForm", new { sendToEmail = "info@salmaplus.cz" })
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (TempData["AdvertisementReplyJS"] != null)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#advertisementReply').modal('show');
+        });
+    </script>
+}
+<div class="col-md-12 detailAdvertisement">
+    <div class="row detailAdvertisementTop">
+        <div class="col-md-8">
+            <span class="companyName">@company.Name</span>
+            <br />
+            @CurrentPage.Name
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="MÁM ZÁJEM o tuto pozici >" data-toggle="modal" data-target="#advertisementReply" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 advertisementItem">
+            <div class="advertisementBody">
+                <div class="">@CurrentPage.aCity, @CurrentPage.aRegion</div>
+                <br />
+                @CurrentPage.aContent
+            </div>
+            <div class="row advertisementBottom">
+                <div class="col-md-6 col-sm-6"><span>Vzdělání</span> @CurrentPage.aRequiredEducation</div>
+                <div class="col-md-4 col-sm-6"><span>Typ</span> @CurrentPage.aTypeOfWork</div>
+                <div class="col-md-2"><span>ZTP</span>  @(CurrentPage.aZtp == true ? "ANO" : "NE") </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- DETAIL FIRMY -->
+            @{
+                var cContent = company.Children().Where("Visible");
+            }
+            @if (cContent.Any())
+            {
+                var cAdvertisement = cContent.First().Children.Where("Visible");
+                if (cAdvertisement.Any())
+                {
+                    IPublishedContent mediaLogo; IPublishedContent mediaObr;
+                    try
+                    {
+                        mediaLogo = Umbraco.Media(cContent.First().cLogo);
+                        mediaObr = Umbraco.Media(cContent.First().cBackground);
+                    }
+                    catch
+                    {
+                        mediaLogo = null; mediaObr = null;
+                    }
+                    <br /><h3 class="center">O společnosti</h3><br />
+                    <div class="detailAdvertisementCompany">
+                        <div class="nahled center">
+                            <br />
+                            @if (mediaLogo != null && mediaLogo.DocumentTypeAlias == "Image")
+                            {
+                                @RenderImage(mediaLogo, company.Url);
+                            }
+                            @if (mediaObr != null && mediaObr.DocumentTypeAlias == "Image")
+                            {
+                                @RenderImage(mediaObr, company.Url);
+                            }
+                            <div class="row">
+                                <h4>
+                                    @if (company.cTop)
+                                    { <span class="topSign">TOP</span> }<a class="underline lightblue" href="@company.Url">@company.Name</a>
+                                </h4>
+                            </div>
+                            <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @cAdvertisement.Count()</span></div><br />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+@helper RenderImage(dynamic item, string url)
+{
+    <div class="row">
+        <a href="@url" class="obr center" style="height: 100px">
+            <img src="@item.umbracoFile" alt="@item.Name" style="max-height: 100px">
+        </a>
+    </div>
+}

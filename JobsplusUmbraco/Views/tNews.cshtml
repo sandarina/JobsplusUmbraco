@@ -1,0 +1,43 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "tBase.cshtml";
+	var companyNode = Umbraco.Content(CurrentPage.nCompanyNodeId);
+}
+<div id="aBody" class="subpage-hover">
+    <div id="tBody">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="row">
+                    <div class="tBody_hlText">
+                        <h1>@CurrentPage.Name</h1>
+                    </div>
+                    <div class="tBody_vText">
+                        <a href="@companyNode.Url"><h2>@companyNode.Name</h2></a>
+                        <br /><a href="@CurrentPage.Parent.Url" class="btn btn-default">@CurrentPage.Parent.Name</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cBody">
+    <div class="cBody_content">
+		<br />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+					<div class="well">@CurrentPage.nDescription</div>
+                    @CurrentPage.nContent
+					<p class="date"><i>Vydal @CurrentPage.CreatorName dne @CurrentPage.CreateDate</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bBody">
+    <div class="container">
+        <div class="row">
+            @{ Html.RenderPartial("pvFirstStepRegistration"); }
+        </div>
+    </div>
+</div>

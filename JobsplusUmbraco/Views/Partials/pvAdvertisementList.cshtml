@@ -1,0 +1,86 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Xml.XPath
+@using Umbraco.Web
+	
+@{
+	var IsTOP = @Request.QueryString["IsTOPAdvertisement"];
+	XPathNodeIterator workingTypes = umbraco.library.GetPreValues(1147);
+	XPathNodeIterator regions = umbraco.library.GetPreValues(1139);
+}
+
+@*@Html.Action("Views/tFindJob", "FindJob")
+    @Html.Action("Overview", "AdvertisementList", new JobsplusUmbraco.Models.AdvertisementList { WorkingField = "obor", Region = "region" })
+
+
+        <div class="col-md-12">
+            <select id="ddlworkingField">
+                <option value=""></option>
+                @foreach (XPathNavigator section in workingTypes)
+                {
+                    foreach (XPathNavigator child in section.SelectChildren("preValue", ""))
+                    {
+                        <option value="@child.Value">@child.Value</option>
+                    }
+                }
+            </select>
+            <select id="ddlregion">
+                <option value=""></option>
+                @foreach (XPathNavigator section in regions)
+                {
+                    foreach (XPathNavigator child in section.SelectChildren("preValue", ""))
+                    {
+                        <option value="@child.Value">@child.Value</option>
+                    }
+                }
+            </select>
+            <div id="ButtonAdvertisemet">
+                <button id="btnAdvertisement" class="btn btn-default">Vyhledat</button>
+            </div>
+        </div>
+*@
+
+
+
+
+
+
+
+@*	
+
+@{
+	var IsTOP = @Request.QueryString["IsTOPAdvertisement"];
+	var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement");
+	XPathNodeIterator workingTypes = umbraco.library.GetPreValues(1147);
+	XPathNodeIterator regions = umbraco.library.GetPreValues(1139);
+}
+
+	@{ var advertisementsFiltr = advertisements; }
+	@if (IsTOP != null && IsTOP == "true" || IsTOP == "1") 
+	{
+		advertisementsFiltr = advertisementsFiltr.OrderBy("Name").OrderBy("topAdvertisement descending");
+	}			
+
+	<div class="row" id="ListAdvertisemet">
+		@if (advertisementsFiltr.Any())
+		{
+			<div class="col-md-12">
+			@foreach (var advertisement in advertisementsFiltr)
+			{
+				<div class="row">
+					@advertisement.Name
+				</div>
+			}
+			</div>
+		}
+	</div>
+</div>
+
+
+@functions {
+	public static string RenderAdvertisementList(IPublishedContent adverisements, string IsTOP, string workingField, string region)
+	{
+		var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+		IPublishedContent contentNode = umbracoHelper.TypedContentSingleAtXPath(String.Format("//{0}", ""));
+		return "";
+	}
+}*@	

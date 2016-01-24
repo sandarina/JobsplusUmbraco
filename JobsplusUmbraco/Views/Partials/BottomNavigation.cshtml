@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{ 
+    var home = CurrentPage.Site();
+    var clanky = home.Children("dtFolder").Where("Visible && visibleInBottomNavi == true");
+}
+
+<div class="col-md-6 text-right">
+    <strong>Najdete nás</strong>
+    <ul>
+        <li>
+			<a href="#">Facebookové stránky. <br />Již brzy!</a>
+        </li>
+    </ul>
+</div>
+
+@if (clanky.Any())
+{
+    <div class="col-md-6  text-right">
+        <strong>Ostatní</strong>
+        <ul>
+            @foreach (var clanek in clanky.First().Children.Where("Visible"))
+            {
+                <li>
+                    <a href="@clanek.Url">@clanek.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@*if (home.Children.Where("Visible").Any())
+{ && DocumentTypeAlias.Contains(\"dtFolder\")
+    foreach (var childPage in home.Children.Where("Visible"))
+    {   
+        <div class="col-xs-6 col-sm-3">
+            @if (childPage.Children.Where("Visible").Any())
+            {                    
+                <strong>@childPage.Name</strong>
+                @childPages(childPage.Children)
+            }
+        </div>
+    }
+}*@
+
+@helper childPages(dynamic pages)
+{
+    @* Ensure that we have a collection of pages *@
+    if (pages.Any())
+    {
+        <ul>
+            @foreach (var page in pages.Where("Visible"))
+            {
+                <li>
+                    <a href="@page.Url">@page.Name</a>
+                </li>
+            }
+        </ul>
+    }
+}

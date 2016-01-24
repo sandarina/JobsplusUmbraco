@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+	var home = @CurrentPage.Site();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@CurrentPage.metaDescription">
+	<meta name="keywords" content="@CurrentPage.metaKeywords">
+
+    <title>@CurrentPage._metaTitle | Jobsplus </title>
+	
+	<!-- Fonts -->
+	<link href="//fonts.googleapis.com/css?family=Merriweather:400,700,300,900" rel="stylesheet" type="text/css">
+	<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet" type="text/css">
+	
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/layout.css">
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-sm-12 col-md-4">
+                    <a href="@home.Url">
+                        <div class="tLogo"></div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-8">
+                    <div class="login-buttons pull-right">
+                        @Umbraco.RenderMacro("LoginStatus")
+                    </div>
+
+                    <nav>
+
+                        @{ Html.RenderPartial("pvMainNavigation"); }
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="toggle" class="toggle">
+            <a href="#" class="cross"><span></span></a>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer class="field dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="row">
+                        @{ Html.RenderPartial("BottomNavigation"); }
+                    </div>
+                </div>
+            </div>
+            <div class="row bLogo">
+                <span class="fText">Copyright &copy; jobsplus.cz | Provozovatelem portálu je <a href="http://www.salmaplus.cz/" target="_blank">SALMA PLUS s.r.o.</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Javascripts -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="/scripts/fanoe.js"></script>
+    <script src="/scripts/scripts.js"></script>
+    <script src="/scripts/dropdownSearchable.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js" type="text/javascript"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/localization/messages_cs.js" type="text/javascript"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+</body>
+</html>
