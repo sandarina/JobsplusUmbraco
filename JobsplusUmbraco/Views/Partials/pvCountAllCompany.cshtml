@@ -1,6 +1,0 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
-@using Umbraco.Web
-
-@{ var companies = Umbraco.TypedContentAtXPath("//dtCompany"); }
-
-<span class="countInfoTabs">@companies.Count()</span>

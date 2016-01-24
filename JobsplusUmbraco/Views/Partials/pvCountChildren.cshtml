@@ -1,5 +1,0 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
-	
-@{ var selection = CurrentPage.Children.Where("Visible"); }
-
- <span class="countInfoTabs">@selection.Count()</span>

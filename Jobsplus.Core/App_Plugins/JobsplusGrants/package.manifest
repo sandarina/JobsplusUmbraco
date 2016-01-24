@@ -1,6 +1,0 @@
-﻿{
-    javascript: [
-	    "~/App_Plugins/JobsplusGrants/backoffice/JobsplusGrantsTree/edit.controller.js",
-        "~/App_Plugins/JobsplusGrants/grants.resource.js"
-    ]
-}

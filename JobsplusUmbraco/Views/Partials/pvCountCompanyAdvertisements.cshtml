@@ -1,9 +1,0 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
-	
-@{ 
-	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
-	var advertisements = cContent.Children.Where("Visible"); 
-}
-
- <span class="countInfoTabs">@advertisements.Count()</span>
-
