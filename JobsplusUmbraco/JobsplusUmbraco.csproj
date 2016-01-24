@@ -308,6 +308,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\JobsplusHelpers.cs" />
+    <Compile Include="Controllers\AdvertisementController.cs" />
     <Compile Include="Controllers\AdvertisementReplyFormController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3090,6 +3091,9 @@
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
     <Content Include="Views\EditaceFiremniStranky.cshtml" />
     <Content Include="Views\pvTOPAdvertisementList.cshtml" />
+    <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\List.cshtml" />
+    <Content Include="Views\tMCAdvertisementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

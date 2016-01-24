@@ -106,10 +106,9 @@ namespace JobsplusUmbraco.Models
         }
 
 
-        public Advertisement DynamicToAdverisement(Node item)
+        public Advertisement DynamicToAdverisement(int Id)
         {
-            //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
-            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item.Id));
+            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(Id));
 
             if (itemAdvertisement == null)
                 return null;
@@ -252,6 +251,23 @@ namespace JobsplusUmbraco.Models
             }
             lAdvertisements = advertisements;
              
+        }
+
+        public void Fill(IEnumerable<IPublishedContent> advertisementList)
+        {
+            if (advertisementList != null)
+            {
+                List<Advertisement> advertisements = new List<Advertisement>();
+                foreach (var result in advertisementList)
+                {
+                    Advertisement advertisement = this.DynamicToAdverisement(result.Id);
+                    if (advertisement != null) advertisements.Add(advertisement);
+                }
+                lAdvertisements = advertisements;
+            }
+            else
+                lAdvertisements = new List<Advertisement>();
+            
         }
         #endregion
 
