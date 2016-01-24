@@ -1,12 +1,9 @@
 ﻿angular.module("umbraco").controller("JobsplusGrants.GrantEditController",
 	function ($scope, $routeParams, grantsResource, notificationsService, navigationService) {
+	    var grantPrefix = 'grant-';
+	    var grantDefinitionPrefix = 'grantdef-';
 
 	    $scope.loaded = false;
-	    $scope.allRegions = function () {
-	        grantsResource.getRegions().then(function (response) {
-	            return response.data;
-	        });
-	    };
 
         // vytvari se novy dotacni program
 	    if ($routeParams.id == -1) {
@@ -15,15 +12,20 @@
 	    }
         // upravuji existujici dotacni program
 	    else {
-	        // vytahnu si id dotace z URL -> service
-	        grantsResource.getById($routeParams.id).then(function (response) {
-	            $scope.grant = response.data;
-	            $scope.loaded = true;
-	        });
+	        if ($routeParams.id.indexOf(grantPrefix) == 0) // jedna se o dotaci
+	        {
+	            // vytahnu si id dotace z URL -> service
+	            grantsResource.getGrantById($routeParams.id).then(function (response) {
+	                $scope.grant = response.data;
+
+	                $scope.loaded = true;
+
+	            });
+	        }
 	    }
 
 
-	    $scope.save = function (grant) {
+	    $scope.saveGrant = function (grant) {
 	        grantsResource.saveGrant(grant).then(function (response) {
 	            $scope.grant = response.data;
 	            $scope.grantForm.$dirty = false;

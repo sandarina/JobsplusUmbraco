@@ -1061,14 +1061,6 @@ nav li > ul > li > ul {
     font-weight: normal;
 }
 
-#tBody .searchbox::-webkit-input-placeholder,
-#tBody .searchbox:-moz-placeholder
-#tBody .searchbox::-moz-placeholder
-{
-    color:    #999;
-    font-style: italic;
-}
-
 #workingField, #region {
     z-index: 1000;
 }

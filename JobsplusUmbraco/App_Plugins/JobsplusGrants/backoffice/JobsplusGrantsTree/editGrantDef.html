@@ -1,0 +1,80 @@
+﻿<form name="grantDefForm"
+      ng-controller="JobsplusGrants.GrantDefinitionEditController"
+      ng-show="loaded"
+      ng-submit="save(grantDef)"
+      val-form-manager>
+    <umb-panel>
+        <umb-header>
+
+            <div class="span7">
+                <umb-content-name placeholder="@placeholders_entername"
+                                  ng-model="grantDef.Name" />
+            </div>
+
+            <div class="span5">
+                <div class="btn-toolbar pull-right umb-btn-toolbar">
+                    <umb-options-menu ng-show="currentNode"
+                                      current-node="currentNode"
+                                      current-section="{{currentSection}}">
+                    </umb-options-menu>
+                </div>
+            </div>
+        </umb-header>
+
+        <div class="umb-panel-body umb-scrollable row-fluid">
+            <div class="tab-content form-horizontal" style="padding-bottom: 90px">
+                <div class="umb-pane">
+
+                    <p>Vytváříte definici pro dotaci "{{grant.Name}}".</p>
+                    <p><i>{{grant.Description}}</i></p>
+
+
+                    <umb-control-group label="Věk" description="Zadejte věkovou hranici od-do (včetně)">
+                        <input name="AgeFrom" type="number" pattern="[0-9]*" class="umb-number" ng-model="grantDef.AgeFrom" min="0" max="99" step="1" required />
+                        - <input name="AgeTo" type="number" pattern="[0-9]*" class="umb-number" ng-model="grantDef.AgeTo" min="0" max="99" step="1" required />
+                    </umb-control-group>
+
+                    <umb-control-group label="Délka registrace na ÚP" description="Zadejte dobu v měsících, po kterou musí být uchazeč registrován na ÚP.">
+                        <input name="EvidenceMonths"
+                               type="number"
+                               pattern="[0-9]*"
+                               class="umb-number"
+                               ng-model="grantDef.EvidenceMonths"
+                               min="0" max="99" step="1" required /> měsíců
+                    </umb-control-group>
+
+                    <umb-control-group label="Typ smlouvy" description="Zadejte požadovaný typ smlouvy.">
+                        <select class="umb-editor umb-editor" name="select-contractType" ng-model="grantDef.ContractType">
+                            <option value="">bez omezení</option>
+                            <option value="na dobu určitou">na dobu určitou</option>
+                            <option value="na dobu neurčitou">na dobu neurčitou</option>
+                        </select>
+                    </umb-control-group>
+
+                    <umb-control-group label="Délka dotace" description="Zadejte dobu v měsících, po kterou bude zaměstnavateli vyplácena dotace">
+                        <input name="GrantMonths" type="number" class="umb-number" ng-model="grantDef.GrantMonths" required /> měsíců
+                    </umb-control-group>
+
+                    <umb-control-group label="Výše dotace" description="Zadejte měsíční výši dotace v Kč">
+                        <input type="number" class="umb-number" ng-model="grantDef.GrantValue" required /> Kč
+                    </umb-control-group>
+
+                    <div class="umb-tab-buttons" detect-fold>
+                        <div class="btn-group">
+                            <button type="submit" data-hotkey="ctrl+s" class="btn btn-success">
+                                <localize key="buttons_save">Save</localize>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </umb-panel>
+</form>
+
+
+
+
+

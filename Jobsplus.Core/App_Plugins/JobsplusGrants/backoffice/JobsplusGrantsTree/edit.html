@@ -26,7 +26,9 @@
                 <div class="umb-pane">
 
                     <umb-control-group label="Kraj" description="Kraj, v němž je dotace platná">
-                        <input type="text" class="umb-editor umb-textstring" ng-model="grant.Region" required />
+                        <select class="umb-editor umb-editor" name="select-region" ng-model="grant.Region">
+                            <option ng-repeat="option in allRegions" value="{{option.Id}}">{{option.Name}}</option>
+                        </select>
                     </umb-control-group>
 
                     <umb-control-group label="Poznámka" description="Doplňující informace k dotačnímu programu">

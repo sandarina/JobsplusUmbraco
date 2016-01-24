@@ -44,6 +44,7 @@ namespace JobsplusUmbraco.Controllers
             var name = model.Firstname + " " + model.Surname;
             var member = memberService.CreateMember(model.Email, model.Email, name, "Zájemce o práci");
             var filepath = "";
+            var cvExists = false;
 
             // profilové údaje uživatele - úplný seznam je v /umbraco/Členové/Typy členů/Zájemce o práci
             member.SetValue("FirstName", model.Firstname);
@@ -74,6 +75,7 @@ namespace JobsplusUmbraco.Controllers
                 {
                     filepath = fullPath + filename;
                     model.CV.SaveAs(fullPath + filename);
+                    cvExists = true;
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +86,7 @@ namespace JobsplusUmbraco.Controllers
 
                 member.SetValue("CV", path + filename);
             }
-            //member.SetValue("CV", model.CV);
+            member.SetValue("CVExists", cvExists);
 
             // Not yet allowed to log in!
             member.IsApproved = true;

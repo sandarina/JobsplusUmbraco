@@ -1,7 +1,7 @@
 ﻿<form name="grantForm"
       ng-controller="JobsplusGrants.GrantEditController"
       ng-show="loaded"
-      ng-submit="save(grant)"
+      ng-submit="saveGrant(grant)"
       val-form-manager>
     <umb-panel>
         <umb-header>
@@ -26,8 +26,7 @@
                 <div class="umb-pane">
 
                     <umb-control-group label="Kraj" description="Kraj, v němž je dotace platná">
-                        <select class="umb-editor umb-editor" name="select-region" ng-model="grant.RegionId"
-                                ng-options="option.Id as option.Name for option in allRegions"></select>
+                        <input type="text" class="umb-editor umb-textstring" ng-model="grant.Region" required />
                     </umb-control-group>
 
                     <umb-control-group label="Poznámka" description="Doplňující informace k dotačnímu programu">

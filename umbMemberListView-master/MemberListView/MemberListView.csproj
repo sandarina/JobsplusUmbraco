@@ -89,9 +89,6 @@
     <Reference Include="Lucene.Net">
       <HintPath>bin\Lucene.Net.dll</HintPath>
     </Reference>
-    <Reference Include="MemberListView">
-      <HintPath>bin\MemberListView.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data">
       <HintPath>bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>

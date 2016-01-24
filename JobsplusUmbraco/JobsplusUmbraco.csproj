@@ -319,7 +319,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Plugins\JobsplusGrants\backoffice\grantsdashboard.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\delete.controller.js" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\delete.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\createGrantDef.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\editGrantDef.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\editGrantDef.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.html" />
     <Content Include="App_Plugins\JobsplusGrants\grants.resource.js" />
