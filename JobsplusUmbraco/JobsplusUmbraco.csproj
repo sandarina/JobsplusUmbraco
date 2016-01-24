@@ -308,6 +308,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\JobsplusHelpers.cs" />
+    <Compile Include="App_Plugins\AdvertisementList\AdvertisementController.cs" />
+    <Compile Include="App_Plugins\AdvertisementList\AdvertisementModel.cs" />
     <Compile Include="Controllers\AdvertisementReplyFormController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -350,6 +352,27 @@
     <Content Include="App_Plugins\MemberManager\css\memberListView.css" />
     <Content Include="App_Plugins\MemberManager\lang\cs-CZ.xml" />
     <Content Include="App_Plugins\MemberManager\resources\member.resource.js" />
+    <Content Include="Config\grid.editors.config.js" />
+    <Content Include="Config\Lang\cs-CZ.user.xml" />
+    <Content Include="Config\Lang\da-DK.user.xml" />
+    <Content Include="Config\Lang\de-DE.user.xml" />
+    <Content Include="Config\Lang\en-GB.user.xml" />
+    <Content Include="Config\Lang\en-US.user.xml" />
+    <Content Include="Config\Lang\es-ES.user.xml" />
+    <Content Include="Config\Lang\fr-FR.user.xml" />
+    <Content Include="Config\Lang\he-IL.user.xml" />
+    <Content Include="Config\Lang\it-IT.user.xml" />
+    <Content Include="Config\Lang\ja-JP.user.xml" />
+    <Content Include="Config\Lang\ko-KR.user.xml" />
+    <Content Include="Config\Lang\nb-NO.user.xml" />
+    <Content Include="Config\Lang\nl-NL.user.xml" />
+    <Content Include="Config\Lang\pl-PL.user.xml" />
+    <Content Include="Config\Lang\pt-BR.user.xml" />
+    <Content Include="Config\Lang\ru-RU.user.xml" />
+    <Content Include="Config\Lang\sv-SE.user.xml" />
+    <Content Include="Config\Lang\zh-CN.user.xml" />
+    <Content Include="Config\splashes\booting.aspx" />
+    <Content Include="Config\splashes\noNodes.aspx" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -425,6 +448,20 @@
     <Content Include="App_Browsers\w3cvalidator.browser" />
     <Content Include="App_Plugins\MemberManager\package.manifest" />
     <None Include="App_Plugins\JobsplusGrants\package.manifest" />
+    <Content Include="Config\scripting.config" />
+    <Content Include="Config\tinyMceConfig.config" />
+    <Content Include="Config\trees.config" />
+    <Content Include="Config\UrlRewriting.config" />
+    <Content Include="Config\ExamineSettings.config" />
+    <Content Include="Config\feedProxy.config" />
+    <Content Include="Config\FileSystemProviders.config" />
+    <Content Include="Config\log4net.config" />
+    <Content Include="Config\404handlers.config" />
+    <Content Include="Config\applications.config" />
+    <Content Include="Config\BaseRestExtensions.config" />
+    <Content Include="Config\ClientDependency.config" />
+    <Content Include="Config\Dashboard.config" />
+    <Content Include="Config\EmbeddedMedia.config" />
     <None Include="Properties\PublishProfiles\Jobsplus-Publish Local.pubxml" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\jquery-1.9.0.js" />
