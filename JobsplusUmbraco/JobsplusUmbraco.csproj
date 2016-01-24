@@ -205,6 +205,7 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -311,11 +312,13 @@
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditCandidateController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\JobTemplatesController.cs" />
     <Compile Include="Controllers\RegisterCandidateController.cs" />
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\AdvertisementList.cs" />
     <Compile Include="Models\AdvertisementReplyForm.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MemberCandidate.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\WorkingField.cs" />
@@ -325,7 +328,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Plugins\JobsplusGrants\backoffice\grantsdashboard.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\delete.controller.js" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\delete.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\createGrantDef.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\editGrantDef.html" />
+    <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\editGrantDef.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.html" />
     <Content Include="App_Plugins\JobsplusGrants\grants.resource.js" />
@@ -3080,11 +3087,15 @@
     <Content Include="Views\JobTemplates\Details.cshtml" />
     <Content Include="Views\JobTemplates\Edit.cshtml" />
     <Content Include="Views\JobTemplates\Index.cshtml" />
+    <Content Include="Views\Partials\pvNewsListAll.cshtml" />
+    <Content Include="Views\EditaceFiremniStranky.cshtml" />
+    <Content Include="Views\pvTOPAdvertisementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="media\cv\" />
     <Folder Include="usercontrols\" />
+    <Folder Include="Views\JobsplusLogin\" />
     <Folder Include="xslt\" />
   </ItemGroup>
   <ItemGroup>

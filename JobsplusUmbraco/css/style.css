@@ -1097,6 +1097,22 @@ nav li > ul > li > ul {
 	text-align: right;
 }
 
+#tBody .txtFulltext {
+	margin: 20px 0px 0px 0px;
+}
+
+#tBody .txtFulltext input.searchbox {
+	background: rgba(101,101,101,0.7);
+	border: 1px solid white;
+	border-radius: 10px;
+	padding: 15px 20px 15px 255px;
+	font-size: 13px;
+	text-transform: uppercase;
+	color: white;
+	font-weight: bold;
+	text-align: right;
+}
+
 #tBody .btnRedirect {
 	margin: 20px 0px 0px 0px;
 }

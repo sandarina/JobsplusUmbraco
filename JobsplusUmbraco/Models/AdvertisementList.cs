@@ -23,6 +23,7 @@ namespace JobsplusUmbraco.Models
     public class AdvertisementList : RenderModel
     {
         #region Properties
+        public string fulltext { get; set; }
         public string workingField { get; set; }
         public string region { get; set; }
         public bool IsTOP { get; set; }
@@ -220,6 +221,8 @@ namespace JobsplusUmbraco.Models
             criteria.OrderBy(new string[] { "DateCreate" });
             filter = criteria.NodeTypeAlias("dtAdvertisement");
 
+            if (!String.IsNullOrEmpty(fulltext))
+                filter.And().GroupedOr(new string[] { "nodeName" }, fulltext);
             if (!String.IsNullOrEmpty(workingField)) 
                 filter.And().Field("aWorkingField", workingField);
             if (!String.IsNullOrEmpty(region))
@@ -227,6 +230,7 @@ namespace JobsplusUmbraco.Models
             if (IsZTP)
                 filter.And().Field("aZtp", "1");
 
+            if (String.IsNullOrEmpty(fulltext)) region = "Název?";
             if (String.IsNullOrEmpty(region)) region = "Kde?";
             if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
             slRegions = this.GetRegionSelectListItem(region);

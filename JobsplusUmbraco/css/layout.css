@@ -2,9 +2,21 @@
 .modal-dialog { z-index: 20000; }
 .modal-body-in { margin: 0 20px }
 
+label {
+    font-size: 14px;
+    font-weight: normal;
+    color: #444;
+    line-height: 24px;
+    display: inline-block;
+    padding: 12px 4px;
+    height: 24px;
+}
+
+
 .violet-color {
     color: rgb(164,40,162);
 }
+.date { font-size: 0.8em; color: #aaa; }
 .btn-default {
 	background: transparent;
 	border: 1px solid rgba(255, 255, 255, 0.75);

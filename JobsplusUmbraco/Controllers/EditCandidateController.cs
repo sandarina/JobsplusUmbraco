@@ -70,6 +70,7 @@ namespace JobsplusUmbraco.Controllers
             // Candidate je typ členského účtu
             var name = model.Firstname + " " + model.Surname;
             var member = memberService.GetByEmail(model.Email);
+            var cvExists = false;
 
             // profilové údaje uživatele - úplný seznam je v /umbraco/Členové/Typy členů/Zájemce o práci
             member.Name = name;
@@ -84,7 +85,7 @@ namespace JobsplusUmbraco.Controllers
             // todo: nahrat zivotopis
             if (model.CV != null && model.CV.InputStream != null)
             {
-                var filename = Path.GetFileName(model.CV.FileName);
+                var filename = "zivotopis_" + DateTime.Now.ToString("yyyy-MM-dd") + Path.GetExtension(model.CV.FileName);
                 var path = "/media/cv/";
                 var fullPath = Server.MapPath("~" + path);
                 var dir = new DirectoryInfo(fullPath);
@@ -99,6 +100,7 @@ namespace JobsplusUmbraco.Controllers
                 try
                 {
                     model.CV.SaveAs(fullPath + filename);
+                    cvExists = true;
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +112,7 @@ namespace JobsplusUmbraco.Controllers
                 TempData["EditCandidateCV"] = filepath;
                 member.SetValue("CV", filepath);
             }
+            member.SetValue("CVExists", cvExists);
 
             // Don't forget to save all these things
             memberService.Save(member);

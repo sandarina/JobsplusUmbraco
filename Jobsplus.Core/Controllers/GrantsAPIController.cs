@@ -13,6 +13,8 @@ namespace Jobsplus.Backoffice.Controllers
     [PluginController("JobsplusGrants")]
     public class GrantsApiController : UmbracoAuthorizedJsonController
     {
+
+        #region Grants
         public IEnumerable<Grant> GetAll()
         {
 
@@ -23,7 +25,7 @@ namespace Jobsplus.Backoffice.Controllers
         public Grant GetById(int id)
         {
 
-            var query = new Sql().Select("*").From("JobsplusGrants").Where<Grant>(x => x.Id == id);
+            var query = new Sql().Select("*").From("JobsplusGrants").Where<Grant>(item => item.Id == id);
             return DatabaseContext.Database.Fetch<Grant>(query).FirstOrDefault();
             
         }
@@ -40,8 +42,17 @@ namespace Jobsplus.Backoffice.Controllers
 
         public int DeleteById(int id)
         {
-            return DatabaseContext.Database.Delete<Grant>(id);     
+            // odstranit všechny podřízené definice dotací
+            var definitionsApi = new GrantDefinitionsApiController();
+            foreach (var definition in definitionsApi.GetAll(id))
+            {
+                definitionsApi.DeleteById(definition.Id);
+            }
+            // odstranit dotaci
+            return DatabaseContext.Database.Delete<Grant>(id);
         }
+        #endregion
+
 
     }
 }

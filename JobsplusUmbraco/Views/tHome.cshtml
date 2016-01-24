@@ -22,9 +22,9 @@
                             @*Html.TextBox("workingField", Model.workingField ?? "Obor nebo pozice?")*@
                             @Html.DropDownListFor(model => model.region, Model.slRegions)
                         </div>
-                        <div class="row txtRegion">
-                            @*Html.TextBox("region", Model.region ?? "Kde?")*@
-                            @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
+                        <div class="row txtFulltext">
+                            @Html.TextBox("fulltext", Model.fulltext, new { @class = "searchbox", placeholder = "Název?"})
+                            @*Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)*@
                         </div>
                         <div class="row btnRedirect">
                             <div class="col-md-8 sIsZTP left">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-md-4">
                         <div id="divNewsList" class="tab">
-                            Aktuality
+                            Marketingové aktuality
                         </div>
                     </div>
                 </div>
