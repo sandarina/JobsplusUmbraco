@@ -303,6 +303,7 @@
     <Compile Include="App_Plugins\AdvertisementList\AdvertisementController.cs" />
     <Compile Include="App_Plugins\AdvertisementList\AdvertisementModel.cs" />
     <Compile Include="Controllers\AdvertisementReplyFormController.cs" />
+    <Compile Include="Controllers\MemberCompanyController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditCandidateController.cs" />
@@ -3089,7 +3090,6 @@
     <Content Include="Views\BlogOverview.cshtml" />
     <Content Include="Views\BlogPost.cshtml" />
     <Content Include="Views\dtRichtextPage.cshtml" />
-    <Content Include="Views\Firma.cshtml" />
     <Content Include="Views\Home.cshtml" />
     <Content Include="Views\Inzerat.cshtml" />
     <Content Include="Views\Master.cshtml" />
@@ -3111,8 +3111,15 @@
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
-    <Content Include="Views\EditaceFiremniStranky.cshtml" />
     <Content Include="Views\pvTOPAdvertisementList.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\MemberCompany\index.cshtml" />
+    <Content Include="Views\Partials\pvFolderNavigation.cshtml" />
+    <Content Include="Views\tMemberMaster.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\tMemberCompanyIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
