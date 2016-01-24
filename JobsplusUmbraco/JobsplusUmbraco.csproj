@@ -75,6 +75,14 @@
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Examine, Version=0.1.68.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Examine.0.1.68.0\lib\Examine.dll</HintPath>
       <Private>True</Private>
@@ -303,6 +311,7 @@
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditCandidateController.cs" />
+    <Compile Include="Controllers\JobTemplatesController.cs" />
     <Compile Include="Controllers\RegisterCandidateController.cs" />
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\AdvertisementList.cs" />
@@ -3066,6 +3075,11 @@
     <Content Include="Views\tProfilUzivatele.cshtml" />
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
+    <Content Include="Views\JobTemplates\Create.cshtml" />
+    <Content Include="Views\JobTemplates\Delete.cshtml" />
+    <Content Include="Views\JobTemplates\Details.cshtml" />
+    <Content Include="Views\JobTemplates\Edit.cshtml" />
+    <Content Include="Views\JobTemplates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

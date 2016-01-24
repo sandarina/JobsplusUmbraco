@@ -52,7 +52,7 @@ namespace JobsplusUmbraco.Models
                     rCollection.Add(new Region { Name = "", Value = "" });
                     while (pvRegions.MoveNext())
                     {
-                        rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value });
+                        rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value }); //pvRegions.Current.GetAttribute("id", "")
                     }
                 }
 

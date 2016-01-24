@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jobsplus.Backoffice.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,6 @@ using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Jobsplus.Backoffice.Models
 {
-
     /// <summary>
     /// Kraje
     /// </summary>
@@ -222,7 +222,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusSpecializations")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public class Specialization
+    public partial class Specialization
     {
         #region Ctor
         public Specialization() { }
@@ -243,10 +243,19 @@ namespace Jobsplus.Backoffice.Models
         public int Order { get; set; }
         #endregion
 
+        public DBContextController DBContext = new DBContextController();
+
+        #region Method
         public override string ToString()
         {
             return Name;
         }
+
+        public Specialization Save()
+        {
+            return DBContext.PostSaveSpecialization(this);
+        }
+        #endregion
     }
 
     /// <summary>
@@ -254,7 +263,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusJobs")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public class Job
+    public partial class Job
     {
         #region Ctor
         public Job() { }
@@ -272,13 +281,33 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Obor
         /// </summary>
-        public Specialization SpecializationId { get; set; }
+        [ForeignKey(typeof(Specialization))]
+        public int SpecializationId { get; set; }
         #endregion
 
+        public DBContextController DBContext = new DBContextController();
+
+        #region Method
         public override string ToString()
         {
             return Name;
         }
+
+        public Job Save()
+        {
+            return DBContext.PostSaveJob(this);
+        }
+
+        /*public Specialization Specialization
+        {
+            get { return DBContext.GetSpecializationById(this.SpecializationId); }
+        }
+
+        public string SpecializationName
+        {
+            get { return Specialization != null ? Specialization.Name : String.Empty; }
+        }*/
+        #endregion
     }
 
     /// <summary>
@@ -286,7 +315,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusJobTemplates")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public class JobTemplate
+    public partial class JobTemplate
     {
         #region Ctor
         public JobTemplate() { }
@@ -299,7 +328,8 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Pracovní pozice
         /// </summary>
-        public Job JobId { get; set; }
+        [ForeignKey(typeof(Job))]
+        public int JobId { get; set; }
 
         /// <summary>
         /// Název
@@ -319,7 +349,7 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Viditelná pro všechny firmy - identifikátory (NodeId) firem, pro něž je šablona viditelná
         /// </summary>
-        public int[] VisibleForCompanyIds { get; set; }
+        public string VisibleForCompanyIds { get; set; }
 
         /// <summary>
         /// Relativní URL formuláře obecné pracovní pozice ke stažení (Word/PDF).
@@ -349,9 +379,34 @@ namespace Jobsplus.Backoffice.Models
 	    #endregion
         #endregion
 
+        public DBContextController DBContext = new DBContextController();
+
+        #region Method
         public override string ToString()
         {
             return Name;
         }
+
+        public JobTemplate Save()
+        {
+            return DBContext.PostSaveJobTemplate(this);
+        }
+
+        /*public Job Job
+        {
+            get { return DBContext.GetJobById(this.JobId); }
+        }*/
+
+        public List<int> GetForCompanyIds()
+        {
+            if (!String.IsNullOrEmpty(this.VisibleForCompanyIds))
+            {
+                var sIds = this.VisibleForCompanyIds.Split(new char[] { ',' });
+                return sIds.Select(id => Convert.ToInt32(id)).ToList();
+            }
+            else
+                return new List<int>();
+        }
+        #endregion
     }
 }

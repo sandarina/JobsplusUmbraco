@@ -216,6 +216,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DBContextController.cs" />
     <Compile Include="Controllers\GrantsApiController.cs" />
     <Compile Include="Controllers\JobTemplateApiController.cs" />
     <Compile Include="Models\RegisterEvents.cs" />
