@@ -1,0 +1,42 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+
+@{ 
+	var FolderPage = CurrentPage;
+    var selection = CurrentPage.Children.Where("Visible"); 
+}
+
+@if (FolderPage.DocumentTypeAlias != "dtFolder")
+{
+    var page = FolderPage;
+    FolderPage = null;
+    while(page.Parent != null)
+    {
+        page = page.Parent;
+        if (page.DocumentTypeAlias == "dtFolder")
+        {
+            FolderPage = page;
+            break;
+        }
+    }
+    selection = FolderPage.Children.Where("Visible"); 
+}
+    
+
+@if (FolderPage != null)
+{
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="@(FolderPage.IsAncestorOrSelf(CurrentPage) ? "selected" : null)">
+            <a href="@FolderPage.Url">@FolderPage.Name</a>
+        </li>
+        @if (selection.Any())
+        { 
+            foreach (var item in selection)
+            {
+                <li role="presentation" class="@(item.IsAncestorOrSelf(CurrentPage) ? "selected" : null)">
+                    <a href="@item.Url">@item.Name</a>
+                </li>
+            }
+        }
+    </ul>
+}

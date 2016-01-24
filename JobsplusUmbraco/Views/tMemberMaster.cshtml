@@ -2,7 +2,6 @@
 @{
     Layout = "tBase.cshtml";
 }
-
 <div id="aBody" class="subpage-hover">
     <div id="tBody">
         <div class="col-md-12">
@@ -19,10 +18,16 @@
         </div>
     </div>
 </div>
-    <div id="cBody">
-        <div class="cBody_content">
-            <div class="container">
-                @Html.Action("Index", "EditCompanyPage")
+<div id="cBody">
+    <div class="cBody_content">
+        <div class="container"><br />
+            <div class="row">
+                <div class="col-md-3">
+                    @{ Html.RenderPartial("pvFolderNavigation");}
+                </div>
+                <div class="col-md-9">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>
