@@ -16,7 +16,7 @@
                     Vám brzy podaří nalézt vhodné zaměstnání!
                 </p><br />
                 <p>
-                    Pro přihlášení použijte Váš emailový účet @TempData["Email"] a zvolené heslo.
+                    Pro přihlášení použijte Váš emailový účet @TempData["Email"] a zvolené heslo.df
                 </p><br /><br />
                 <p>
                     <a href="/vip-vstup/prihlasit/" class="btn btn-default gray">Přihlásit se</a>
@@ -38,9 +38,11 @@
                             Ajaj, něco nám ještě chybí:
                         </div>
                     </div>
-                    <div class="row"><br />
+                    <div class="row">
+                        <br />
                         <div class="col-md-12">
-                            @HttpUtility.HtmlDecode(@Html.ValidationSummary(false).ToString()).ToMvcHtmlString()
+                            @Html.ValidationSummary(false)
+                            @TempData["ValidationErrorInfo"]
                         </div>
                     </div>
                 </div>
