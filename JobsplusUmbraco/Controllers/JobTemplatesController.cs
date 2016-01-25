@@ -11,12 +11,36 @@ using Jobsplus.Backoffice.Controllers;
 using JobsplusUmbraco.Models;
 using Umbraco.Web.Mvc;
 using Umbraco.Core;
+using Umbraco.Core.Models;
+using Umbraco.Web;
 
 namespace JobsplusUmbraco.Controllers
 {
     public class JobTemplatesController : SurfaceController
     {
         private DBContextController DBContext = new DBContextController();
+
+        public int GetMemberId()
+        {
+            var memberService = Services.MemberService;
+            var profile = Members.GetCurrentMemberProfileModel();
+            var memberCompany = memberService.GetByUsername(Members.CurrentUserName);
+
+            return memberCompany.Id;
+        }
+
+        public IPublishedContent Company()
+        {
+            var memberPicker = GetMemberId();
+
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+            var company = umbracoHelper.TypedContentSingleAtXPath("//dtCompanyList").Children.Where("cMemberPicker =" + memberPicker);
+
+            if (company != null && company.Count() > 0)
+                return (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(company.First().Id));
+            else
+                return null;
+        }
 
         // GET: JobTemplates10
         public ActionResult Index()

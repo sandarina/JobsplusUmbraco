@@ -323,6 +323,8 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MemberCandidate.cs" />
     <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\RequiredEducation.cs" />
+    <Compile Include="Models\TypeOfWork.cs" />
     <Compile Include="Models\WorkingField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

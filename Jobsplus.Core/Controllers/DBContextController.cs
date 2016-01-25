@@ -81,8 +81,8 @@ namespace Jobsplus.Backoffice.Controllers
         #region JobTemplate
         public IEnumerable<JobTemplate> GetAllJobTemplate(int? companyID = null)
         {
-            var query = new Sql().Select("*").From("JobsplusJobTemplates").OrderBy("Name");
-            if (companyID.HasValue) query = query.Where<JobTemplate>(x => x.VisibleForCompanyIds.Contains(companyID.Value.ToString()));
+            var query = new Sql().Select("*").From("JobsplusJobTemplates");
+            if (companyID.HasValue) query = query.Where<JobTemplate>(x => x.VisibleForCompanyIds.Contains(companyID.Value.ToString())).OrderBy("Name");
             return DatabaseContext.Database.Fetch<JobTemplate>(query);
         }
 

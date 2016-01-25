@@ -8,6 +8,7 @@ namespace JobsplusUmbraco.Models
 {
     public class WorkingField
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
     }
