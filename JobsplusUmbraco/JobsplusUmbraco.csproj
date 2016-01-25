@@ -75,6 +75,14 @@
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Examine, Version=0.1.68.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Examine.0.1.68.0\lib\Examine.dll</HintPath>
       <Private>True</Private>
@@ -300,14 +308,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\JobsplusHelpers.cs" />
-    <Compile Include="App_Plugins\AdvertisementList\AdvertisementController.cs" />
-    <Compile Include="App_Plugins\AdvertisementList\AdvertisementModel.cs" />
+    <Compile Include="Controllers\AdvertisementController.cs" />
     <Compile Include="Controllers\AdvertisementReplyFormController.cs" />
     <Compile Include="Controllers\MemberCompanyController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditCandidateController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\JobTemplatesController.cs" />
     <Compile Include="Controllers\RegisterCandidateController.cs" />
     <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\AdvertisementList.cs" />
@@ -315,6 +323,8 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MemberCandidate.cs" />
     <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\RequiredEducation.cs" />
+    <Compile Include="Models\TypeOfWork.cs" />
     <Compile Include="Models\WorkingField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -343,27 +353,6 @@
     <Content Include="App_Plugins\MemberManager\css\memberListView.css" />
     <Content Include="App_Plugins\MemberManager\lang\cs-CZ.xml" />
     <Content Include="App_Plugins\MemberManager\resources\member.resource.js" />
-    <Content Include="Config\grid.editors.config.js" />
-    <Content Include="Config\Lang\cs-CZ.user.xml" />
-    <Content Include="Config\Lang\da-DK.user.xml" />
-    <Content Include="Config\Lang\de-DE.user.xml" />
-    <Content Include="Config\Lang\en-GB.user.xml" />
-    <Content Include="Config\Lang\en-US.user.xml" />
-    <Content Include="Config\Lang\es-ES.user.xml" />
-    <Content Include="Config\Lang\fr-FR.user.xml" />
-    <Content Include="Config\Lang\he-IL.user.xml" />
-    <Content Include="Config\Lang\it-IT.user.xml" />
-    <Content Include="Config\Lang\ja-JP.user.xml" />
-    <Content Include="Config\Lang\ko-KR.user.xml" />
-    <Content Include="Config\Lang\nb-NO.user.xml" />
-    <Content Include="Config\Lang\nl-NL.user.xml" />
-    <Content Include="Config\Lang\pl-PL.user.xml" />
-    <Content Include="Config\Lang\pt-BR.user.xml" />
-    <Content Include="Config\Lang\ru-RU.user.xml" />
-    <Content Include="Config\Lang\sv-SE.user.xml" />
-    <Content Include="Config\Lang\zh-CN.user.xml" />
-    <Content Include="Config\splashes\booting.aspx" />
-    <Content Include="Config\splashes\noNodes.aspx" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -439,20 +428,6 @@
     <Content Include="App_Browsers\w3cvalidator.browser" />
     <Content Include="App_Plugins\MemberManager\package.manifest" />
     <None Include="App_Plugins\JobsplusGrants\package.manifest" />
-    <Content Include="Config\scripting.config" />
-    <Content Include="Config\tinyMceConfig.config" />
-    <Content Include="Config\trees.config" />
-    <Content Include="Config\UrlRewriting.config" />
-    <Content Include="Config\ExamineSettings.config" />
-    <Content Include="Config\feedProxy.config" />
-    <Content Include="Config\FileSystemProviders.config" />
-    <Content Include="Config\log4net.config" />
-    <Content Include="Config\404handlers.config" />
-    <Content Include="Config\applications.config" />
-    <Content Include="Config\BaseRestExtensions.config" />
-    <Content Include="Config\ClientDependency.config" />
-    <Content Include="Config\Dashboard.config" />
-    <Content Include="Config\EmbeddedMedia.config" />
     <None Include="Properties\PublishProfiles\Jobsplus-Publish Local.pubxml" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\jquery-1.9.0.js" />
@@ -3110,6 +3085,11 @@
     <Content Include="Views\tProfilUzivatele.cshtml" />
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
+    <Content Include="Views\JobTemplates\Create.cshtml" />
+    <Content Include="Views\JobTemplates\Delete.cshtml" />
+    <Content Include="Views\JobTemplates\Details.cshtml" />
+    <Content Include="Views\JobTemplates\Edit.cshtml" />
+    <Content Include="Views\JobTemplates\Index.cshtml" />
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
     <Content Include="Views\pvTOPAdvertisementList.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -3120,6 +3100,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\tMemberCompanyIndex.cshtml" />
+    <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\List.cshtml" />
+    <Content Include="Views\tMCAdvertisementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -105,8 +105,8 @@
                                             </div>
                                         </div>
                                         <div class="row advertisementBottom">
-                                            <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @advertisement.RequiredEducation</div>
-                                            <div class="col-md-6 col-sm-6"><span>Typ</span> @advertisement.TypeOfWork</div>
+                                            <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @advertisement.RequiredEducation.Name</div>
+                                            <div class="col-md-6 col-sm-6"><span>Typ</span> @advertisement.TypeOfWork.Name</div>
                                             <div class="col-md-2"><span>ZTP</span> @(advertisement.ZTP ? "ANO" : "NE") </div>
                                         </div>
                                     </div>
@@ -137,3 +137,5 @@
         return (item == "YES" || item == "TRUE" || item == "1");
     }
 }
+
+<script src="/scripts/dropdownSearchable.js"></script>

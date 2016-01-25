@@ -29,7 +29,7 @@ namespace JobsplusUmbraco.Models
         public bool IsTOP { get; set; }
         public List<Advertisement> lAdvertisements { get; set; }
         public IEnumerable<SelectListItem> slWorkingFields { get; set; }
-        public IEnumerable<SelectListItem> slRegions { get; set; }
+        public IEnumerable<SelectListItem> slRegions { get; set; }       
         public bool IsZTP { get; set; }
 
         UmbracoHelper umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
@@ -53,7 +53,7 @@ namespace JobsplusUmbraco.Models
                     rCollection.Add(new Region { Name = "", Value = "" });
                     while (pvRegions.MoveNext())
                     {
-                        rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value });
+                        rCollection.Add(new Region { Name = pvRegions.Current.Value, Value = pvRegions.Current.Value }); //pvRegions.Current.GetAttribute("id", "")
                     }
                 }
 
@@ -106,10 +106,9 @@ namespace JobsplusUmbraco.Models
         }
 
 
-        public Advertisement DynamicToAdverisement(Node item)
+        public Advertisement DynamicToAdverisement(int Id)
         {
-            //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
-            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item.Id));
+            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(Id));
 
             if (itemAdvertisement == null)
                 return null;
@@ -138,9 +137,9 @@ namespace JobsplusUmbraco.Models
             //advertisement.CompanyLogo =
 
             advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
-            advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);
+            advertisement.TypeOfWork = new TypeOfWork { Name = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty) };
             advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
-            advertisement.RequiredEducation = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty);
+            advertisement.RequiredEducation = new RequiredEducation { Name = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty) };
             advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
             advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
             advertisement.ZTP = itemAdvertisement.GetPropertyValue<string>("aZtp", "0") == "1" ? true : false;
@@ -183,9 +182,9 @@ namespace JobsplusUmbraco.Models
             //advertisement.CompanyLogo =
 
             advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
-            advertisement.TypeOfWork = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty);
+            advertisement.TypeOfWork = new TypeOfWork { Name = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty) };
             advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
-            advertisement.RequiredEducation = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty);
+            advertisement.RequiredEducation = new RequiredEducation { Name = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty) };
             advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
             advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
             advertisement.ZTP = bool.Parse(itemAdvertisement.GetPropertyValue<string>("aZtp", "0"));
@@ -235,15 +234,7 @@ namespace JobsplusUmbraco.Models
             if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
-            /*
-            List<Advertisement> advertisements = new List<Advertisement>();
-            foreach (var result in allAdverts)
-            {
-                Advertisement advertisement = this.DynamicToAdverisement(result);
-                if (advertisement != null) advertisements.Add(advertisement);
-            }
-            lAdvertisements = advertisements;
-            * */
+
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))
             {
@@ -252,6 +243,22 @@ namespace JobsplusUmbraco.Models
             }
             lAdvertisements = advertisements;
              
+        }
+
+        public void Fill(IEnumerable<IPublishedContent> advertisementList)
+        {
+            if (advertisementList != null)
+            {
+                List<Advertisement> advertisements = new List<Advertisement>();
+                foreach (var result in advertisementList)
+                {
+                    Advertisement advertisement = this.DynamicToAdverisement(result.Id);
+                    if (advertisement != null) advertisements.Add(advertisement);
+                }
+                lAdvertisements = advertisements;
+            }
+            else
+                lAdvertisements = new List<Advertisement>();  
         }
         #endregion
 

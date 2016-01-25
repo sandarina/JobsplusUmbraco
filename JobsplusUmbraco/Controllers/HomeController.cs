@@ -18,6 +18,7 @@ using Umbraco.Web.Security;
 //using umbraco.presentation.nodeFactory;
 using System.Data.SqlClient;
 using System.Configuration;
+using umbraco.cms.businesslogic.web;
 
 
 namespace JobsplusUmbraco.Controllers
@@ -69,6 +70,15 @@ namespace JobsplusUmbraco.Controllers
         public ActionResult tHome()
         {
             CheckExpiredTop();
+
+            /*var contentService = Services.ContentService;
+            var produkt = contentService.CreateContent("Nový inzerát", 1446, "dtAdvertisement");
+            produkt.SetValue("aContent", "obsahuje inzerát");
+            produkt.SetValue("aTypeOfWork", "55");
+            produkt.SetValue("aRegion", "240");
+            produkt.SetValue("aWorkingField", "133");
+            produkt.SetValue("aRequiredEducation", "242");
+            var status = contentService.SaveAndPublishWithStatus(produkt);*/
 
             AdvertisementList model = new AdvertisementList();
             model.Fill();
