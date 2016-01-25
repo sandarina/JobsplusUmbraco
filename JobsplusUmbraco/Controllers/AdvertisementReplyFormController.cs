@@ -96,9 +96,9 @@ namespace JobsplusUmbraco.Controllers
                     return CurrentUmbracoPage();
                 }
                 
-                filepath = path + filename;
-                model.CVPath = filepath;
-                member.SetValue("CV", filepath);
+                model.CVPath = path + filename;
+                member.SetValue("CV", path + filename);
+                member.SetValue("CVExists", true);
                 memberService.Save(member);
             }
 
@@ -106,7 +106,7 @@ namespace JobsplusUmbraco.Controllers
             var mail = new MailMessage("info@jobsplus.cz", model.SendToEmail);
             if (!string.IsNullOrEmpty(filepath))
             {
-                var atachementPath = Server.MapPath("~" + filepath);
+                var atachementPath = filepath;
 
                 if (System.IO.File.Exists(atachementPath))
                     mail.Attachments.Add(new Attachment(atachementPath));
@@ -140,7 +140,7 @@ namespace JobsplusUmbraco.Controllers
             var mailCandidate = new MailMessage("info@jobsplus.cz", model.Email);
             if (!string.IsNullOrEmpty(filepath))
             {
-                var atachementPath = Server.MapPath("~" + filepath);
+                var atachementPath = filepath;
 
                 if (System.IO.File.Exists(atachementPath))
                     mail.Attachments.Add(new Attachment(atachementPath));
