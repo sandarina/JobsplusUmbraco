@@ -26,10 +26,12 @@ namespace JobsplusUmbraco.Models
         public string fulltext { get; set; }
         public string workingField { get; set; }
         public string region { get; set; }
+        public string typeOfWork { get; set;  }
         public bool IsTOP { get; set; }
         public List<Advertisement> lAdvertisements { get; set; }
         public IEnumerable<SelectListItem> slWorkingFields { get; set; }
-        public IEnumerable<SelectListItem> slRegions { get; set; }       
+        public IEnumerable<SelectListItem> slRegions { get; set; }
+        public IEnumerable<SelectListItem> slTypeOfWork { get; set; } 
         public bool IsZTP { get; set; }
 
         UmbracoHelper umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
@@ -94,9 +96,42 @@ namespace JobsplusUmbraco.Models
             }
         }
 
+        public List<TypeOfWork> lTypeOfWork
+        {
+            get
+            {
+                List<TypeOfWork> wfCollection = new List<TypeOfWork>();
+                XPathNodeIterator iTypeOfWorks = umbraco.library.GetPreValues(1146);
+                if (iTypeOfWorks.Count > 0 && iTypeOfWorks.Current.HasChildren)
+                {
+                    iTypeOfWorks.MoveNext();
+                    XPathNodeIterator pvTypeOfWorks = iTypeOfWorks.Current.SelectChildren("preValue", "");
+                    wfCollection.Add(new TypeOfWork { Name = "", Value = "" });
+                    while (pvTypeOfWorks.MoveNext())
+                    {
+                        wfCollection.Add(new TypeOfWork { Name = pvTypeOfWorks.Current.Value, Value = pvTypeOfWorks.Current.Value });
+                    }
+                }
+
+                return wfCollection;
+            }
+        }
+        
+
         public IEnumerable<SelectListItem> GetWorkingFieldSelectListItem(string selectItem)
         {
             return from s in lWorkingFields
+                   select new SelectListItem
+                   {
+                       Text = s.Name,
+                       Value = s.Value,
+                       Selected = s.Value == selectItem
+                   };
+        }
+
+        public IEnumerable<SelectListItem> GetTypeOfWorkSelectListItem(string selectItem)
+        {
+            return from s in lTypeOfWork
                    select new SelectListItem
                    {
                        Text = s.Name,
@@ -226,6 +261,8 @@ namespace JobsplusUmbraco.Models
                 filter.And().Field("aWorkingField", workingField);
             if (!String.IsNullOrEmpty(region))
                 filter.And().Field("aRegion", region);
+            if (!String.IsNullOrEmpty(typeOfWork))
+                filter.And().Field("aTypeOfWork", typeOfWork);
             if (IsZTP)
                 filter.And().Field("aZtp", "1");
 
@@ -234,6 +271,7 @@ namespace JobsplusUmbraco.Models
             if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
+            slTypeOfWork = this.GetTypeOfWorkSelectListItem(typeOfWork);
 
             List<Advertisement> advertisements = new List<Advertisement>();
             foreach (var result in searcher.Search(filter.Compile()))

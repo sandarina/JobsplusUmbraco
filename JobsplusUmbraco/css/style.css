@@ -1171,6 +1171,10 @@ nav li > ul > li > ul {
 	margin: 0px;
 }
 
+#findJobForm .row {
+    padding: 5px 0;
+}
+
 .cBody_tabs {
 	background-color: rgb(82,82,82);
 	color: white;

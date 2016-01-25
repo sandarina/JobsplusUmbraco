@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
 
     $('#advertisementReply').on('shown.bs.modal', function () {
         $('#EditCandidateFormSubmit').focus()
@@ -30,6 +30,8 @@
 	    $('#searchRegions input.searchbox').addClass("form-control");
 	    $('#searchWorkingFields input.searchbox').attr("placeholder", "Obor nebo pozice?");
 	    $('#searchWorkingFields input.searchbox').addClass("form-control");
+	    $('#searchTypeOfWorks input.searchbox').attr("placeholder", "Typ (hlavní, brigáda, apod.)?");
+	    $('#searchTypeOfWorks input.searchbox').addClass("form-control");
 	});
 
 	$('#tBody .txtWorkingField input.searchbox').prop("autocomplete", "off"); 

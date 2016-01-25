@@ -32,8 +32,8 @@
                         <div class="col-md-3" id="searchRegions">
                             @Html.DropDownListFor(model => model.region, Model.slRegions)
                         </div>
-                        <div class="col-md-3" id="searchWorkingFields">
-                            @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
+                        <div class="col-md-3 text-right" id="searchTypeOfWorks">
+                            @Html.DropDownListFor(model => model.typeOfWork, Model.slTypeOfWork)
                         </div>
                         <div class="col-md-3 text-right">
                             <input type="submit" class="btn btn-default violet" value="Vyhledat" />
@@ -41,7 +41,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-9 text-right">
+                        <div class="col-md-6" id="searchWorkingFields">
+                            @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
+                        </div>
+                        <div class="col-md-3 text-right">
                             @Html.CheckBoxFor(model => model.IsZTP) <label for="IsZTP">vhodné pro ZTP</label>
                         </div>
                     </div>
