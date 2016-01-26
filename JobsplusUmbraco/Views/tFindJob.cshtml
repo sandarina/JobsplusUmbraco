@@ -27,7 +27,7 @@
                 <div class="container">
                     <div class="row" style="@(IsTOP ? "display:none" : "")">
                         <div class="col-md-3" id="searchFulltext">
-                            @Html.TextBox("fulltext", Model.fulltext, new { @class = "searchbox form-control", placeholder = "Název?" })
+                            @Html.TextBox("fulltext", Model.fulltext, new { @class = "searchbox form-control", placeholder = "Pozice?" })
                         </div>
                         <div class="col-md-3" id="searchRegions">
                             @Html.DropDownListFor(model => model.region, Model.slRegions)

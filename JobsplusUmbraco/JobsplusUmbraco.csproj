@@ -429,6 +429,7 @@
     <Content Include="App_Browsers\w3cvalidator.browser" />
     <Content Include="App_Plugins\MemberManager\package.manifest" />
     <None Include="App_Plugins\JobsplusGrants\package.manifest" />
+    <Content Include="Config\ExamineSettings.config" />
     <None Include="Properties\PublishProfiles\Jobsplus-Publish Local.pubxml" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\jquery-1.9.0.js" />

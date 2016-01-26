@@ -25,10 +25,10 @@
 	        $(this).attr('autocomplete', 'off');
 	    });
 	    $('#tBody .txtWorkingField input.searchbox').attr("placeholder", "Kde?");
-	    $('#tBody .txtRegion input.searchbox').attr("placeholder", "Obor nebo pozice?");
+	    $('#tBody .txtRegion input.searchbox').attr("placeholder", "Obor?");
 	    $('#searchRegions input.searchbox').attr("placeholder", "Kde?");
 	    $('#searchRegions input.searchbox').addClass("form-control");
-	    $('#searchWorkingFields input.searchbox').attr("placeholder", "Obor nebo pozice?");
+	    $('#searchWorkingFields input.searchbox').attr("placeholder", "Obor?");
 	    $('#searchWorkingFields input.searchbox').addClass("form-control");
 	    $('#searchTypeOfWorks input.searchbox').attr("placeholder", "Typ (hlavní, brigáda, apod.)?");
 	    $('#searchTypeOfWorks input.searchbox').addClass("form-control");

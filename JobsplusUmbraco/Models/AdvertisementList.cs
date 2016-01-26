@@ -266,15 +266,17 @@ namespace JobsplusUmbraco.Models
             if (IsZTP)
                 filter.And().Field("aZtp", "1");
 
-            if (String.IsNullOrEmpty(fulltext)) region = "Název?";
+            if (String.IsNullOrEmpty(fulltext)) region = "Pracovní pozice?";
             if (String.IsNullOrEmpty(region)) region = "Kde?";
-            if (String.IsNullOrEmpty(workingField)) workingField = "Obor nebo pozice?";
+            if (String.IsNullOrEmpty(workingField)) workingField = "Obor?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
             slTypeOfWork = this.GetTypeOfWorkSelectListItem(typeOfWork);
 
             List<Advertisement> advertisements = new List<Advertisement>();
-            foreach (var result in searcher.Search(filter.Compile()))
+            var searchResult = searcher.Search(filter.Compile());
+            //searchResult = searchResult.Select(r => r.Fields["nodeName"].ContainsInsensitive(fulltext));
+            foreach (var result in searchResult)
             {
                 Advertisement advertisement = this.DynamicToAdverisement(result);
                 if (advertisement != null) advertisements.Add(advertisement);
