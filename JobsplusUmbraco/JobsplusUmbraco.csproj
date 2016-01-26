@@ -3104,6 +3104,7 @@
     <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\List.cshtml" />
     <Content Include="Views\tMCAdvertisementList.cshtml" />
+    <Content Include="Views\tMCAdvertisementCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

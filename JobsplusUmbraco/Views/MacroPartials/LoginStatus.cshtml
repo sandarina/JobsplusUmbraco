@@ -1,11 +1,9 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
-
 @using System.Web.Mvc.Html
 @using ClientDependency.Core.Mvc
 @using Umbraco.Web
 @using Umbraco.Web.Models
 @using Umbraco.Web.Controllers
-
 @{
     var loginStatusModel = Members.GetCurrentLoginStatus();
 
@@ -16,26 +14,34 @@
     Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
 
     var logoutModel = new PostRedirectModel();
-    logoutModel.RedirectUrl = "/"; 
+    logoutModel.RedirectUrl = "/";
 }
-
 @* NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed *@
 @Html.RenderJsHere()
-
 @if (loginStatusModel.IsLoggedIn)
 {
     <div class="loggedInButtons">
         <p class="left">@loginStatusModel.Name</p>
-        <a href="/uzivatel/profil/" class="btn btn-default left">Můj profil</a>
+        @{
+            var roles = Roles.GetRolesForUser(loginStatusModel.Username);
+        }
+        @if (roles.Contains("Zájemnce o práci"))
+        { 
+            <a href="/uzivatel/" class="btn btn-default left">Můj profil</a>
+        }
+        @if (roles.Contains("Správce firmy"))
+        {
+            <a href="/firma/" class="btn btn-default left">V.I.P. zóna</a>
+        }
         @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout", new { @class = "left" }))
         {
-        <button class="btn btn-default">Odhlásit</button>
+            <button class="btn btn-default">Odhlásit</button>
 
-        @Html.HiddenFor(m => logoutModel.RedirectUrl)
+            @Html.HiddenFor(m => logoutModel.RedirectUrl)
         }
     </div>
 }
 else
 {
-	<a href="/vip-vstup/prihlasit/" class="btn btn-default">Přihlásit</a>
+    <a href="/vip-vstup/prihlasit/" class="btn btn-default">Přihlásit</a>
 }

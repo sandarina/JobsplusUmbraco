@@ -55,11 +55,12 @@
 else
 {
     <div>
-        <div class="well"><p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p><br />
+        <div class="well">
+            <p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p><br />
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     @{
-    var roles = Roles.GetRolesForUser(loginStatusModel.Username);
+                        var roles = Roles.GetRolesForUser(loginStatusModel.Username);
                     }
                     @if (roles.Count() > 0)
                     {
@@ -76,16 +77,23 @@ else
                         <p>Nemáte přiřazeny žádné role.</p>
                     }
                 </div>
-                <div class="col-md-6 text-right">
-                    <a href="@mainNode.Url" class="btn btn-primary">V.I.P zóna</a>
+                <div class="col-md-12 text-right">
                     @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
                     {
-                        <button class="btn btn-default gray">Odhlásit</button>
+                        <button class="btn btn-default gray" style="float:right; margin-left: 5px">Odhlásit</button>
 
-                        @Html.HiddenFor(m => logoutModel.RedirectUrl)
+                        @Html.HiddenFor(m => Model.Content.Url)
                     }
+                @if (roles.Contains("Zájemnce o práci"))
+                {
+                    <a href="/uzivatel/" class="btn btn-default violet">Můj profil</a>
+                }
+                @if (roles.Contains("Správce firmy"))
+                {
+                    <a href="/firma/" class="btn btn-default violet">V.I.P. zóna</a>
+                }
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 }

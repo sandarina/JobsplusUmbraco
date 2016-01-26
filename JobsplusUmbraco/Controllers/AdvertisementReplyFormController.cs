@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Umbraco.Web.Mvc;
 using System.Net.Mail;
 using System.IO;
+using System.Web.Security;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -27,13 +28,20 @@ namespace JobsplusUmbraco.Controllers
 
                 if (Members.IsLoggedIn())
                 {
-                    var memberService = Services.MemberService;
-                    var candidate = memberService.GetByUsername(Members.CurrentUserName);
-                    if (candidate != null)
+                    if (!Roles.IsUserInRole(Members.CurrentUserName, "Zájemce o práci"))
                     {
-                        advertisementReplyForm.CandidateMemberId = candidate.Id;
-                        advertisementReplyForm.Email = candidate.Email;
-                        advertisementReplyForm.CVPath = candidate.GetValue<string>("CV");
+                        ModelState.AddModelError("", "Na inzerát mohou reagovat pouze uživatelé s rolí \"Zájemce o práci\".");
+                    }
+                    else
+                    {
+                        var memberService = Services.MemberService;
+                        var candidate = memberService.GetByUsername(Members.CurrentUserName);
+                        if (candidate != null)
+                        {
+                            advertisementReplyForm.CandidateMemberId = candidate.Id;
+                            advertisementReplyForm.Email = candidate.Email;
+                            advertisementReplyForm.CVPath = candidate.GetValue<string>("CV");
+                        }
                     }
                 }
             }

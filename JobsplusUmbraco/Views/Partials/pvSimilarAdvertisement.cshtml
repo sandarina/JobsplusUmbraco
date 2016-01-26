@@ -10,7 +10,10 @@
 }
 @if (advertisements.Any())
 {
+
     var similarAdvertisement = advertisements.Where("aWorkingField.Contains(\"" + (string)workingField + "\")").Where("aRegion.Contains(\"" + (string)region + "\")");
+    //var similarAdvertisement = advertisements.Where("aWorkingField.Contains(\"" + workingField.ToString() + "\") AND aRegion.Contains(\"" + region.ToString() + "\")");
+    
     <div class="col-md-12 advertisementList">
         @foreach (var advertisement in similarAdvertisement.OrderBy("createDate descending").OrderBy("aTop descending"))
         {

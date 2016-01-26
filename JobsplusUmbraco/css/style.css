@@ -1175,6 +1175,14 @@ nav li > ul > li > ul {
     padding: 5px 0;
 }
 
+/*selecty filtru*/
+select#region,
+select#workingField,
+select#typeOfWork {
+    font-size: 14px;
+    line-height: 20px;
+}
+
 .cBody_tabs {
 	background-color: rgb(82,82,82);
 	color: white;
