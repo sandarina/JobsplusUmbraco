@@ -3,7 +3,7 @@
 @using Umbraco.Web.Controllers
 @using Umbraco.Web.Models
 
-@{    
+@{
     var loginStatusModel = Members.GetCurrentLoginStatus();
     var loginModel = new JobsplusUmbraco.Models.LoginModel();
     Html.EnableClientValidation();
@@ -43,6 +43,10 @@ else
                 <br />
                 <div class="col-md-12">
                     <b>@Html.ValidationSummary(false)</b>
+                    @if (TempData["ValidationErrorInfo"] != null && !string.IsNullOrWhiteSpace(TempData["ValidationErrorInfo"].ToString()))
+                    {
+                        <div class="validationErrorInfo">@Html.Raw(TempData["ValidationErrorInfo"])</div>
+                    }
                 </div>
             </div>
         </div>
@@ -60,6 +64,7 @@ else
             {
                 @Html.HiddenFor(m => m.SendToEmail)
                 @Html.HiddenFor(m => m.CandidateMemberId)
+                @Html.HiddenFor(m => m.CompanyNodeId)
                 @Html.HiddenFor(m => m.AdvertisementNodeId)
                 @Html.HiddenFor(m => m.AdvertisementName)
                 @Html.HiddenFor(m => m.AdvertisementUrl)
@@ -136,7 +141,7 @@ else
                 </div>
                 <button class="btn btn-default violet">Přihlásit se</button>
             }<br />
-            <p>Nemáte dosud založený účet? Není nic jednoduššího než se <a href="/vip-vstup/registrace/">zaregistrovat</a>. Zabere to jen minutku...</p>
+                <p>Nemáte dosud založený účet? Není nic jednoduššího než se <a href="/vip-vstup/registrace/">zaregistrovat</a>. Zabere to jen minutku...</p>
         }
     }
 }

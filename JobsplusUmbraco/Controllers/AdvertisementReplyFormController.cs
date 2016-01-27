@@ -8,6 +8,9 @@ using Umbraco.Web.Mvc;
 using System.Net.Mail;
 using System.IO;
 using System.Web.Security;
+using Jobsplus.Backoffice;
+using Jobsplus.Backoffice.Models;
+using Umbraco.Web;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -23,6 +26,7 @@ namespace JobsplusUmbraco.Controllers
                 advertisementReplyForm = new AdvertisementReplyForm();
                 advertisementReplyForm.SendToEmail = sendToEmail;
                 advertisementReplyForm.AdvertisementNodeId = CurrentPage.Id;
+                advertisementReplyForm.CompanyNodeId = CurrentPage.Parent.Parent.Id;
                 advertisementReplyForm.AdvertisementName = CurrentPage.Name;
                 advertisementReplyForm.AdvertisementUrl = CurrentPage.Url;
 
@@ -100,21 +104,48 @@ namespace JobsplusUmbraco.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě: <br /><h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                    ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě:");
+                    TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
                     return CurrentUmbracoPage();
                 }
-                
-                model.CVPath = path + filename;
-                member.SetValue("CV", path + filename);
+
+                filepath = path + filename;
+                model.CVPath = filepath;
+                member.SetValue("CV", filepath);
                 member.SetValue("CVExists", true);
                 memberService.Save(member);
             }
 
+            #region Ulozeni reakce do databaze
+            try
+            {                    
+                AdvertisementReply reply = new AdvertisementReply();
+                reply.CompanyId = model.CompanyNodeId.Value;
+                reply.AdvertisementId = model.AdvertisementNodeId.Value;
+                reply.CandidateId = model.CandidateMemberId.Value;
+                reply.CandidateName = member.Name;
+                reply.CandidateEmail = member.Email;
+                reply.CandidateCV = filepath;
+                reply.CandidateReplyNote = model.Comment;
+                reply.CreateDate = DateTime.Now;
+
+                DatabaseContext.Database.Save(reply);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Při ukládání reakce do dataáze došlo k chybě:");
+                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                return CurrentUmbracoPage();
+            }
+            #endregion
+
             #region Odeslat email spravci
-            var mail = new MailMessage("info@jobsplus.cz", model.SendToEmail);
+            var mail = new MailMessage(JobsplusConstants.EmailRobotEmail, model.SendToEmail);
+            // TODO: odeslat oznámení na emaily účtů správců firmy, která vydala inzerát
+            // ....
             if (!string.IsNullOrEmpty(filepath))
             {
-                var atachementPath = filepath;
+                var atachementPath = Server.MapPath("~" + filepath);
 
                 if (System.IO.File.Exists(atachementPath))
                     mail.Attachments.Add(new Attachment(atachementPath));
@@ -138,17 +169,17 @@ namespace JobsplusUmbraco.Controllers
             catch(Exception ex)
             {
                 var innterMsgText = ex.InnerException != null ? "<br />"+ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:<br /><br />"+
-                    ex.Message + "<br />" + ex.StackTrace + innterMsgText + "<br /><br />Děkujeme, a omlouváme se za dočasné obtíže...");
+                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
+                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>");
                 return CurrentUmbracoPage();
             }
             #endregion
 
             #region Odeslat email zajemci
-            var mailCandidate = new MailMessage("info@jobsplus.cz", model.Email);
+            var mailCandidate = new MailMessage(JobsplusConstants.EmailRobotEmail, model.Email);
             if (!string.IsNullOrEmpty(filepath))
             {
-                var atachementPath = filepath;
+                var atachementPath = Server.MapPath("~" + filepath);
 
                 if (System.IO.File.Exists(atachementPath))
                     mail.Attachments.Add(new Attachment(atachementPath));
@@ -171,12 +202,11 @@ namespace JobsplusUmbraco.Controllers
             catch (Exception ex)
             {
                 var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:<br /><br />" +
-                    ex.Message + "<br />" + ex.StackTrace + innterMsgText + "<br /><br />Děkujeme, a omlouváme se za dočasné obtíže...");
+                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
+                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>");
                 return CurrentUmbracoPage();
             }
             #endregion
-
 
             if (TempData.ContainsKey("AdvertisementReplyIsSuccess")) TempData.Remove("AdvertisementReplyIsSuccess");
             TempData.Add("AdvertisementReplyIsSuccess", true);

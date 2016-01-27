@@ -13,9 +13,14 @@ namespace JobsplusUmbraco.Models
         public int? CandidateMemberId { get; set; }
 
         /// <summary>
+        /// NodeId firmy
+        /// </summary>
+        public int? CompanyNodeId { get; set; }
+
+        /// <summary>
         /// NodeId inzerátu
         /// </summary>
-        public int? AdvertisementNodeId { get; set; }
+        public int? AdvertisementNodeId { get; set; }        
 
         /// <summary>
         /// Název inzerátu

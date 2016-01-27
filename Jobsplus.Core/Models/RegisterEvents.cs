@@ -58,6 +58,12 @@ namespace Jobsplus.Backoffice.Models
                 db.CreateTable<GrantGrantDefinition>(false);
             }
 
+            if (!db.TableExist("JobsplusGrantDefEmployDeparts"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<GrantDefEmployDeparts>(false);
+            }
+
             //Check if the DB table does NOT exist
             if (!db.TableExist("JobsplusSpecializations"))
             {
@@ -78,6 +84,14 @@ namespace Jobsplus.Backoffice.Models
                 //Create DB table - and set overwrite to false
                 db.CreateTable<JobTemplate>(false);
             } 
+
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("JobsplusAdvertisementReply"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<AdvertisementReply>(false);
+            } 
+            
         }
     }
 }

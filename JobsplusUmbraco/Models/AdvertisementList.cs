@@ -14,9 +14,14 @@ using System.Xml.XPath;
 using Umbraco.Core.Models;
 using System.Data;
 using Examine;
+using Examine.LuceneEngine.SearchCriteria;
 using umbraco.cms.businesslogic.member;
+using Umbraco.Core.Persistence;
 using Umbraco.Web.Security;
 using umbraco.MacroEngines;
+using Examine.SearchCriteria;
+using Jobsplus.Backoffice;
+using Jobsplus.Backoffice.Models;
 
 namespace JobsplusUmbraco.Models
 {
@@ -247,16 +252,43 @@ namespace JobsplusUmbraco.Models
             DynamicNode node = Model; // your start node
             var childNodes = node.ChildrenAsList.Where(x => !excludedDoctypes.Contains(x.NodeTypeAlias));*/
 
-
             var searcher = ExamineManager.Instance.SearchProviderCollection["InternalSearcher"];
+            //var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"];
             var criteria = searcher.CreateSearchCriteria(UmbracoExamine.IndexTypes.Content);
             Examine.SearchCriteria.IBooleanOperation filter = null;
 
             criteria.OrderBy(new string[] { "DateCreate" });
             filter = criteria.NodeTypeAlias("dtAdvertisement");
 
+            #region Hledani v nazvu inzeratu
+            // VYHLEDAVAC 1.0
+            // DKO: puvodni vyhledavani - CASE SENSITIVE, pouze celá slova
+            /*if (!String.IsNullOrEmpty(fulltext))
+                filter.And().GroupedOr(new string[] { "nodeName" }, fulltext.Trim().ToLower()); */
+
+            // VYHLEDAVAC 2.0
+            // DKO: dalsi pokus o vyhledavani - CASE INSENSITIVE, pouze celá slova, bere v potaz i vyhledání uprostřed slov v názvu,
+            // pokud uživatel zadá více jak jedno slovo, nefunguje :-(
+            /*
             if (!String.IsNullOrEmpty(fulltext))
-                filter.And().GroupedOr(new string[] { "nodeName" }, fulltext);
+                filter.And().GroupedOr(new string[] { "nodeName" }, fulltext.Trim().ToLower().MultipleCharacterWildcard());*/
+
+            // VYHLEDAVAC 3.0
+            if (!String.IsNullOrWhiteSpace(fulltext))
+            {
+                var values = new List<Examine.SearchCriteria.IExamineValue>();
+                var searchTerms = fulltext.Trim().ToLower().Split(' '); // rozdělení vyhledávaného výrazu na jednotlivé termíny
+                foreach (var term in searchTerms) // přidání každého termínu zvlášť do skupiny vyhledáváných slov v názvu
+                {
+                    if (string.IsNullOrWhiteSpace(term)) continue;
+                    values.Add(term.MultipleCharacterWildcard()); // MultipleCharacterWildcard zajistí relevantnější prohledávání - i uprostřed slov apod.
+                }
+                if (values.Count() > 0)
+                {
+                    filter.And().GroupedOr(new string[] { "nodeName" }, values.ToArray<IExamineValue>());
+                }
+            }
+            #endregion
             if (!String.IsNullOrEmpty(workingField)) 
                 filter.And().Field("aWorkingField", workingField);
             if (!String.IsNullOrEmpty(region))
@@ -275,7 +307,6 @@ namespace JobsplusUmbraco.Models
 
             List<Advertisement> advertisements = new List<Advertisement>();
             var searchResult = searcher.Search(filter.Compile());
-            //searchResult = searchResult.Select(r => r.Fields["nodeName"].ContainsInsensitive(fulltext));
             foreach (var result in searchResult)
             {
                 Advertisement advertisement = this.DynamicToAdverisement(result);

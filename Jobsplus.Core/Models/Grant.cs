@@ -59,6 +59,11 @@ namespace Jobsplus.Backoffice.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Zkratka
+        /// </summary>        
+        public string Shortcut { get; set; }
+
+        /// <summary>
         /// Kraj
         /// </summary>
         [ForeignKey(typeof(Region))]
@@ -183,7 +188,19 @@ namespace Jobsplus.Backoffice.Models
         [ForeignKey(typeof(GrantDefinition))]
         public int GrantDefinitionId { get; set; }
     }
+
+    [TableName("JobsplusGrantDefEmployDeparts")]
+    public class GrantDefEmployDeparts
+    {
+        [ForeignKey(typeof(GrantDefinition))]
+        public int GrantDefinitionId { get; set; }
+
+        [ForeignKey(typeof(EmployDepartment))]
+        public int EmployDepartmentId { get; set; }
+    }
     #endregion
+
+
 
     /// <summary>
     /// Úřad práce
@@ -204,6 +221,12 @@ namespace Jobsplus.Backoffice.Models
         /// Název
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Okres
+        /// </summary>
+        [ForeignKey(typeof(Region))]
+        public int RegionId { get; set; }
 
         /// <summary>
         /// Okres

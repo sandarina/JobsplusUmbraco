@@ -13,7 +13,6 @@ namespace Jobsplus.Backoffice.Controllers
     [PluginController("JobsplusGrants")]
     public class GrantsApiController : UmbracoAuthorizedJsonController
     {
-
         #region Grants
         public IEnumerable<Grant> GetAll()
         {
@@ -52,7 +51,5 @@ namespace Jobsplus.Backoffice.Controllers
             return DatabaseContext.Database.Delete<Grant>(id);
         }
         #endregion
-
-
     }
 }

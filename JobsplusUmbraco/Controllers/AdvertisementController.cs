@@ -190,15 +190,20 @@ namespace JobsplusUmbraco.Controllers
 
         public int GetMemberId()
         {
+            var memberCompany = GetMember();
+            return memberCompany != null ? memberCompany.Id : 0;
+        }
+
+        public IMember GetMember()
+        {
             var memberService = Services.MemberService;
             var profile = Members.GetCurrentMemberProfileModel();
-            var memberCompany = memberService.GetByUsername(Members.CurrentUserName);
-
-            return memberCompany.Id;
+            return memberService.GetByUsername(Members.CurrentUserName);
         }
 
         public IPublishedContent Company()
         {
+            /*
             var memberPicker = GetMemberId();
 
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
@@ -208,6 +213,11 @@ namespace JobsplusUmbraco.Controllers
                 return (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(company.First().Id));
             else
                 return null;
+             */
+            var memberCompany = GetMember();
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+            // DKO: získá napojení na stránku firmy z nastavení uživatele v členské sekci
+            return umbracoHelper.Content(memberCompany.Properties["CompanyPage"].Value);  
         }
 
         public IPublishedContent CompanyContent()
@@ -224,7 +234,7 @@ namespace JobsplusUmbraco.Controllers
 
         // GET: Advertisement
         public ActionResult Index()
-        {
+        {            
             return PartialView();
         }
 

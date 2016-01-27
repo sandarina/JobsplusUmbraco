@@ -216,11 +216,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\RegionsApiController.cs" />
     <Compile Include="Controllers\GrantDefinitionsApiController.cs" />
     <Compile Include="Controllers\DBContextController.cs" />
     <Compile Include="Controllers\GrantsApiController.cs" />
     <Compile Include="Controllers\JobTemplateApiController.cs" />
+    <Compile Include="Models\AdvertisementReply.cs" />
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\RegisterEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

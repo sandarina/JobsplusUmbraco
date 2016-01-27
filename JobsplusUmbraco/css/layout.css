@@ -274,4 +274,58 @@ label {
     display: inline-block;
 }
 
+/****** TABLES ******/
+.row {
+    margin: 5px auto;
+}
+table.list {
+    width: 100%;
+}
+table.list a {
+    color: rgb(164,40,162);
+}
+table.list th {
+    background: rgb(164,40,162);
+    border-right: 1px solid rgb(164,40,162);
+    border-left: 1px solid rgb(164,40,162);
+    color: #fff;
+    font-weight: bold;
+    text-align: left;
+}
+table.list th, td {
+    line-height: 30px;
+    font-size: 14px;
+    padding: 4px
+}
+table.list tr {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+table.list td {
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+}
+table.list tr.odd td {
+    background: #eee;
+}
+
+table.list .btn {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/*NAV*/
+.nav-pills a {
+    color: rgb(164,40,162);
+}
+.nav-pills a:hover {
+    color: #444;
+}
+.nav-pills .selected a,
+.nav-pills .selected a:hover
+ {
+    background: rgb(164,40,162);
+    color: #fff;
+}
+
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

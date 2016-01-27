@@ -3094,8 +3094,6 @@
     <Content Include="Views\JobTemplates\Index.cshtml" />
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
     <Content Include="Views\pvTOPAdvertisementList.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\MemberCompany\index.cshtml" />
     <Content Include="Views\Partials\pvFolderNavigation.cshtml" />
     <Content Include="Views\tMemberMaster.cshtml">
@@ -3106,12 +3104,12 @@
     <Content Include="Views\Advertisement\List.cshtml" />
     <Content Include="Views\tMCAdvertisementList.cshtml" />
     <Content Include="Views\tMCAdvertisementCreate.cshtml" />
+    <None Include="Views\Advertisement\Lis.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="media\cv\" />
     <Folder Include="usercontrols\" />
-    <Folder Include="Views\JobsplusLogin\" />
     <Folder Include="xslt\" />
   </ItemGroup>
   <ItemGroup>
