@@ -1,30 +1,55 @@
 ﻿@using JobsplusUmbraco.Models
 @inherits Umbraco.Web.Mvc.UmbracoViewPage<Advertisement>
 
-<div>
-    @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("JobTemplateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+@{
+    var visibleJobTemplate = TempData["VisibleJobTemplate"] != null;
+}
+
+@if (visibleJobTemplate)
+{
+    <div>
+        @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("JobTemplateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <h2 class="violet-color">Načíst ze šablony</h2>
+            </div><br />
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.DropDownListFor(m => m.JobTemplateID, Model.slJobTemplate, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-default violet">Načíst</button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+{
+    <div class="alert alert-danger" role="alert">
         <div class="row">
-            <h2 class="violet-color">Načíst ze šablony</h2>
+            <div class="col-md-12">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                Ajaj, něco nám ještě chybí:
+            </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                @Html.DropDownListFor(m => m.JobTemplateID, Model.slJobTemplate, new { @class = "form-control" })
-            </div>
-            <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-default violet">Načíst</button>
+            <br />
+            <div class="col-md-12">
+                <b>@Html.ValidationSummary(false)</b>
             </div>
         </div>
-    }
-</div>
+    </div>
+}
 
 <div>
     @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("AdvertisementSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.ValidationSummary("m", true)
         <div class="row">
             <h2 class="violet-color">O inzerátu</h2>
         </div><br />
-
         <div class="row">
             <div class="form-group col-md-6">
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název inzerátu" })
@@ -37,9 +62,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6">
-                <div class="col-md-10">
                     @Html.DropDownListFor(m => m.WorkingFieldID, Model.slWorkingField, new { @class = "form-control" })
-                </div>
             </div>
         </div>
         <div class="row">
@@ -55,6 +78,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "Město" })
+                @Html.ValidationMessageFor(m => m.City, "Prosím zadejte město", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">

@@ -1,6 +1,7 @@
 ﻿using Jobsplus.Backoffice.Controllers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ using System.Web.Mvc;
 using umbraco.businesslogic;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using Umbraco.Web.Models;
 
 namespace Jobsplus.Backoffice.Models
 {
@@ -246,7 +250,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusSpecializations")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public partial class Specialization
+    public class Specialization
     {
         #region Ctor
         public Specialization() { }
@@ -287,7 +291,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusJobs")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public partial class Job
+    public class Job
     {
         #region Ctor
         public Job() { }
@@ -300,12 +304,15 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Název
         /// </summary>
+        [DisplayName("Název")]
+        [Required(ErrorMessage = "Zadejte název pracovní pozice.")]
         public string Name { get; set; }
 
         /// <summary>
         /// Obor
         /// </summary>
         [ForeignKey(typeof(Specialization))]
+        [Required(ErrorMessage = "Zadejte obor.")]
         public int SpecializationId { get; set; }
         #endregion
 
@@ -339,7 +346,7 @@ namespace Jobsplus.Backoffice.Models
     /// </summary>
     [TableName("JobsplusJobTemplates")]
     [PrimaryKey("Id", autoIncrement = true)]
-    public partial class JobTemplate
+    public class JobTemplate
     {
         #region Ctor
         public JobTemplate() { }
@@ -353,11 +360,15 @@ namespace Jobsplus.Backoffice.Models
         /// Pracovní pozice
         /// </summary>
         [ForeignKey(typeof(Job))]
+        [DisplayName("Pracovní pozice")]
+        [Required(ErrorMessage = "Zadejte pracovní pozici.")]
         public int JobId { get; set; }
 
         /// <summary>
         /// Název
         /// </summary>
+        [DisplayName("Název")]
+        [Required(ErrorMessage = "Zadejte název šablony.")]
         public string Name { get; set; }
 
         /// <summary>
@@ -389,21 +400,32 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Šablona "Pravomoci a povinnosti", web "Vaší náplní práce bude"
         /// </summary>
+        [DisplayName("Pravomoci a povinnosti")]
+        [Required(ErrorMessage = "Zadejte pravomoci a povinnosti.")]
         public string JobDescription { get; set; }
 
         /// <summary>
         /// Šablona "Kvalifikační požadavky", web "Požadujeme"
         /// </summary>
+        [DisplayName("Kvalifikační požadavky")]
+        [Required(ErrorMessage = "Zadejte kvalifikační požadavky.")]
         public string JobRequirements { get; set; }
 
         /// <summary>
         /// Šablona "Firemní benefity", web "Nabízíme"
         /// </summary>
+        [DisplayName("Firemní benefity")]
+        [Required(ErrorMessage = "Zadejte firemní benefity.")]
         public string JobOfferings { get; set; }
 	    #endregion
         #endregion
 
         public DBContextController DBContext = new DBContextController();
+
+        /// <summary>
+        /// SelectList pracovních pozic
+        /// </summary>
+        public IEnumerable<SelectListItem> slJob { get; set; }
 
         #region Method
         public override string ToString()

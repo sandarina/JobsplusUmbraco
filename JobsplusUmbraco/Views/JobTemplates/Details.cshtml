@@ -1,90 +1,78 @@
-﻿@model Jobsplus.Backoffice.Models.JobTemplate
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<JobTemplate>
+@using Jobsplus.Backoffice.Models;
 
-@{
-    Layout = null;
+<div class="row">
+    <h2 class="violet-color">Detail šablony</h2>
+</div><br />
+
+@if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+{
+    <div class="alert alert-danger" role="alert">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                Ajaj, něco nám ještě chybí:
+            </div>
+        </div>
+        <div class="row">
+            <br />
+            <div class="col-md-12">
+                <b>@Html.ValidationSummary(false)</b>
+            </div>
+        </div>
+    </div>
 }
 
-<!DOCTYPE html>
+@using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.JobTemplatesController>("Details", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>JobTemplate</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.IsGeneralTemplate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.IsGeneralTemplate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.IsVisibleForAll)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.IsVisibleForAll)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TemplateUrl)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TemplateUrl)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.JobName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.JobName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.JobDescription)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.JobDescription)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.JobRequirements)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.JobRequirements)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.JobOfferings)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.JobOfferings)
-            </dd>
-    
-        </dl>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.CheckBoxFor(m => m.IsGeneralTemplate, new { @class = "RegistrationUP" })
+            Obecná šablona
+            @Html.ValidationMessageFor(m => m.IsGeneralTemplate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    if (TempData["TemplateDoc"] != null && !string.IsNullOrEmpty(TempData["TemplateDoc"].ToString()))
+    {
+        <div class="row">
+            <div class="form-group col-md-6">
+                <p>Formulář pracovní pozice: <a href="@TempData["TemplateDoc"]" class="btn btn-default violet">Zobrazit formulář</a></p>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.DropDownListFor(m => m.JobId, Model.slJob, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.JobId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", placeholder = "Pravomoce a povinnosti" })
+            @Html.ValidationMessageFor(m => m.JobDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control", placeholder = "Kvalifikační požadavky" })
+            @Html.ValidationMessageFor(m => m.JobRequirements, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control", placeholder = "Firemní benefity" })
+            @Html.ValidationMessageFor(m => m.JobOfferings, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-default violet">Uložit</button>
+    </div>
+}

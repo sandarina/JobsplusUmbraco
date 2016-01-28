@@ -13,6 +13,7 @@ using Jobsplus.Backoffice.Models;
 using Jobsplus.Backoffice.Controllers;
 using umbraco.cms.businesslogic.web;
 using Umbraco.Web;
+using System.Net;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -49,7 +50,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Value,
-                       Selected = s.Value == selectItem,
+                       Selected = s.Value == selectItem || s.Name == selectItem,
                    };
         }
         #endregion
@@ -84,7 +85,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Value,
-                       Selected = s.Value == selectItem
+                       Selected = s.Value == selectItem || s.Name == selectItem
                    };
         }
         #endregion
@@ -118,7 +119,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Value,
-                       Selected = s.Value == selectItem
+                       Selected = s.Value == selectItem || s.Name == selectItem
                    };
         }
         #endregion
@@ -152,7 +153,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Value,
-                       Selected = s.Value == selectItem
+                       Selected = s.Value == selectItem || s.Name == selectItem
                    };
         }
         #endregion
@@ -183,7 +184,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Id.ToString(),
-                       Selected = s.Id.ToString() == selectItem
+                       Selected = s.Id.ToString() == selectItem || s.Name == selectItem
                    };
         }
         #endregion
@@ -238,33 +239,47 @@ namespace JobsplusUmbraco.Controllers
             return PartialView();
         }
 
-        public ActionResult Create()
+        public ActionResult Details(int? id)
         {
-            Advertisement model = new Advertisement();
-            if (TempData.ContainsKey("JobTemplate"))
+            Advertisement advertisement = new Advertisement();
+            if (id.HasValue)
             {
-                JobTemplate jobTemplate = (JobTemplate)TempData["JobTemplate"];
-                if (jobTemplate != null)
-                {
-                    model.Name = jobTemplate.JobName;
-                    model.JobDescription = jobTemplate.JobDescription;
-                    model.JobOfferings = jobTemplate.JobOfferings;
-                    model.JobRequirements = jobTemplate.JobRequirements;
-                    model.slJobTemplate = GetJobTemplateSelectListItem(jobTemplate.Id.ToString());
-                } 
+                if (TempData.ContainsKey("VisibleJobTemplate")) TempData.Remove("VisibleJobTemplate");
+                advertisement.DynamicToAdverisement(id.Value);
+                advertisement.slRegion = GetRegionSelectListItem(advertisement.Region.Name);
+                advertisement.slWorkingField = GetWorkingFieldSelectListItem(advertisement.WorkingField.Name);
+                advertisement.slTypeOfWork = GetTypeOfWorkSelectListItem(advertisement.TypeOfWork.Name);
+                advertisement.slRequiredEducation = GetRequiredEducationSelectListItem(advertisement.RequiredEducation.Name);
             }
             else
             {
-                model.slJobTemplate = GetJobTemplateSelectListItem(String.Empty);
+                if (TempData.ContainsKey("VisibleJobTemplate")) TempData.Remove("VisibleJobTemplate");
+                TempData.Add("VisibleJobTemplate", true);
+
+                if (TempData.ContainsKey("JobTemplate"))
+                {
+                    JobTemplate jobTemplate = (JobTemplate)TempData["JobTemplate"];
+                    if (jobTemplate != null)
+                    {
+                        advertisement.Name = jobTemplate.JobName;
+                        advertisement.JobDescription = jobTemplate.JobDescription;
+                        advertisement.JobOfferings = jobTemplate.JobOfferings;
+                        advertisement.JobRequirements = jobTemplate.JobRequirements;
+                        advertisement.slJobTemplate = GetJobTemplateSelectListItem(jobTemplate.Id.ToString());
+                    }
+                }
+                else
+                {
+                    advertisement.slJobTemplate = GetJobTemplateSelectListItem(String.Empty);
+                }
+
+                advertisement.slRegion = GetRegionSelectListItem(String.Empty);
+                advertisement.slWorkingField = GetWorkingFieldSelectListItem(String.Empty);
+                advertisement.slTypeOfWork = GetTypeOfWorkSelectListItem(String.Empty);
+                advertisement.slRequiredEducation = GetRequiredEducationSelectListItem(String.Empty);
             }
 
-            model.slRegion = GetRegionSelectListItem(String.Empty);
-            model.slWorkingField = GetWorkingFieldSelectListItem(String.Empty);
-            model.slTypeOfWork = GetTypeOfWorkSelectListItem(String.Empty);
-            model.slRequiredEducation = GetRequiredEducationSelectListItem(String.Empty);
-            
-                        
-            return PartialView(model);            
+            return PartialView(advertisement);            
         }
 
         [HttpPost]
@@ -309,24 +324,21 @@ namespace JobsplusUmbraco.Controllers
 
             var contentService = Services.ContentService;
             var produkt = contentService.CreateContent(model.Name, companyContent.Id, "dtAdvertisement");
-            produkt.SetValue("aContent", model.Content);
+            produkt.SetValue("aContent", !String.IsNullOrEmpty(model.Content) ? model.Content : " ");
             produkt.SetValue("aTypeOfWork", model.TypeOfWorkID);
             produkt.SetValue("aRegion", model.RegionID);
             produkt.SetValue("aWorkingField", model.WorkingFieldID);
             produkt.SetValue("aRequiredEducation", model.RequiredEducationID);
-            produkt.SetValue("aCity", model.City);
+            produkt.SetValue("aCity", !String.IsNullOrEmpty(model.City) ? model.City : " ");
             produkt.SetValue("aZTP", model.ZTP ? "1" : "0");
-            produkt.SetValue("aJobDescription", model.JobDescription);
-            produkt.SetValue("aJobOfferings", model.JobOfferings);
-            produkt.SetValue("aJobRequirements", model.JobRequirements);
+            produkt.SetValue("aJobDescription", !String.IsNullOrEmpty(model.JobDescription) ? model.JobDescription : " ");
+            produkt.SetValue("aJobOfferings", !String.IsNullOrEmpty(model.JobOfferings) ? model.JobOfferings : " ");
+            produkt.SetValue("aJobRequirements", !String.IsNullOrEmpty(model.JobRequirements) ? model.JobRequirements : " ");
 
             var status = contentService.SaveAndPublishWithStatus(produkt);
 
             if (TempData.ContainsKey("AdvertisementSubmitIsSuccess")) TempData.Remove("AdvertisementSubmitIsSuccess");
-            if (status.Success)
-                TempData.Add("AdvertisementSubmitIsSuccess", true);
-            else
-                TempData.Add("AdvertisementSubmitIsSuccess", false);
+            if (status.Success) TempData.Add("AdvertisementSubmitIsSuccess", "save");
 
             return Redirect("/firma/inzeraty");
         }
@@ -338,6 +350,29 @@ namespace JobsplusUmbraco.Controllers
             model.Fill(advertisementList);
 
             return PartialView(model);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            JobTemplate jobTemplate = DBContext.GetJobTemplateById(id.Value);
+
+            if (jobTemplate == null)
+                return HttpNotFound();
+
+            return RedirectToCurrentUmbracoPage(); //View(jobTemplate);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            DBContext.DeleteJobTemplateById(id);
+            if (TempData.ContainsKey("AdvertisementSubmitIsSuccess")) TempData.Remove("AdvertisementSubmitIsSuccess");
+            TempData.Add("AdvertisementSubmitIsSuccess", "delete");
+            return RedirectToAction("List");
         }
 
         public ActionResult CloseSuccessMessage(string url)

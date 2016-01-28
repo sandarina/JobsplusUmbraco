@@ -3087,10 +3087,8 @@
     <Content Include="Views\tProfilUzivatele.cshtml" />
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
-    <Content Include="Views\JobTemplates\Create.cshtml" />
     <Content Include="Views\JobTemplates\Delete.cshtml" />
     <Content Include="Views\JobTemplates\Details.cshtml" />
-    <Content Include="Views\JobTemplates\Edit.cshtml" />
     <Content Include="Views\JobTemplates\Index.cshtml" />
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
     <Content Include="Views\pvTOPAdvertisementList.cshtml" />
@@ -3103,8 +3101,11 @@
     <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\List.cshtml" />
     <Content Include="Views\tMCAdvertisementList.cshtml" />
-    <Content Include="Views\tMCAdvertisementCreate.cshtml" />
+    <Content Include="Views\Advertisement\Details.cshtml" />
     <None Include="Views\Advertisement\Lis.cshtml.bak" />
+    <Content Include="Views\tMCAdvertisementDetails.cshtml" />
+    <Content Include="Views\tMCJobTemplateList.cshtml" />
+    <Content Include="Views\tMCJobTemplateDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

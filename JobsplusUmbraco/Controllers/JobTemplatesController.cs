@@ -20,26 +20,53 @@ namespace JobsplusUmbraco.Controllers
     {
         private DBContextController DBContext = new DBContextController();
 
+        #region Job
+        public List<Job> lJobs
+        {
+            get
+            {
+                IEnumerable<Job> ieJobs = DBContext.GetAllJob();
+                if (ieJobs == null) return null;
+
+                return ieJobs.ToList();
+            }
+        }
+
+        public IEnumerable<SelectListItem> GetJobSelectListItem(string selectItem)
+        {
+            List<Job> jobs = new List<Job>();
+            jobs.Add(new Job { Id = 0, Name = "-- vyberte pracovní pozici --" });
+            jobs.AddRange(lJobs);
+
+            return from s in jobs
+                   select new SelectListItem
+                   {
+                       Text = s.Name,
+                       Value = s.Id.ToString(),
+                       Selected = s.Id.ToString() == selectItem
+                   };
+        }
+        #endregion
+
         public int GetMemberId()
+        {
+            var memberCompany = GetMember();
+            return memberCompany != null ? memberCompany.Id : 0;
+        }
+
+        public IMember GetMember()
         {
             var memberService = Services.MemberService;
             var profile = Members.GetCurrentMemberProfileModel();
-            var memberCompany = memberService.GetByUsername(Members.CurrentUserName);
-
-            return memberCompany.Id;
+            return memberService.GetByUsername(Members.CurrentUserName);
         }
 
         public IPublishedContent Company()
         {
-            var memberPicker = GetMemberId();
-
+            var memberCompany = GetMember();
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
-            var company = umbracoHelper.TypedContentSingleAtXPath("//dtCompanyList").Children.Where("cMemberPicker =" + memberPicker);
-
-            if (company != null && company.Count() > 0)
-                return (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(company.First().Id));
-            else
-                return null;
+            // DKO: získá napojení na stránku firmy z nastavení uživatele v členské sekci
+            return umbracoHelper.Content(memberCompany.Properties["CompanyPage"].Value);
         }
 
         // GET: JobTemplates10
@@ -48,101 +75,66 @@ namespace JobsplusUmbraco.Controllers
             return PartialView(DBContext.GetAllJobTemplate());
         }
 
-        // GET: JobTemplates/Details/5
         public ActionResult Details(int? id)
         {
-            if (!id.HasValue)
+            JobTemplate jobTemplate = null;
+            if (id.HasValue)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                jobTemplate = DBContext.GetJobTemplateById(id.Value);
+                if (jobTemplate == null)
+                    return HttpNotFound();
 
-            JobTemplate jobTemplate = DBContext.GetJobTemplateById(id.Value);
+                jobTemplate.slJob = GetJobSelectListItem(jobTemplate.JobId.ToString());
+            }
+            else
+            {
+                jobTemplate = new JobTemplate();
+                jobTemplate.slJob = GetJobSelectListItem(String.Empty);
+            }
             
-            if (jobTemplate == null)
-            {
-                return HttpNotFound();
-            }
-            return RedirectToCurrentUmbracoPage();//View(jobTemplate);
+            
+            return PartialView(jobTemplate);
         }
 
-        // GET: JobTemplates/Create
-        public ActionResult Create()
-        {
-            return PartialView();
-        }
-
-        // POST: JobTemplates/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,IsGeneralTemplate,IsVisibleForAll,TemplateUrl,JobName,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
+        //public ActionResult Create([Bind(Include = "Id,Name,IsGeneralTemplate,IsVisibleForAll,TemplateUrl,JobName,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
+        public ActionResult Details([Bind(Include = "Id,Name,IsGeneralTemplate,JobId,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
         {
-            if (ModelState.IsValid && jobTemplate != null)
+            if (!ModelState.IsValid || jobTemplate == null)
+                return CurrentUmbracoPage();
+
+            var company = Company();
+            Job job = DBContext.GetJobById(jobTemplate.JobId);
+            if (job != null)
             {
-                Job job = DBContext.GetJobByName(jobTemplate.JobName);
-                if (job != null)
-                {
-                    jobTemplate.JobId = job.Id;
-                    jobTemplate.VisibleForCompanyIds = "";
-                    jobTemplate.Save();
-                    return RedirectToAction("Index");
-                }              
+                jobTemplate.JobName = job.Name;
+                jobTemplate.VisibleForCompanyIds = company != null ? company.Id.ToString() : " ";
+                jobTemplate.Save();
+
+                if (TempData.ContainsKey("JobTemplateSubmitIsSuccess")) TempData.Remove("JobTemplateSubmitIsSuccess");
+                TempData.Add("JobTemplateSubmitIsSuccess", true);
+
+                //return Redirect("/firma/sablony");
+                return RedirectToAction("Index");
             }
 
             return RedirectToCurrentUmbracoPage();
         }
 
-        // GET: JobTemplates/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            JobTemplate jobTemplate = DBContext.GetJobTemplateById(id.Value);
-            
-            if (jobTemplate == null)
-            {
-                return HttpNotFound();
-            }
-            return RedirectToCurrentUmbracoPage();//View(jobTemplate);
-        }
-
-        // POST: JobTemplates/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,IsGeneralTemplate,IsVisibleForAll,TemplateUrl,JobName,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
-        {
-            if (ModelState.IsValid)
-            {
-                jobTemplate.Save();
-                return RedirectToAction("Index");
-            }
-            return View(jobTemplate);
-        }
-
-        // GET: JobTemplates/Delete/5
         public ActionResult Delete(int? id)
         {
             if (!id.HasValue)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
 
             JobTemplate jobTemplate = DBContext.GetJobTemplateById(id.Value);
             
             if (jobTemplate == null)
-            {
                 return HttpNotFound();
-            }
+
             return RedirectToCurrentUmbracoPage(); //View(jobTemplate);
         }
 
-        // POST: JobTemplates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -151,13 +143,13 @@ namespace JobsplusUmbraco.Controllers
             return RedirectToAction("Index");
         }
 
-        /*protected override void Dispose(bool disposing)
+        public ActionResult CloseSuccessMessage(string url)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
+            if (TempData.ContainsKey("JobTemplateSubmitIsSuccess")) TempData.Remove("JobTemplateSubmitIsSuccess");
+            if (!string.IsNullOrEmpty(url))
+                return Redirect(url);
+            else
+                return RedirectToCurrentUmbracoPage();
+        }
     }
 }

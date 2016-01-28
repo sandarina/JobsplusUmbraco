@@ -120,8 +120,7 @@ namespace JobsplusUmbraco.Models
 
                 return wfCollection;
             }
-        }
-        
+        }      
 
         public IEnumerable<SelectListItem> GetWorkingFieldSelectListItem(string selectItem)
         {
@@ -143,96 +142,6 @@ namespace JobsplusUmbraco.Models
                        Value = s.Value,
                        Selected = s.Value == selectItem
                    };
-        }
-
-
-        public Advertisement DynamicToAdverisement(int Id)
-        {
-            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(Id));
-
-            if (itemAdvertisement == null)
-                return null;
-
-            Advertisement advertisement = new Advertisement();
-            advertisement.ID = itemAdvertisement.Id;
-            advertisement.Name = itemAdvertisement.Name;
-            advertisement.Url = itemAdvertisement.Url;
-            advertisement.CreateDate = itemAdvertisement.CreateDate;
-            advertisement.UpdateDate = itemAdvertisement.UpdateDate;
-            advertisement.Company = itemAdvertisement.Parent.Parent.Name;
-            advertisement.CompanyUrl = itemAdvertisement.Parent.Parent.Url;
-            dynamic mediaLogo;
-            try
-            {
-                mediaLogo = umbracoHelper.Media(itemAdvertisement.Parent.GetPropertyValue<int>("cLogo"));
-            }
-            catch
-            {
-                mediaLogo = null;
-            }
-            if (mediaLogo != null)
-            {
-                advertisement.CompanyLogo = mediaLogo.umbracoFile;
-            }
-            //advertisement.CompanyLogo =
-
-            advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
-            advertisement.TypeOfWork = new TypeOfWork { Name = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty) };
-            advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
-            advertisement.RequiredEducation = new RequiredEducation { Name = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty) };
-            advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
-            advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
-            advertisement.ZTP = itemAdvertisement.GetPropertyValue<string>("aZtp", "0") == "1" ? true : false;
-            advertisement.Content = itemAdvertisement.GetPropertyValue<string>("aContent", string.Empty);
-            //advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("advertiser").HasValue ? Members.GetById(itemAdvertisement.GetPropertyValue<int>("advertiser")).Name : string.Empty;
-            advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("Aadvertiser").HasValue ? membershipHelper.GetById(itemAdvertisement.GetPropertyValue<int>("aAdvertiser")).Name : string.Empty;
-
-            return advertisement;
-        }
-
-        public Advertisement DynamicToAdverisement(dynamic item)
-        {
-            //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
-            var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item["id"]));
-
-            if (itemAdvertisement == null)
-                return null;
-
-            Advertisement advertisement = new Advertisement();
-            advertisement.ID = itemAdvertisement.Id;
-            advertisement.Name = itemAdvertisement.Name;
-            advertisement.Url = itemAdvertisement.Url;
-            advertisement.CreateDate = itemAdvertisement.CreateDate;
-            advertisement.UpdateDate = itemAdvertisement.UpdateDate;
-            advertisement.Company = itemAdvertisement.Parent.Parent.Name;
-            advertisement.CompanyUrl = itemAdvertisement.Parent.Parent.Url;
-            dynamic mediaLogo;            
-            try
-            {
-                mediaLogo = umbracoHelper.Media(itemAdvertisement.Parent.GetPropertyValue<int>("cLogo"));
-            }
-            catch
-            {
-                mediaLogo = null;
-            }
-            if (mediaLogo != null)
-            {
-                advertisement.CompanyLogo = mediaLogo.umbracoFile;
-            }
-            //advertisement.CompanyLogo =
-
-            advertisement.TOP = itemAdvertisement.GetPropertyValue<string>("aTop", "0") == "1" ? true : false;
-            advertisement.TypeOfWork = new TypeOfWork { Name = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aTypeOfWork", string.Empty) };
-            advertisement.WorkingField = new WorkingField { Name = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aWorkingField", string.Empty) };
-            advertisement.RequiredEducation = new RequiredEducation { Name = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRequiredEducation", string.Empty) };
-            advertisement.Region = new Region { Name = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty), Value = itemAdvertisement.GetPropertyValue<string>("aRegion", string.Empty) };
-            advertisement.City = itemAdvertisement.GetPropertyValue<string>("aCity", string.Empty);
-            advertisement.ZTP = bool.Parse(itemAdvertisement.GetPropertyValue<string>("aZtp", "0"));
-            advertisement.Content = itemAdvertisement.GetPropertyValue<string>("aContent", string.Empty);
-            //advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("advertiser").HasValue ? Members.GetById(itemAdvertisement.GetPropertyValue<int>("advertiser")).Name : string.Empty;
-            advertisement.Advertiser = itemAdvertisement.GetPropertyValue<int?>("Aadvertiser").HasValue ? membershipHelper.GetById(itemAdvertisement.GetPropertyValue<int>("aAdvertiser")).Name : string.Empty;
-
-            return advertisement;
         }
 
         public void Fill()
@@ -309,7 +218,9 @@ namespace JobsplusUmbraco.Models
             var searchResult = searcher.Search(filter.Compile());
             foreach (var result in searchResult)
             {
-                Advertisement advertisement = this.DynamicToAdverisement(result);
+                //Advertisement advertisement = this.DynamicToAdverisement(result);
+                Advertisement advertisement = new Advertisement();
+                advertisement.DynamicToAdverisement(result);
                 if (advertisement != null) advertisements.Add(advertisement);
             }
             lAdvertisements = advertisements;
@@ -323,7 +234,9 @@ namespace JobsplusUmbraco.Models
                 List<Advertisement> advertisements = new List<Advertisement>();
                 foreach (var result in advertisementList)
                 {
-                    Advertisement advertisement = this.DynamicToAdverisement(result.Id);
+                    //Advertisement advertisement = this.DynamicToAdverisement(result.Id);
+                    Advertisement advertisement = new Advertisement();
+                    advertisement.DynamicToAdverisement(result.Id);
                     if (advertisement != null) advertisements.Add(advertisement);
                 }
                 lAdvertisements = advertisements;
