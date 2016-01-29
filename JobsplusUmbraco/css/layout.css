@@ -12,6 +12,14 @@ label {
     height: 24px;
 }
 
+.validationErrorInfo
+{
+    background: rgba(255,255,255,0.5);
+    padding: 10px;
+    margin: 20px 0 0;
+    border: 1px solid #a94442;
+}
+
 
 .violet-color {
     color: rgb(164,40,162);

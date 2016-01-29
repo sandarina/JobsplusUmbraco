@@ -46,6 +46,7 @@ else
                     @if (TempData["ValidationErrorInfo"] != null && !string.IsNullOrWhiteSpace(TempData["ValidationErrorInfo"].ToString()))
                     {
                         <div class="validationErrorInfo">@Html.Raw(TempData["ValidationErrorInfo"])</div>
+                        <p>Omlouváme se za dočasné obtíže!</p>
                     }
                 </div>
             </div>

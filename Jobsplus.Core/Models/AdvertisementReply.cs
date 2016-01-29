@@ -96,6 +96,12 @@ namespace Jobsplus.Backoffice.Models
         public bool? IsDiscarded { get; set; }
         #endregion
 
+        public static AdvertisementReply Get(int id, UmbracoDatabase db)
+        {
+            var query = new Sql().Select("*").From("JobsplusAdvertisementReply").Where("Id = " + id);
+            return db.Fetch<AdvertisementReply>(query).FirstOrDefault();
+        }
+
         public static List<AdvertisementReply> GetAdvertisementReplies(int advertisementId, UmbracoDatabase db)
         {
             var query = new Sql().Select("*").From("JobsplusAdvertisementReply").Where("AdvertisementId = " + advertisementId);

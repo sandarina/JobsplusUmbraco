@@ -31,6 +31,17 @@ namespace JobsplusUmbraco
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
+
+        /// <summary>
+        /// Získá HTML reprezentaci zprávy z Exception.
+        /// </summary>
+        /// <param name="ex">Exception</param>
+        /// <returns></returns>
+        public static string GetMsgFromException(Exception ex)
+        {
+            var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
+            return "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>";
+        }
     }
 }
 

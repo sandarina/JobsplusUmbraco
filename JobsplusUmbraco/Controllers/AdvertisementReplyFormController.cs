@@ -105,7 +105,7 @@ namespace JobsplusUmbraco.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě:");
-                    TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                    TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                     return CurrentUmbracoPage();
                 }
 
@@ -134,7 +134,7 @@ namespace JobsplusUmbraco.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Při ukládání reakce do dataáze došlo k chybě:");
-                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                 return CurrentUmbracoPage();
             }
             #endregion
@@ -168,9 +168,8 @@ namespace JobsplusUmbraco.Controllers
             }
             catch(Exception ex)
             {
-                var innterMsgText = ex.InnerException != null ? "<br />"+ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
-                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>");
+                ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                 return CurrentUmbracoPage();
             }
             #endregion
@@ -201,9 +200,8 @@ namespace JobsplusUmbraco.Controllers
             }
             catch (Exception ex)
             {
-                var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
-                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>");
+                ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                 return CurrentUmbracoPage();
             }
             #endregion

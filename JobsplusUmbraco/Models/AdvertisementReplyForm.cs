@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jobsplus.Backoffice.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -61,5 +62,10 @@ namespace JobsplusUmbraco.Models
         /// Souhlas se zpracováním osobních údajů.
         /// </summary>
         public bool Confirm { get; set; }
+
+        /// <summary>
+        ///Vybraný zájemce.
+        /// </summary>
+        public bool? Selected { get; set; }
     }
 }

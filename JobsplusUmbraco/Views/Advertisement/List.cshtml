@@ -16,7 +16,7 @@
     public string CountReplies(int advertisementId)
     {
         var replies = GetReplies(advertisementId);
-        return replies.Count().ToString() + "/" + replies.Count(i => i.IsViewed.Equals(false));
+        return replies.Count().ToString() + "/" + replies.Count(i => i.ViewDate.HasValue.Equals(true));
     }
 }
 
@@ -58,7 +58,7 @@
                             <td><a href="@advertisement.Url" target="_blank" title="Zobrazit inzerát na webu...">@advertisement.Name</a></td>
                             <td>@(advertisement.TOP ? "<i class=\"fa fa-check\"></i>" : "")</td>
                             <td>@advertisement.CreateDate</td>
-                            <td>@CountReplies(advertisement.ID)</td>
+                            <td><a href="reakce/?AdvertisementID=@advertisement.ID">@CountReplies(advertisement.ID)</a></td>
                             <td class="text-right">
                                 <a href="" class="btn btn-default violet">Detail</a>
                                 <a href="" class="btn btn-default gray" onclick="return confirm('Opravdu smazat?')">Smazat</a>

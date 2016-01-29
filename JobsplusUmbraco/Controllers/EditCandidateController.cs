@@ -8,6 +8,7 @@ using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
 using JobsplusUmbraco.Models;
 using Umbraco.Core.Models;
+using Jobsplus.Backoffice;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -104,7 +105,8 @@ namespace JobsplusUmbraco.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě: <br /><h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                    ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                    TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                     return CurrentUmbracoPage();
                 }
                 

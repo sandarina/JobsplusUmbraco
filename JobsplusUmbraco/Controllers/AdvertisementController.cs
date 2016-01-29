@@ -13,12 +13,17 @@ using Jobsplus.Backoffice.Models;
 using Jobsplus.Backoffice.Controllers;
 using umbraco.cms.businesslogic.web;
 using Umbraco.Web;
+using Umbraco.Core.Persistence;
+using Jobsplus.Backoffice;
+using System.Net.Mail;
 
 namespace JobsplusUmbraco.Controllers
 {
     public class AdvertisementController : SurfaceController
     {
         private DBContextController DBContext = new DBContextController();
+        
+        private UmbracoDatabase _db { get { return ApplicationContext.DatabaseContext.Database; } }
 
         #region Region
         public List<JobsplusUmbraco.Models.Region> lRegions
@@ -232,6 +237,11 @@ namespace JobsplusUmbraco.Controllers
             return company != null && company.FirstChild() != null && company.FirstChild().Children() != null ? company.FirstChild().Children().Where("Visible") : null;
         }
 
+        public List<AdvertisementReply> GetReplies(int advertisementId)
+        {
+            return AdvertisementReply.GetAdvertisementReplies(advertisementId, _db);
+        }
+
         // GET: Advertisement
         public ActionResult Index()
         {            
@@ -338,6 +348,127 @@ namespace JobsplusUmbraco.Controllers
             model.Fill(advertisementList);
 
             return PartialView(model);
+        }
+
+        public ActionResult Replies(int AdvertisementId)
+        {
+            TempData.Add("MemberCannotViewAdvertisement", false);
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+            var advertisement = umbracoHelper.Content(AdvertisementId) as IPublishedContent;
+
+            var company = Company();
+            var companyName = company.Name;
+
+            if (advertisement.Parent.Parent.Id != company.Id)
+            {
+                TempData.Add("MemberCannotViewAdvertisement", true);
+                return CurrentUmbracoPage();
+            }
+
+            var model = new RepliesForm();
+            model.AdvertisementId = AdvertisementId;
+            var replies = GetReplies(AdvertisementId);
+            model.Replies = replies;
+            // označit reakce za zobrazené
+            foreach (var reply in replies)
+            {
+                if (!reply.ViewDate.HasValue)
+                {
+                    reply.ViewDate = DateTime.Now;
+                    _db.Save(reply);
+                }
+                else if (!reply.IsViewed)
+                {
+                    reply.IsViewed = true;
+                    _db.Save(reply);
+                }
+            }
+            model.CompanyName = companyName;
+            /*
+            model.Selection = new Dictionary<int,bool>();
+            foreach(var reply in model.Replies)
+            {
+                model.Selection.Add(reply.Id, false);
+            }*/
+            model.SubmitAction = ESubmitAction.None;
+            model.EmailText = @"Dobrý den,<br /><br />
+děkujeme za Váš zájem o práci v naší firmě. Bohužel, do užšího výběru postoupili jiní uchazeči, kteří lépe odpovídali našim požadavkům. 
+Ceníme si Vašich vědomostí a dovedností a proto jsme si dovolili diskrétně uložit Váš životopis do naší databáze uchazečů o zaměstnání.  
+Rádi se s Vámi spojíme, vznikne-li u nás pracovní pozice odpovídající Vaší kvalifikaci.<br /><br />
+Sledujte i nadále naše nabídky volných pracovních míst, které naleznete na webovém portálu http://jobsplus.cz/. <br /><br />
+Přejeme Vám mnoho osobních i pracovních úspěchů.<br /><br />S pozdravem,<br />" + companyName;
+
+            return PartialView(model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RepliesSendSubmit(RepliesForm model, int[] replySelect)
+        {
+            #region Validation
+            if (!ModelState.IsValid)
+                return CurrentUmbracoPage();
+
+            if (replySelect.Count() == 0)
+            {
+                ModelState.AddModelError("", "Nevybrali jste žádné reakce k odmítnutí!");
+                return CurrentUmbracoPage();
+            }
+
+            if (model.SubmitAction == ESubmitAction.DiscadWithEmail && string.IsNullOrWhiteSpace(model.EmailText))
+            {
+                ModelState.AddModelError("", "Uchazeči nebyli odmítnuti ,protože text emailu je prázdný!");
+                return CurrentUmbracoPage();
+            }
+            #endregion
+
+            if (TempData.ContainsKey("RepliesSendSubmitMsg")) TempData.Remove("RepliesSendSubmitMsg");
+
+            foreach(var id in replySelect)
+            {
+                var reply = AdvertisementReply.Get(id, _db);
+
+                switch(model.SubmitAction)
+                {
+                    case ESubmitAction.DiscadWithEmail:
+                        var mailCandidate = new MailMessage(JobsplusConstants.EmailRobotEmail, reply.CandidateEmail);
+
+                        mailCandidate.Subject = "Odpověď od " + model.CompanyName;
+                        mailCandidate.IsBodyHtml = true;
+                        mailCandidate.Body = model.EmailText;
+                        try
+                        {
+                            var smtpClient = new SmtpClient();
+                            smtpClient.Send(mailCandidate);
+                        }
+                        catch (Exception ex)
+                        {
+                            ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                            TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
+                            return CurrentUmbracoPage();
+                        }
+                        DiscardReply(reply);
+                        break;
+                    case ESubmitAction.Discard:
+                        DiscardReply(reply);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            return RedirectToCurrentUmbracoPage("?AdvertisementId=" + model.AdvertisementId);
+        }
+
+        /// <summary>
+        /// Označí reakci na inzerát za vyřízenou a odmítnutou. Uloží do DB.
+        /// </summary>
+        /// <param name="reply"></param>
+        private void DiscardReply(AdvertisementReply reply)
+        {
+            reply.IsDiscarded = true;
+            reply.IsCheckOut = true;
+            reply.CheckOutDate = DateTime.Now;
+            _db.Save(reply);
         }
 
         public ActionResult CloseSuccessMessage(string url)
