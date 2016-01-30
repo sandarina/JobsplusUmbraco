@@ -16,7 +16,7 @@
     public string CountReplies(int advertisementId)
     {
         var replies = GetReplies(advertisementId);
-        return replies.Count().ToString() + "/" + replies.Count(i => i.ViewDate.HasValue.Equals(true));
+        return replies.Count().ToString() + "/" + replies.Count(i => i.ViewDate.HasValue.Equals(false));
     }
 }
 
