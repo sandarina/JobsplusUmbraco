@@ -42,6 +42,24 @@ namespace JobsplusUmbraco
             var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
             return "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p>";
         }
+
+        public static string GetValueToEmail(object value)
+        {
+            if (value == null) return "-";
+
+            var type = value.GetType();
+
+            // prázdný řetězec
+            if (type == typeof(string) && string.IsNullOrWhiteSpace((string)value)) return "-";
+
+            // binární
+            if (type == typeof(bool)) return (bool)value ? "Ano" : "Ne";
+
+            // datum
+            if (type == typeof(DateTime)) return ((DateTime)value).ToShortDateString();
+
+            return value.ToString().Replace("\n", "<br />");
+        }
     }
 }
 
