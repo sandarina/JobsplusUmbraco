@@ -25,7 +25,7 @@
         <h2 class="violet-color">Můj profil</h2>
     </div>
     <div class="col-md-10">
-        if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+        @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
         {
         <div class="alert alert-danger" role="alert">
             <div class="row">
