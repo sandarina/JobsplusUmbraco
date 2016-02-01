@@ -31,6 +31,19 @@ namespace JobsplusUmbraco
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
+
+        /// <summary>
+        /// Prevede array na retezec a spoji je separatorem
+        /// </summary>
+        public static string ArrayToString<T>(T[] values, string separator)
+        {
+            string sValues = string.Empty;
+            if (values.Length > 0)
+            {
+                sValues = string.Join(separator, Array.ConvertAll(values, v => v.ToString()));
+            }
+            return sValues;
+        }
     }
 }
 

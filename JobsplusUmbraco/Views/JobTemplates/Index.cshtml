@@ -10,7 +10,10 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> &nbsp;
-                Šablona byla uložena!
+                @if (TempData["JobTemplateSubmitIsSuccess"] == "save")
+                { <span>Šablona byla uložena!</span> }
+                @if (TempData["JobTemplateSubmitIsSuccess"] == "delete")
+                { <span>Šablona byla vymazána!</span> }
             </div>
             <div class="col-md-6 col-sm-6 text-right"><a href="@Url.Action("CloseSuccessMessage", new { url = Request.RawUrl })">Zavřít</a></div>
         </div>
@@ -18,7 +21,7 @@
 }
 
 <div class="row">
-    <div class="col-md-12"><a href="detail/" class="btn btn-default violet">Vytvořit šablonu</a></div>
+    <div class="col-md-12"><a href=@("http://" + Request.Url.Authority + "/firma/sablony/detail/") class="btn btn-default violet">Vytvořit šablonu</a></div>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -37,9 +40,9 @@
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
                             <td>@Html.DisplayFor(modelItem => item.JobName)</td>
-                            <td>
-                                <a href=@("detail?ID=" + item.Id) class=" btn btn-default violet">Detail</a>
-                                <a href=@("?ID=" + item.Id) class=" btn btn-default violet">Smazat</a>
+                            <td class="text-right">
+                                <a href=@("http://" + Request.Url.Authority + "/firma/sablony/detail?ID=" + item.Id) class=" btn btn-default violet">Detail</a>
+                                <a href="@Url.Action("Delete", new { item.Id })" class="btn btn-default gray" onclick="return confirm('Opravdu smazat?')">Smazat</a>
                             </td>
                         </tr>
                     }

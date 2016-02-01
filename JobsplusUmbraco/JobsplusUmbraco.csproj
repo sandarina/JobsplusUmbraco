@@ -3087,7 +3087,6 @@
     <Content Include="Views\tProfilUzivatele.cshtml" />
     <Content Include="Views\RegisterCandidate\Index.cshtml" />
     <Content Include="Views\AdvertisementReplyForm\Index.cshtml" />
-    <Content Include="Views\JobTemplates\Delete.cshtml" />
     <Content Include="Views\JobTemplates\Details.cshtml" />
     <Content Include="Views\JobTemplates\Index.cshtml" />
     <Content Include="Views\Partials\pvNewsListAll.cshtml" />
@@ -3098,7 +3097,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\tMemberCompanyIndex.cshtml" />
-    <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\List.cshtml" />
     <Content Include="Views\tMCAdvertisementList.cshtml" />
     <Content Include="Views\Advertisement\Details.cshtml" />
@@ -3106,6 +3104,8 @@
     <Content Include="Views\tMCAdvertisementDetails.cshtml" />
     <Content Include="Views\tMCJobTemplateList.cshtml" />
     <Content Include="Views\tMCJobTemplateDetails.cshtml" />
+    <Content Include="Views\tMCAdvertisementDelete.cshtml" />
+    <Content Include="Views\tMCJobTemplateDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

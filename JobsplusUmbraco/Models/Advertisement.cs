@@ -16,6 +16,7 @@ namespace JobsplusUmbraco.Models
 {
     public class Advertisement
     {
+        #region Properties
         public int ID { get; set; }
 
         [DisplayName("Název")]
@@ -80,19 +81,9 @@ namespace JobsplusUmbraco.Models
         public string JobOfferings { get; set; }
 
         /// <summary>
-        /// SelectList šablon
-        /// </summary>
-        public IEnumerable<SelectListItem> slJobTemplate { get; set; }
-
-        /// <summary>
         /// Vybraná položka SelectListu
         /// </summary>
         public int JobTemplateID { get; set; }
-
-        /// <summary>
-        /// SelectList požadovaných vztahů
-        /// </summary>
-        public IEnumerable<SelectListItem> slTypeOfWork { get; set; }
 
         /// <summary>
         /// Vybraná položka SelectListu
@@ -102,21 +93,11 @@ namespace JobsplusUmbraco.Models
         public int TypeOfWorkID { get; set; }
 
         /// <summary>
-        /// SelectList oboru
-        /// </summary>
-        public IEnumerable<SelectListItem> slWorkingField { get; set; }
-
-        /// <summary>
         /// Vybraná položka SelectListu
         /// </summary>
         [DisplayName("Obor")]
         [Required(ErrorMessage = "Zadejte obor.")]
         public int WorkingFieldID { get; set; }
-
-        /// <summary>
-        /// SelectList dosaženého vzdělání
-        /// </summary>
-        public IEnumerable<SelectListItem> slRequiredEducation { get; set; }
 
         /// <summary>
         /// Vybraná položka SelectListu
@@ -126,19 +107,18 @@ namespace JobsplusUmbraco.Models
         public int RequiredEducationID { get; set; }
 
         /// <summary>
-        /// SelectList krajů
-        /// </summary>
-        public IEnumerable<SelectListItem> slRegion { get; set; }
-
-        /// <summary>
         /// Vybraná položka SelectListu
         /// </summary>
         [DisplayName("Kraj")]
         [Required(ErrorMessage = "Zadejte kraj.")]
         public int RegionID { get; set; }
+        #endregion
 
+        #region Custom properties
         UmbracoHelper umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
         MembershipHelper membershipHelper = new MembershipHelper(UmbracoContext.Current);
+        #endregion
+
 
         #region Method
         public void DynamicToAdverisement(int Id)
@@ -186,7 +166,6 @@ namespace JobsplusUmbraco.Models
 
         public void DynamicToAdverisement(dynamic item)
         {
-            //var itemAdvertisement = (IPublishedContent)Umbraco.TypedContent(Convert.ToInt32(item["id"])); 
             var itemAdvertisement = (IPublishedContent)umbracoHelper.TypedContent(Convert.ToInt32(item["id"]));
 
             if (itemAdvertisement != null)

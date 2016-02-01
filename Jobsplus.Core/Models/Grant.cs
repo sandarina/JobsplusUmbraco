@@ -422,11 +422,6 @@ namespace Jobsplus.Backoffice.Models
 
         public DBContextController DBContext = new DBContextController();
 
-        /// <summary>
-        /// SelectList pracovních pozic
-        /// </summary>
-        public IEnumerable<SelectListItem> slJob { get; set; }
-
         #region Method
         public override string ToString()
         {

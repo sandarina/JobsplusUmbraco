@@ -107,5 +107,13 @@ namespace Jobsplus.Backoffice.Controllers
             return DatabaseContext.Database.Delete<JobTemplate>(id);
         }
         #endregion
+
+        #region AdvertisementReply
+        public List<AdvertisementReply> GetAdvertisementReplies(int advertisementId)
+        {
+            var query = new Sql().Select("*").From("JobsplusAdvertisementReply").Where<AdvertisementReply>(x => x.AdvertisementId == advertisementId);
+            return DatabaseContext.Database.Fetch<AdvertisementReply>(query);
+        }
+        #endregion
     }
 }
