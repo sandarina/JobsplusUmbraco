@@ -1,0 +1,12 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "tMemberMaster.cshtml";
+    var JobTemplateID = ConvertToInt(@Request.QueryString["ID"]);
+}
+@functions {
+    public int? ConvertToInt(string data)
+    {
+        return !String.IsNullOrEmpty(data) ? Convert.ToInt32(data) : (int?)null;
+    }
+}
+@Html.Action("Delete", "JobTemplates", new { id = JobTemplateID })
