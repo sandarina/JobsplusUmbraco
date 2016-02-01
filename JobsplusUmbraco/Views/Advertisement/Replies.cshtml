@@ -1,0 +1,125 @@
+﻿@using JobsplusUmbraco.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<RepliesForm>
+@{
+    var replies = Model.Replies;
+}
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+        {
+            <div class="alert alert-danger" role="alert">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                        Ajaj, něco nám ještě chybí:
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="col-md-12">
+                        @Html.ValidationSummary(false)
+                        @if (TempData["ValidationErrorInfo"] != null && !string.IsNullOrWhiteSpace(TempData["ValidationErrorInfo"].ToString()))
+                        {
+                            <div class="validationErrorInfo">@Html.Raw(TempData["ValidationErrorInfo"])</div>
+                            <p>Omlouváme se za dočasné obtíže!</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (TempData["MemberCannotViewAdvertisement"] != null && (bool)TempData["MemberCannotViewAdvertisement"])
+        {
+            <div class="alert alert-danger" role="alert">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="validationErrorInfo">Nemáte oprávnění k zobrazení reakcí k inzerátu!</div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            if (replies.Count() > 0)
+            {
+                using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("RepliesSendSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.AdvertisementId);
+            @Html.HiddenFor(m => m.CompanyName);
+            <table class="list">
+                <tr>
+                    <th><input type="checkbox" class="rowSelectAll" /></th>
+                    <th>&nbsp;</th>
+                    <th>Jméno a příjmeni</th>
+                    <th>Email</th>
+                    <th>Životopis</th>
+                    <th>Pozn.</th>
+                    <th>Přijato</th>
+                </tr>
+                @{ var odd = true; }
+                @foreach (var reply in replies)
+                {
+                    <tr class="@(odd ? "odd": "even")">
+                        <td>
+                            <input type="checkbox" class="replySelect" name="replySelect" id="replySelect_@reply.Id" value="@reply.Id" @Html.Raw(reply.IsCheckOut?"disabled=\"true\"":"") />
+                        </td>
+                        <td>@(@Html.Raw(!reply.IsViewed ? "<i class=\"fa fa-eye violet-color\"></i>" : "&nbsp;"))</td>
+                        <td>@reply.CandidateName</td>
+                        <td>@reply.CandidateEmail</td>
+                        @if (!string.IsNullOrWhiteSpace(@reply.CandidateCV))
+                        {
+                            <td><a href="@reply.CandidateCV" target="_blank"><i class="fa fa-file-text"></i></a></td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(@reply.CandidateReplyNote))
+                        {
+                            <td>
+                                <button type="button" class="btn btn-default violet" data-toggle="popover" data-placement="left" data-content="@reply.CandidateReplyNote">
+                                    Pozn.
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+                        }
+                        <td>@reply.CreateDate</td>
+                    </tr>
+                        odd = !odd;
+                }
+            </table><br />
+            <div class="row">
+                <div class="col-md-12">
+                    Vybrané:
+                    <button type="submit" name="SubmitAction" value="@ESubmitAction.DiscadWithEmail" class="btn btn-default violet">Zamítnout a odeslat email</button>
+                    <button type="submit" name="SubmitAction" value="@ESubmitAction.Discard" class="btn btn-default violet">Zamítnout</button>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(m => m.EmailText, new { @class = "tinymce", rows = 20 })
+                </div>
+            </div>
+                }
+            }
+            else
+            {
+                <div class="no-results">na inzerát zatím nikdo nereagoval</div>
+            }
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.rowSelectAll').click(function () {
+            var allChecked = $(this).prop('checked');
+            $('.replySelect').each(function () {
+                if (!$(this).prop("disabled")) this.checked = allChecked;
+            });
+        });
+    });
+</script>

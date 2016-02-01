@@ -8,6 +8,7 @@ using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
 using JobsplusUmbraco.Models;
 using System.Net.Mail;
+using Jobsplus.Backoffice;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -83,7 +84,7 @@ namespace JobsplusUmbraco.Controllers
                 {
                     filepath = "";
                     ModelState.AddModelError("", "Při nahrávání životopisu došlo k chybě");
-                    TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + "</p>");
+                    TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                     return CurrentUmbracoPage();
                 }
 
@@ -103,10 +104,8 @@ namespace JobsplusUmbraco.Controllers
             // "Candidate" je skupina členů
             memberService.AssignRole(member.Id, "Zájemce o práci");
 
-
-
             #region Odeslat email spravci
-            var mail = new MailMessage("info@jobsplus.cz", _SendToEmail);
+            var mail = new MailMessage(JobsplusConstants.EmailRobotEmail, _SendToEmail);
             if (!string.IsNullOrEmpty(filepath))
             {
                 var atachementPath = filepath;
@@ -114,17 +113,22 @@ namespace JobsplusUmbraco.Controllers
                 if (System.IO.File.Exists(atachementPath))
                     mail.Attachments.Add(new Attachment(atachementPath));
             }
-            mail.Subject = "NOVÁ REGISTRACE na jobsplus.cz";
+            mail.Subject = "NOVÁ REGISTRACE - zájemce o práci";
             mail.IsBodyHtml = true;
-            mail.Body = "<p>Dobrý den,<br />na webu jobsplus.cz se zaregistroval nový uchazeč o zaměstnání.</p><br /><br />" +
+            mail.Body = "<p>Dobrý den,<br />" +
+                "na webu jobsplus.cz se zaregistroval nový uchazeč o zaměstnání.</p><br /><br />" +
                 "<h3>Uchazeč</h3>" +
-                "<p><b>Jméno a příjmení</b><p>" + name + "</p><br />" +
-                "<p><b>Email</b></p><p>" + member.Email + "</p><br />" +
-                "<p><b>Datum narození</b><p>" + model.BirthDate + "</p><br />" +
-                "<p><b>Telefon</b><p>" + model.Phone + "</p><br />" +
-                "<p><b>Registrován na ÚP?</b><p>" + (model.RegistrationUP ? "Ano" : "Ne") + "</p><br />" +
-                (model.RegistrationUP ? "<p><b>Úřad práce (město)</b><p>" + model.Town + "</p><br />" : "") +
-                (!string.IsNullOrEmpty(model.Comments) ? "<h3>Zpráva od zájemce</h3><p>" + model.Comments + "</p><br /><br />" : "") + "<br />" +
+                "<b>Jméno a příjmení:</b> " +       JobsplusHelpers.GetValueToEmail(name) + "<br />" +
+                "<b>Email:</b> " +                  JobsplusHelpers.GetValueToEmail(member.Email) + "<br />" +
+                "<b>Datum narození</b> " +          JobsplusHelpers.GetValueToEmail(model.BirthDate) + "<br />" +
+                "<b>Telefon</b> " +                 JobsplusHelpers.GetValueToEmail(model.Phone) + "<br />" +
+                "<b>Registrován na ÚP:</b> " +      JobsplusHelpers.GetValueToEmail(model.RegistrationUP) + "<br />" +
+                (model.RegistrationUP ? 
+                    "<b>Úřad práce (město)</b> " +  JobsplusHelpers.GetValueToEmail(model.Town) + "<br />" : 
+                    "") +
+                (!string.IsNullOrEmpty(model.Comments) ?
+                    "<br /><b>Zpráva od zájemce</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<<br />" : 
+                    "") + "<br />" +
                 "<p>S pozdravem,<br />Váš JOBSPLUS AUTOMATICKÝ ROZESÍLAČ e-mailů ;-)</p>";
 
             try
@@ -134,15 +138,14 @@ namespace JobsplusUmbraco.Controllers
             }
             catch (Exception ex)
             {
-                var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
-                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p><br /><p>Děkujeme, a omlouváme se za dočasné obtíže...</p>");
+                ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                 return CurrentUmbracoPage();
             }
             #endregion
 
             #region Odeslat email zajemci
-            var mailCandidate = new MailMessage("info@jobsplus.cz", model.Email);
+            var mailCandidate = new MailMessage(JobsplusConstants.EmailRobotEmail, model.Email);
             if (!string.IsNullOrEmpty(filepath))
             {
                 var atachementPath = filepath;
@@ -151,21 +154,25 @@ namespace JobsplusUmbraco.Controllers
                     mail.Attachments.Add(new Attachment(atachementPath));
             }
 
-            mailCandidate.Subject = "POTVRZENÍ REGISTRACE na jobsplus.cz";
+            mailCandidate.Subject = "POTVRZENÍ REGISTRACE - zájemce o práci";
             mailCandidate.IsBodyHtml = true;
-            mailCandidate.Body = "<p>Dobrý den,<br />zaznamenali jsme Vaši registraci na webu jobsplus.cz.</p><br /><br />" +
+            mailCandidate.Body = "<p>Dobrý den,<br />" +
+                "zaznamenali jsme Vaši registraci na webu jobsplus.cz.</p><br /><br />" +
                 "<h3>Přihlašovací údaje</h3>" +
-                "<p><b>Přihlašovací jméno</b></p><p>" + member.Email + "</p><br />" +
-                "<p><b>Heslo</b></p><p>" + model.Password + "</p><br />" +
-                "<p>Váš účet je již aktivní a můžete přihlásit na web jobsplus.cz a odpovídat inzerci. Těšíme se Vaší přízni a přejeme brzké nalezení vysněného zaměstnání.</p><br /><br />" +
-                "<h3>Údaje o Vás</h3>" +
-                "<p><b>Jméno a příjmení</b><p>" + name + "</p><br />" +
-                "<p><b>Email</b></p><p>" + member.Email + "</p><br />" +
-                "<p><b>Datum narození</b><p>" + model.BirthDate + "</p><br />" +
-                "<p><b>Telefon</b><p>" + model.Phone + "</p><br />" +
-                "<p><b>Registrován na ÚP?</b><p>" + (model.RegistrationUP ? "Ano" : "Ne") + "</p><br />" +
-                (model.RegistrationUP ? "<p><b>Úřad práce (město)</b><p>" + model.Town + "</p><br />" : "") +
-                (!string.IsNullOrEmpty(model.Comments) ? "<h3>Poznámka</h3><p>" + model.Comments + "</p><br />" : "") + "<br />" +
+                "<b>Přihlašovací jméno:</b>: " + member.Email + "<br />" +
+                "<b>Heslo:</b> " + model.Password + "<br />" +
+                "<p>Váš účet je již aktivní a můžete <a href=\"http://www.jobsplus.cz/vip-vstup/prihlasit/\">přihlásit</a> na web jobsplus.cz a odpovídat na inzerci. Těšíme se Vaší přízni a přejeme brzké nalezení vysněného zaměstnání.</p><br /><br />" +
+                "<b>Jméno a příjmení:</b> " + JobsplusHelpers.GetValueToEmail(name) + "<br />" +
+                "<b>Email:</b> " + JobsplusHelpers.GetValueToEmail(member.Email) + "<br />" +
+                "<b>Datum narození</b> " + JobsplusHelpers.GetValueToEmail(model.BirthDate) + "<br />" +
+                "<b>Telefon</b> " + JobsplusHelpers.GetValueToEmail(model.Phone) + "<br />" +
+                "<b>Registrován na ÚP:</b> " + JobsplusHelpers.GetValueToEmail(model.RegistrationUP) + "<br />" +
+                (model.RegistrationUP ?
+                    "<b>Úřad práce (město)</b> " + JobsplusHelpers.GetValueToEmail(model.Town) + "<br />" :
+                    "") +
+                (!string.IsNullOrEmpty(model.Comments) ?
+                    "<br /><b>Poznámka</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<<br />" :
+                    "") + "<br />" +
                 "<p>S pozdravem,<br />Váš JOBSPLUS AUTOMATICKÝ ROZESÍLAČ e-mailů ;-)</p>";
             try
             {
@@ -174,9 +181,8 @@ namespace JobsplusUmbraco.Controllers
             }
             catch (Exception ex)
             {
-                var innterMsgText = ex.InnerException != null ? "<br />" + ex.InnerException.Message : "";
-                ModelState.AddModelError("", "Odeslání emailu selhalo! Prosím kotaktujte naši technickou podporu na emailu info@salmaplus.cz. Do emailu uveďte následující text:");
-                TempData.Add("ValidationErrorInfo", "<h3>" + ex.Message + "</h3><br /><p>" + ex.StackTrace + innterMsgText + "</p><br /><p>Děkujeme, a omlouváme se za dočasné obtíže...</p>");
+                ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
                 return CurrentUmbracoPage();
             }
             #endregion

@@ -2,7 +2,6 @@
 @using Jobsplus.Backoffice.Models
 @using Jobsplus.Backoffice.Controllers
 @using Umbraco.Core.Persistence
-@*inherits Umbraco.Web.Mvc.UmbracoViewPage<AdvertisementList>*@
 @model IEnumerable<JobsplusUmbraco.Models.Advertisement>
 
 @{
@@ -20,7 +19,7 @@
     public string CountReplies(int advertisementId)
     {
         var replies = GetReplies(advertisementId);
-        return replies.Count().ToString() + "/" + replies.Count(i => i.IsViewed.Equals(false));
+        return replies.Count().ToString() + "/" + replies.Count(i => i.ViewDate.HasValue.Equals(false));
     }
 }
 
@@ -45,7 +44,7 @@
     <div class="col-md-12">
         @using (Html.BeginForm("List", "Advertisement"))
         {
-            if (/*Model.lAdvertisements.Count() > 0*/Model.Count() > 0)
+            if (Model.Count() > 0)
             {
                 <table class="list">
                     <tr>
@@ -63,7 +62,7 @@
                             <td><a href="@advertisement.Url" target="_blank" title="Zobrazit inzerát na webu...">@advertisement.Name</a></td>
                             <td>@(advertisement.TOP ? "<i class=\"fa fa-check\"></i>" : "")</td>
                             <td>@advertisement.CreateDate</td>
-                            <td>@CountReplies(advertisement.ID)</td>
+                            <td><a href="reakce/?AdvertisementID=@advertisement.ID">@CountReplies(advertisement.ID)</a></td>
                             <td class="text-right">
                                 <a href=@("http://" + Request.Url.Authority + "/firma/inzeraty/detail?ID=" + advertisement.ID) class=" btn btn-default violet">Detail</a>                                
                                 <a href="@Url.Action("Delete", new { advertisement.ID })" class="btn btn-default gray" onclick="return confirm('Opravdu smazat?')">Smazat</a>

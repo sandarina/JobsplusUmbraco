@@ -13,14 +13,21 @@ using Jobsplus.Backoffice.Models;
 using Jobsplus.Backoffice.Controllers;
 using umbraco.cms.businesslogic.web;
 using Umbraco.Web;
+using Umbraco.Core.Persistence;
+using Jobsplus.Backoffice;
+using System.Net.Mail;
 using System.Net;
 
 namespace JobsplusUmbraco.Controllers
 {
     public class AdvertisementController : SurfaceController
     {
+        #region Properties
         private DBContextController DBContext = new DBContextController();
+        private UmbracoDatabase _db { get { return ApplicationContext.DatabaseContext.Database; } }
+        #endregion
 
+        #region Method
         #region Region
         public List<JobsplusUmbraco.Models.Region> lRegions
         {
@@ -32,7 +39,7 @@ namespace JobsplusUmbraco.Controllers
                 {
                     iRegions.MoveNext();
                     XPathNodeIterator pvRegions = iRegions.Current.SelectChildren("preValue", "");
-                    rCollection.Add(new JobsplusUmbraco.Models.Region { Name = "-- vyberte kraj --", Id = 0 });
+                    rCollection.Add(new JobsplusUmbraco.Models.Region { Name = "-- vyberte kraj --", Id = null });
                     while (pvRegions.MoveNext())
                     {
                         rCollection.Add(new JobsplusUmbraco.Models.Region { Name = pvRegions.Current.Value, Id = Convert.ToInt32(pvRegions.Current.GetAttribute("id", "")) });
@@ -50,7 +57,7 @@ namespace JobsplusUmbraco.Controllers
                    {
                        Text = s.Name,
                        Value = s.Id.ToString(),
-                       Selected = (/*s.Id.ToString() == selectItem ||*/ s.Name == selectItem)
+                       Selected = s.Name.Trim() == selectItem.Trim()
                    };
         }
         #endregion
@@ -66,11 +73,11 @@ namespace JobsplusUmbraco.Controllers
                 {
                     iWorkingFields.MoveNext();
                     XPathNodeIterator pvWorkingFields = iWorkingFields.Current.SelectChildren("preValue", "");
-                    wfCollection.Add(new WorkingField { Name = "-- vyberte obor --", Value = "0" });
+                    wfCollection.Add(new WorkingField { Name = "-- vyberte obor --", Id = null });
                     //wfCollection.Add(new WorkingField { Name = "Obor nebo pozice?", Value = "Obor nebo pozice?" });
                     while (pvWorkingFields.MoveNext())
                     {
-                        wfCollection.Add(new WorkingField { Name = pvWorkingFields.Current.Value, Value = pvWorkingFields.Current.GetAttribute("id", "") });
+                        wfCollection.Add(new WorkingField { Name = pvWorkingFields.Current.Value, Id = Convert.ToInt32(pvWorkingFields.Current.GetAttribute("id", "")) });
                     }
                 }
 
@@ -84,8 +91,8 @@ namespace JobsplusUmbraco.Controllers
                    select new SelectListItem
                    {
                        Text = s.Name,
-                       Value = s.Value,
-                       Selected = s.Value == selectItem || s.Name == selectItem
+                       Value = s.Id.ToString(),
+                       Selected = s.Name.Contains(selectItem)//s.Name == selectItem
                    };
         }
         #endregion
@@ -101,10 +108,10 @@ namespace JobsplusUmbraco.Controllers
                 {
                     iTypeOfWorks.MoveNext();
                     XPathNodeIterator pvTypeOfWorks = iTypeOfWorks.Current.SelectChildren("preValue", "");
-                    wfCollection.Add(new TypeOfWork { Name = "-- vyberte požadovaný vztah --", Value = "0" });
+                    wfCollection.Add(new TypeOfWork { Name = "-- vyberte požadovaný vztah --", Id = null });
                     while (pvTypeOfWorks.MoveNext())
                     {
-                        wfCollection.Add(new TypeOfWork { Name = pvTypeOfWorks.Current.Value, Value = pvTypeOfWorks.Current.GetAttribute("id", "") });
+                        wfCollection.Add(new TypeOfWork { Name = pvTypeOfWorks.Current.Value, Id = Convert.ToInt32(pvTypeOfWorks.Current.GetAttribute("id", "")) });
                     }
                 }
 
@@ -118,8 +125,8 @@ namespace JobsplusUmbraco.Controllers
                    select new SelectListItem
                    {
                        Text = s.Name,
-                       Value = s.Value,
-                       Selected = s.Value == selectItem || s.Name == selectItem
+                       Value = s.Id.ToString(),
+                       Selected = s.Name == selectItem
                    };
         }
         #endregion
@@ -135,10 +142,10 @@ namespace JobsplusUmbraco.Controllers
                 {
                     iRequiredEducations.MoveNext();
                     XPathNodeIterator pvRequiredEducations = iRequiredEducations.Current.SelectChildren("preValue", "");
-                    wfCollection.Add(new RequiredEducation { Name = "-- vyberte dosažené vzdělání --", Value = "0" });
+                    wfCollection.Add(new RequiredEducation { Name = "-- vyberte dosažené vzdělání --", Id = null });
                     while (pvRequiredEducations.MoveNext())
                     {
-                        wfCollection.Add(new RequiredEducation { Name = pvRequiredEducations.Current.Value, Value = pvRequiredEducations.Current.GetAttribute("id", "") });
+                        wfCollection.Add(new RequiredEducation { Name = pvRequiredEducations.Current.Value, Id = Convert.ToInt32(pvRequiredEducations.Current.GetAttribute("id", "")) });
                     }
                 }
 
@@ -152,8 +159,8 @@ namespace JobsplusUmbraco.Controllers
                    select new SelectListItem
                    {
                        Text = s.Name,
-                       Value = s.Value,
-                       Selected = s.Value == selectItem || s.Name == selectItem
+                       Value = s.Id.ToString(),
+                       Selected = s.Name == selectItem
                    };
         }
         #endregion
@@ -176,7 +183,7 @@ namespace JobsplusUmbraco.Controllers
         public IEnumerable<SelectListItem> GetJobTemplateSelectListItem(string selectItem)
         {
             List<JobTemplate> jobTemplates = new List<JobTemplate>();
-            jobTemplates.Add(new JobTemplate { Id = 0, Name = "-- vyberte šablonu --" });
+            jobTemplates.Add(new JobTemplate { Id = null, Name = "-- vyberte šablonu --" });
             jobTemplates.AddRange(lJobTemplates);
 
             return from s in jobTemplates
@@ -233,6 +240,11 @@ namespace JobsplusUmbraco.Controllers
             return company != null && company.FirstChild() != null && company.FirstChild().Children() != null ? company.FirstChild().Children().Where("Visible") : null;
         }
 
+        public List<AdvertisementReply> GetReplies(int advertisementId)
+        {
+            return AdvertisementReply.GetAdvertisementReplies(advertisementId, _db);
+        }
+
         public List<Advertisement> Fill(IEnumerable<IPublishedContent> advertisementList)
         {
             if (advertisementList != null)
@@ -250,8 +262,9 @@ namespace JobsplusUmbraco.Controllers
             else
                 return new List<Advertisement>();
         }
+        #endregion
 
-        // GET: Advertisement
+        #region ActionResult
         public ActionResult Index()
         {            
             return PartialView();
@@ -284,7 +297,7 @@ namespace JobsplusUmbraco.Controllers
                         advertisement.JobOfferings = jobTemplate.JobOfferings;
                         advertisement.JobRequirements = jobTemplate.JobRequirements;
                         ViewData["slJobTemplate"] = GetJobTemplateSelectListItem(jobTemplate.Id.ToString());
-                    }
+                    } 
                 }
                 else
                 {
@@ -296,16 +309,13 @@ namespace JobsplusUmbraco.Controllers
                 ViewData["slTypeOfWork"] = GetTypeOfWorkSelectListItem(String.Empty);
                 ViewData["slRequiredEducation"] = GetRequiredEducationSelectListItem(String.Empty);
             }
-
+                        
             return PartialView(advertisement);            
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult JobTemplateSubmit(Advertisement model)
         {
-            /*if (!ModelState.IsValid)
-                return CurrentUmbracoPage();*/
-
             if (ViewData["slJobTemplate"] == null)
                 ViewData["slJobTemplate"] = GetJobTemplateSelectListItem(String.Empty);
             if (ViewData["slRegion"] == null)
@@ -329,7 +339,7 @@ namespace JobsplusUmbraco.Controllers
             if (TempData.ContainsKey("JobTemplate")) TempData.Remove("JobTemplate");
             TempData.Add("JobTemplate", jobTemplate);
 
-            return CurrentUmbracoPage();
+            return RedirectToCurrentUmbracoPage();
         }
 
         [HttpPost]
@@ -382,6 +392,127 @@ namespace JobsplusUmbraco.Controllers
             return Redirect("/firma/inzeraty");
         }
 
+        public ActionResult Replies(int AdvertisementId)
+        {
+            TempData.Add("MemberCannotViewAdvertisement", false);
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+            var advertisement = umbracoHelper.Content(AdvertisementId) as IPublishedContent;
+
+            var company = Company();
+            var companyName = company.Name;
+
+            if (advertisement.Parent.Parent.Id != company.Id)
+            {
+                TempData.Add("MemberCannotViewAdvertisement", true);
+                return CurrentUmbracoPage();
+            }
+
+            var model = new RepliesForm();
+            model.AdvertisementId = AdvertisementId;
+            var replies = GetReplies(AdvertisementId);
+            model.Replies = replies;
+            // označit reakce za zobrazené
+            foreach (var reply in replies)
+            {
+                if (!reply.ViewDate.HasValue)
+                {
+                    reply.ViewDate = DateTime.Now;
+                    _db.Save(reply);
+                }
+                else if (!reply.IsViewed)
+                {
+                    reply.IsViewed = true;
+                    _db.Save(reply);
+                }
+            }
+            model.CompanyName = companyName;
+            /*
+            model.Selection = new Dictionary<int,bool>();
+            foreach(var reply in model.Replies)
+            {
+                model.Selection.Add(reply.Id, false);
+            }*/
+            model.SubmitAction = ESubmitAction.None;
+            model.EmailText = @"Dobrý den,<br /><br />
+děkujeme za Váš zájem o práci v naší firmě. Bohužel, do užšího výběru postoupili jiní uchazeči, kteří lépe odpovídali našim požadavkům. 
+Ceníme si Vašich vědomostí a dovedností a proto jsme si dovolili diskrétně uložit Váš životopis do naší databáze uchazečů o zaměstnání.  
+Rádi se s Vámi spojíme, vznikne-li u nás pracovní pozice odpovídající Vaší kvalifikaci.<br /><br />
+Sledujte i nadále naše nabídky volných pracovních míst, které naleznete na webovém portálu http://jobsplus.cz/. <br /><br />
+Přejeme Vám mnoho osobních i pracovních úspěchů.<br /><br />S pozdravem,<br />" + companyName;
+
+            return PartialView(model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RepliesSendSubmit(RepliesForm model, int[] replySelect)
+        {
+            #region Validation
+            if (!ModelState.IsValid)
+                return CurrentUmbracoPage();
+
+            if (replySelect.Count() == 0)
+            {
+                ModelState.AddModelError("", "Nevybrali jste žádné reakce k odmítnutí!");
+                return CurrentUmbracoPage();
+            }
+
+            if (model.SubmitAction == ESubmitAction.DiscadWithEmail && string.IsNullOrWhiteSpace(model.EmailText))
+            {
+                ModelState.AddModelError("", "Uchazeči nebyli odmítnuti ,protože text emailu je prázdný!");
+                return CurrentUmbracoPage();
+            }
+            #endregion
+
+            if (TempData.ContainsKey("RepliesSendSubmitMsg")) TempData.Remove("RepliesSendSubmitMsg");
+
+            foreach(var id in replySelect)
+            {
+                var reply = AdvertisementReply.Get(id, _db);
+
+                switch(model.SubmitAction)
+                {
+                    case ESubmitAction.DiscadWithEmail:
+                        var mailCandidate = new MailMessage(JobsplusConstants.EmailRobotEmail, reply.CandidateEmail);
+
+                        mailCandidate.Subject = "Odpověď od " + model.CompanyName;
+                        mailCandidate.IsBodyHtml = true;
+                        mailCandidate.Body = model.EmailText;
+                        try
+                        {
+                            var smtpClient = new SmtpClient();
+                            smtpClient.Send(mailCandidate);
+                        }
+                        catch (Exception ex)
+                        {
+                            ModelState.AddModelError("", JobsplusConstants.SendEmailErrorMsg);
+                            TempData.Add("ValidationErrorInfo", JobsplusHelpers.GetMsgFromException(ex));
+                            return CurrentUmbracoPage();
+                        }
+                        DiscardReply(reply);
+                        break;
+                    case ESubmitAction.Discard:
+                        DiscardReply(reply);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            return RedirectToCurrentUmbracoPage("?AdvertisementId=" + model.AdvertisementId);
+        }
+
+        /// <summary>
+        /// Označí reakci na inzerát za vyřízenou a odmítnutou. Uloží do DB.
+        /// </summary>
+        /// <param name="reply"></param>
+        private void DiscardReply(AdvertisementReply reply)
+        {
+            reply.IsDiscarded = true;
+            reply.IsCheckOut = true;
+            reply.CheckOutDate = DateTime.Now;
+            _db.Save(reply);
+        }
+
         public ActionResult CloseSuccessMessage(string url)
         {
             if (TempData.ContainsKey("AdvertisementSubmitIsSuccess")) TempData.Remove("AdvertisementSubmitIsSuccess");
@@ -390,5 +521,6 @@ namespace JobsplusUmbraco.Controllers
             else
                 return RedirectToCurrentUmbracoPage();
         }
+        #endregion
     }
 }

@@ -27,19 +27,25 @@
     <div class="col-md-10">
         @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
         {
-            <div class="alert alert-danger" role="alert">
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
-                        Ajaj, něco nám ještě chybí:
-                    </div>
-                </div>
-                <div class="row"><br />
-                    <div class="col-md-12">
-                        <b>@Html.ValidationSummary(false)</b>
-                    </div>
+        <div class="alert alert-danger" role="alert">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                    Ajaj, něco nám ještě chybí:
                 </div>
             </div>
+            <div class="row">
+                <br />
+                <div class="col-md-12">
+                    @Html.ValidationSummary(false)
+                    @if (TempData["ValidationErrorInfo"] != null && !string.IsNullOrWhiteSpace(TempData["ValidationErrorInfo"].ToString()))
+                    {
+                        <div class="validationErrorInfo">@Html.Raw(TempData["ValidationErrorInfo"])</div>
+                        <p>Omlouváme se za dočasné obtíže!</p>
+                    }
+                </div>
+            </div>
+        </div>
         }
 
         @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.EditCandidateController>("EditCandidateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))

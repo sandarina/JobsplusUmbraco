@@ -5,6 +5,24 @@
     var visibleJobTemplate = TempData["VisibleJobTemplate"] != null;
 }
 
+@if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
+{
+    <div class="alert alert-danger" role="alert">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
+                Ajaj, něco nám ještě chybí:
+            </div>
+        </div>
+        <div class="row">
+            <br />
+            <div class="col-md-12">
+                <b>@Html.ValidationSummary(false)</b>
+            </div>
+        </div>
+    </div>
+}
+
 @if (visibleJobTemplate)
 {
     <div>
@@ -25,28 +43,9 @@
     </div>
 }
 
-@if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
-{
-    <div class="alert alert-danger" role="alert">
-        <div class="row">
-            <div class="col-md-12">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp;
-                Ajaj, něco nám ještě chybí:
-            </div>
-        </div>
-        <div class="row">
-            <br />
-            <div class="col-md-12">
-                <b>@Html.ValidationSummary(false)</b>
-            </div>
-        </div>
-    </div>
-}
-
 <div>
     @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("AdvertisementSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.ValidationSummary("m", true)
         <div class="row">
             <h2 class="violet-color">O inzerátu</h2>
         </div><br />
@@ -62,7 +61,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6">
-                    @Html.DropDownListFor(m => m.WorkingFieldID, (IEnumerable<SelectListItem>)ViewData["slWorkingField"], new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.WorkingFieldID, (IEnumerable<SelectListItem>)ViewData["slWorkingField"], new { @class = "form-control" })
             </div>
         </div>
         <div class="row">
@@ -78,7 +77,6 @@
         <div class="row">
             <div class="form-group col-md-6">
                 @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "Město" })
-                @Html.ValidationMessageFor(m => m.City, "Prosím zadejte město", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">

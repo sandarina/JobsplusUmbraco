@@ -23,9 +23,9 @@
     </div>
 }
 
-@using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.JobTemplatesController>("Details", FormMethod.Post))
+@using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.JobTemplatesController>("JobTemplateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+    @*Html.AntiForgeryToken()*@
     
     @Html.HiddenFor(m => m.IsVisibleForAll)
     @Html.HiddenFor(m => m.VisibleForCompanyIds)
@@ -35,14 +35,12 @@
     <div class="row">
         <div class="form-group col-md-6">
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony" })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             @Html.CheckBoxFor(m => m.IsGeneralTemplate, new { @class = "RegistrationUP", @disabled = "disabled" })
             Obecná šablona
-            @Html.ValidationMessageFor(m => m.IsGeneralTemplate, "", new { @class = "text-danger" })
         </div>
     </div>
     if (TempData["TemplateDoc"] != null && !string.IsNullOrEmpty(TempData["TemplateDoc"].ToString()))
@@ -56,25 +54,21 @@
     <div class="row">
         <div class="form-group col-md-6">
             @Html.DropDownListFor(m => m.JobId, (IEnumerable<SelectListItem>)ViewData["slJob"], new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.JobId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", placeholder = "Pravomoce a povinnosti" })
-            @Html.ValidationMessageFor(m => m.JobDescription, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control", placeholder = "Kvalifikační požadavky" })
-            @Html.ValidationMessageFor(m => m.JobRequirements, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control", placeholder = "Firemní benefity" })
-            @Html.ValidationMessageFor(m => m.JobOfferings, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row">

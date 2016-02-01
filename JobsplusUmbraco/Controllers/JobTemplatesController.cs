@@ -35,7 +35,7 @@ namespace JobsplusUmbraco.Controllers
         public IEnumerable<SelectListItem> GetJobSelectListItem(string selectItem)
         {
             List<Job> jobs = new List<Job>();
-            jobs.Add(new Job { Id = 0, Name = "-- vyberte pracovní pozici --" });
+            jobs.Add(new Job { Id = null, Name = "-- vyberte pracovní pozici --" });
             jobs.AddRange(lJobs);
 
             return from s in jobs
@@ -92,17 +92,13 @@ namespace JobsplusUmbraco.Controllers
             {
                 jobTemplate = new JobTemplate();
                 ViewData["slJob"] = GetJobSelectListItem(String.Empty);
-            }
-            
+            }       
             
             return PartialView(jobTemplate);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Name,IsGeneralTemplate,IsVisibleForAll,TemplateUrl,JobName,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
-        //public ActionResult Details([Bind(Include = "Id,Name,IsGeneralTemplate,IsVisibleForAll,TemplateUrl,JobName,JobDescription,JobRequirements,JobOfferings")] JobTemplate jobTemplate)
-        public ActionResult Details(JobTemplate jobTemplate)
+        public ActionResult JobTemplateSubmit(JobTemplate jobTemplate)
         {
             if (!ModelState.IsValid || jobTemplate == null)
                 return CurrentUmbracoPage();
@@ -124,19 +120,18 @@ namespace JobsplusUmbraco.Controllers
                     jobTemplate.IsVisibleForAll = false;
                     jobTemplate.VisibleForCompanyIds = company != null ? company.Id.ToString() : " ";
                     jobTemplate.TemplateUrl = String.Empty;
-                } 
-                
+                }
+
                 jobTemplate.JobName = job.Name;
                 jobTemplate.Save();
 
                 if (TempData.ContainsKey("JobTemplateSubmitIsSuccess")) TempData.Remove("JobTemplateSubmitIsSuccess");
                 TempData.Add("JobTemplateSubmitIsSuccess", "save");
 
-                //return RedirectToAction("Index");
                 return Redirect("/firma/sablony");
             }
 
-            return RedirectToCurrentUmbracoPage();
+            return CurrentUmbracoPage();
         }
 
         public ActionResult Delete(int? id)

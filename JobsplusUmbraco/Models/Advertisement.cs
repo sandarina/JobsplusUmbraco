@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using Umbraco.Core.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Umbraco.Core.Persistence;
+using Umbraco.Core;
 
 namespace JobsplusUmbraco.Models
 {
@@ -119,7 +121,6 @@ namespace JobsplusUmbraco.Models
         MembershipHelper membershipHelper = new MembershipHelper(UmbracoContext.Current);
         #endregion
 
-
         #region Method
         public void DynamicToAdverisement(int Id)
         {
@@ -206,6 +207,8 @@ namespace JobsplusUmbraco.Models
                 this.JobRequirements = itemAdvertisement.GetPropertyValue<string>("aJobRequirements", string.Empty);
             }
         }
+
+
         #endregion
     }
 }
