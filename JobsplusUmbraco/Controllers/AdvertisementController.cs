@@ -277,6 +277,16 @@ namespace JobsplusUmbraco.Controllers
             {
                 if (TempData.ContainsKey("VisibleJobTemplate")) TempData.Remove("VisibleJobTemplate");
                 advertisement.DynamicToAdverisement(id.Value);
+
+                if (!String.IsNullOrEmpty(advertisement.Region.Name))
+                    advertisement.RegionID = lRegions.Find(r => r.Name == advertisement.Region.Name).Id.Value;
+                if (!String.IsNullOrEmpty(advertisement.WorkingField.Name))
+                    advertisement.WorkingFieldID = lWorkingFields.Find(r => r.Name == advertisement.WorkingField.Name).Id.Value;
+                if (!String.IsNullOrEmpty(advertisement.TypeOfWork.Name))
+                    advertisement.TypeOfWorkID = lTypeOfWorks.Find(r => r.Name == advertisement.TypeOfWork.Name).Id.Value;
+                if (!String.IsNullOrEmpty(advertisement.RequiredEducation.Name))
+                    advertisement.RequiredEducationID = lRequiredEducations.Find(r => r.Name == advertisement.RequiredEducation.Name).Id.Value;
+
                 ViewData["slRegion"] = GetRegionSelectListItem(advertisement.Region.Name);
                 ViewData["slWorkingField"] = GetWorkingFieldSelectListItem(advertisement.WorkingField.Name);
                 ViewData["slTypeOfWork"] = GetTypeOfWorkSelectListItem(advertisement.TypeOfWork.Name);
@@ -296,6 +306,8 @@ namespace JobsplusUmbraco.Controllers
                         advertisement.JobDescription = jobTemplate.JobDescription;
                         advertisement.JobOfferings = jobTemplate.JobOfferings;
                         advertisement.JobRequirements = jobTemplate.JobRequirements;
+                        if (jobTemplate.Id.HasValue)
+                            advertisement.JobTemplateID = jobTemplate.Id.Value;
                         ViewData["slJobTemplate"] = GetJobTemplateSelectListItem(jobTemplate.Id.ToString());
                     } 
                 }
@@ -308,6 +320,7 @@ namespace JobsplusUmbraco.Controllers
                 ViewData["slWorkingField"] = GetWorkingFieldSelectListItem(String.Empty);
                 ViewData["slTypeOfWork"] = GetTypeOfWorkSelectListItem(String.Empty);
                 ViewData["slRequiredEducation"] = GetRequiredEducationSelectListItem(String.Empty);
+                
             }
                         
             return PartialView(advertisement);            
