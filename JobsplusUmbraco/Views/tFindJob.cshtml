@@ -88,7 +88,7 @@
                                                     </h4>
                                                 </div>
                                                 <div class="row advertisementPlace">
-                                                    <span>@advertisement.City, </span><span>@advertisement.Region.Name</span>
+                                                    <span>@advertisement.City, </span><span>@(advertisement.Region != null ? advertisement.Region.Name : "neuvedeno")</span>
                                                 </div>
                                             </div>
                                             @if (!string.IsNullOrEmpty(advertisement.CompanyLogo))
@@ -108,8 +108,8 @@
                                             </div>
                                         </div>
                                         <div class="row advertisementBottom">
-                                            <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @advertisement.RequiredEducation.Name</div>
-                                            <div class="col-md-6 col-sm-6"><span>Typ</span> @advertisement.TypeOfWork.Name</div>
+                                            <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @(advertisement.RequiredEducation != null ? advertisement.RequiredEducation.Name : "neuvedeno")</div>
+                                            <div class="col-md-6 col-sm-6"><span>Typ</span> @(advertisement.TypeOfWork != null ? advertisement.TypeOfWork.Name : "neuvedeno")</div>
                                             <div class="col-md-2"><span>ZTP</span> @(advertisement.ZTP ? "ANO" : "NE") </div>
                                         </div>
                                     </div>

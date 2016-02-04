@@ -161,7 +161,7 @@ namespace JobsplusUmbraco.Models
             DynamicNode node = Model; // your start node
             var childNodes = node.ChildrenAsList.Where(x => !excludedDoctypes.Contains(x.NodeTypeAlias));*/
 
-            var searcher = ExamineManager.Instance.SearchProviderCollection["InternalSearcher"];
+            var searcher = ExamineManager.Instance.SearchProviderCollection["ExternalSearcher"];
             //var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"];
             var criteria = searcher.CreateSearchCriteria(UmbracoExamine.IndexTypes.Content);
             Examine.SearchCriteria.IBooleanOperation filter = null;
@@ -198,18 +198,22 @@ namespace JobsplusUmbraco.Models
                 }
             }
             #endregion
-            if (!String.IsNullOrEmpty(workingField)) 
-                filter.And().Field("aWorkingField", workingField);
+            if (!String.IsNullOrEmpty(workingField))
+            {
+                filter.And().Field("aWorkingField", workingField.MultipleCharacterWildcard());
+            }
             if (!String.IsNullOrEmpty(region))
-                filter.And().Field("aRegion", region);
+                filter.And().Field("aRegion", region.MultipleCharacterWildcard());
             if (!String.IsNullOrEmpty(typeOfWork))
-                filter.And().Field("aTypeOfWork", typeOfWork);
+                filter.And().Field("aTypeOfWork", typeOfWork.MultipleCharacterWildcard());
             if (IsZTP)
-                filter.And().Field("aZtp", "1");
+                filter.And().Field("aZtp", ("1").MultipleCharacterWildcard());
 
-            if (String.IsNullOrEmpty(fulltext)) region = "Pracovní pozice?";
-            if (String.IsNullOrEmpty(region)) region = "Kde?";
-            if (String.IsNullOrEmpty(workingField)) workingField = "Obor?";
+            //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pozice?";
+            if (String.IsNullOrEmpty(region)) region = "";
+            if (String.IsNullOrEmpty(workingField)) workingField = "";
+            if (String.IsNullOrEmpty(typeOfWork)) typeOfWork = "";
+            
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
             slTypeOfWork = this.GetTypeOfWorkSelectListItem(typeOfWork);
