@@ -207,7 +207,7 @@ namespace JobsplusUmbraco.Models
             if (IsZTP)
                 filter.And().Field("aZtp", "1");
 
-            if (String.IsNullOrEmpty(fulltext)) region = "Pracovní pozice?";
+            //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pracovní pozice?";
             if (String.IsNullOrEmpty(region)) region = "Kde?";
             if (String.IsNullOrEmpty(workingField)) workingField = "Obor?";
             slRegions = this.GetRegionSelectListItem(region);
@@ -221,7 +221,7 @@ namespace JobsplusUmbraco.Models
                 //Advertisement advertisement = this.DynamicToAdverisement(result);
                 Advertisement advertisement = new Advertisement();
                 advertisement.DynamicToAdverisement(result);
-                if (advertisement != null) advertisements.Add(advertisement);
+                if (advertisement != null && advertisement.ID > 0) advertisements.Add(advertisement);
             }
             lAdvertisements = advertisements;
              
@@ -237,7 +237,7 @@ namespace JobsplusUmbraco.Models
                     //Advertisement advertisement = this.DynamicToAdverisement(result.Id);
                     Advertisement advertisement = new Advertisement();
                     advertisement.DynamicToAdverisement(result.Id);
-                    if (advertisement != null) advertisements.Add(advertisement);
+                    if (advertisement != null && advertisement.ID > 0) advertisements.Add(advertisement);
                 }
                 lAdvertisements = advertisements;
             }
