@@ -53,7 +53,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 advertisementList">
-                        @if (Model.lAdvertisements.Count() > 0)
+                        @if (Model != null && Model.lAdvertisements != null && Model.lAdvertisements.Count() > 0)
                         {
                             var count = Model.lAdvertisements.Count();
                             var txt1 = "Nalezeno";
@@ -68,8 +68,8 @@
                                 txt1 = "Nalezeny";
                                 txt2 = "pracovní pozice";
                             }
-                            <div class="info">@txt1 <b><i>@Model.lAdvertisements.Count()</i></b> @txt2 odpovdající Vašim požadavkům.</div>
-                            foreach (var advertisement in Model.lAdvertisements)
+                            <div class="info">@txt1 <b><i>@Model.lAdvertisements.Count()</i></b> @txt2 odpovídající Vašim požadavkům.</div>
+                            foreach (Advertisement advertisement in Model.lAdvertisements)
                             {
                                 <div class='row advertisementItem @(advertisement.TOP ? "top" : "")'>
                                     <div class="col-md-12">

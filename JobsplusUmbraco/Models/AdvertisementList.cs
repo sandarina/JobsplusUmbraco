@@ -161,7 +161,7 @@ namespace JobsplusUmbraco.Models
             DynamicNode node = Model; // your start node
             var childNodes = node.ChildrenAsList.Where(x => !excludedDoctypes.Contains(x.NodeTypeAlias));*/
 
-            var searcher = ExamineManager.Instance.SearchProviderCollection["ExternalSearcher"];
+            var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"]; // InternalSearcher
             //var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"];
             var criteria = searcher.CreateSearchCriteria(UmbracoExamine.IndexTypes.Content);
             Examine.SearchCriteria.IBooleanOperation filter = null;
@@ -198,22 +198,25 @@ namespace JobsplusUmbraco.Models
                 }
             }
             #endregion
-            if (!String.IsNullOrEmpty(workingField))
+            if (!String.IsNullOrEmpty(workingField)) 
             {
-                filter.And().Field("aWorkingField", workingField.MultipleCharacterWildcard());
+                filter.And().Field("aWorkingField", workingField);
             }
             if (!String.IsNullOrEmpty(region))
-                filter.And().Field("aRegion", region.MultipleCharacterWildcard());
+                filter.And().Field("aRegion", region);
             if (!String.IsNullOrEmpty(typeOfWork))
-                filter.And().Field("aTypeOfWork", typeOfWork.MultipleCharacterWildcard());
+                filter.And().Field("aTypeOfWork", typeOfWork);
             if (IsZTP)
-                filter.And().Field("aZtp", ("1").MultipleCharacterWildcard());
+                filter.And().Field("aZtp", ("1"));
 
             //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pozice?";
             if (String.IsNullOrEmpty(region)) region = "";
             if (String.IsNullOrEmpty(workingField)) workingField = "";
             if (String.IsNullOrEmpty(typeOfWork)) typeOfWork = "";
-            
+
+            //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pracovní pozice?";
+            if (String.IsNullOrEmpty(region)) region = "Kde?";
+            if (String.IsNullOrEmpty(workingField)) workingField = "Obor?";
             slRegions = this.GetRegionSelectListItem(region);
             slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
             slTypeOfWork = this.GetTypeOfWorkSelectListItem(typeOfWork);
@@ -225,7 +228,7 @@ namespace JobsplusUmbraco.Models
                 //Advertisement advertisement = this.DynamicToAdverisement(result);
                 Advertisement advertisement = new Advertisement();
                 advertisement.DynamicToAdverisement(result);
-                if (advertisement != null) advertisements.Add(advertisement);
+                if (advertisement != null && advertisement.ID > 0) advertisements.Add(advertisement);
             }
             lAdvertisements = advertisements;
              
@@ -241,7 +244,7 @@ namespace JobsplusUmbraco.Models
                     //Advertisement advertisement = this.DynamicToAdverisement(result.Id);
                     Advertisement advertisement = new Advertisement();
                     advertisement.DynamicToAdverisement(result.Id);
-                    if (advertisement != null) advertisements.Add(advertisement);
+                    if (advertisement != null && advertisement.ID > 0) advertisements.Add(advertisement);
                 }
                 lAdvertisements = advertisements;
             }
