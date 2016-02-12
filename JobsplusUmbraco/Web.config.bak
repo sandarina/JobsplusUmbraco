@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <configSections>
     <section name="urlrewritingnet" restartOnExternalChanges="true" requirePermission="false" type="UrlRewritingNet.Configuration.UrlRewriteSection, UrlRewritingNet.UrlRewriter" />
@@ -13,6 +13,8 @@
       <section name="FileSystemProviders" type="Umbraco.Core.Configuration.FileSystemProvidersSection, Umbraco.Core" requirePermission="false" />
       <section name="dashBoard" type="Umbraco.Core.Configuration.Dashboard.DashboardSection, Umbraco.Core" requirePermission="false" />
     </sectionGroup>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
   </configSections>
   <umbracoConfiguration>
     <settings configSource="config\umbracoSettings.config" />
@@ -31,7 +33,7 @@
       Umbraco web.config configuration documentation can be found here: 
       http://our.umbraco.org/documentation/using-umbraco/config-files/#webconfig
       -->
-    <add key="umbracoConfigurationStatus" value="7.2.8" />
+    <add key="umbracoConfigurationStatus" value="7.3.5" />
     <add key="umbracoReservedUrls" value="~/config/splashes/booting.aspx,~/install/default.aspx,~/config/splashes/noNodes.aspx,~/VSEnterpriseHelper.axd" />
     <add key="umbracoReservedPaths" value="~/umbraco,~/install/" />
     <add key="umbracoPath" value="~/umbraco" />
@@ -40,16 +42,21 @@
     <add key="umbracoTimeOutInMinutes" value="20" />
     <add key="umbracoDefaultUILanguage" value="en" />
     <add key="umbracoUseSSL" value="false" />
+    <add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
     <add key="webpages:Enabled" value="false" />
     <add key="enableSimpleMembership" value="false" />
     <add key="autoFormsAuthentication" value="false" />
     <add key="log4net.Config" value="config\log4net.config" />
+    <add key="owin:appStartup" value="UmbracoDefaultOwinStartup" />
   </appSettings>
   <connectionStrings>
-    <remove name="umbracoDbDSN" />
-    <add name="umbracoDbDSN" connectionString="server=olive.globenet.cz;database=d001981;user id=d001981a;password=yDTg8JI775" providerName="System.Data.SqlClient" />
-    <!--<add name="umbracoDbDSN" connectionString="server=10.11.36.165;database=jobsplus;user id=sa;password=Heslo.99" providerName="System.Data.SqlClient" />-->
-    <!-- Important: If you're upgrading Umbraco, do not clear the connection string / provider name during your web.config merge. -->
+    <add name="umbracoDbDSN" connectionString="server=185.111.98.38;database=jobsplus;user id=jobsplus;password=yDTg8JI775"
+      providerName="System.Data.SqlClient" />
+    <!--
+    <add name="umbracoDbDSN" connectionString="server=185.111.98.38;database=jobsplus;user id=jobsplus;password=yDTg8JI775"
+      providerName="System.Data.SqlClient" />-->
+    <add name="JobsplusUmbracoContext" connectionString="Data Source=(localdb)\v11.0; Initial Catalog=JobsplusUmbracoContext-20160119215027; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|JobsplusUmbracoContext-20160119215027.mdf"
+      providerName="System.Data.SqlClient" />
   </connectionStrings>
   <system.data>
     <DbProviderFactories>
@@ -66,45 +73,30 @@
       </smtp>
     </mailSettings>
   </system.net>
-  <!--
-    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
-
-    The following attributes can be set on the <httpRuntime> tag.
-      <system.Web>
-        <httpRuntime targetFramework="4.5" />
-      </system.Web>
-  -->
   <system.web>
-    <customErrors mode="Off" />
+    <customErrors mode="RemoteOnly" />
     <trace enabled="false" requestLimit="10" pageOutput="false" traceMode="SortByTime" localOnly="true" />
-    <httpRuntime enableVersionHeader="false" maxRequestLength="20192" />
+    <httpRuntime requestValidationMode="2.0" enableVersionHeader="false" targetFramework="4.5" maxRequestLength="1048576" fcnMode="Single" />
     <!--
       If you are deploying to a cloud environment that has multiple web server instances,
       you should change session state mode from "InProc" to "Custom". In addition,
       change the connection string named "DefaultConnection" to connect to an instance
       of SQL Server (including SQL Azure and SQL  Compact) instead of to SQL Server Express.
       -->
-    <sessionState mode="InProc" customProvider="DefaultSessionProvider">
-      <providers>
-        <add name="DefaultSessionProvider" type="System.Web.Providers.DefaultSessionStateProvider, System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" connectionStringName="DefaultConnection" />
-      </providers>
-    </sessionState>
-    <pages enableEventValidation="false" controlRenderingCompatibilityVersion="4.0">
+    <pages enableEventValidation="false">
       <controls>
         <add tagPrefix="asp" namespace="System.Web.UI" assembly="System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
         <add tagPrefix="umbraco" namespace="umbraco.presentation.templateControls" assembly="umbraco" />
         <add tagPrefix="asp" namespace="System.Web.UI.WebControls" assembly="System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
       </controls>
-    <namespaces>
-        <add namespace="ClientDependency.Core.Mvc" />
-      </namespaces></pages>
+    </pages>
     <httpModules>
       <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter" />
       <add name="ScriptModule" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
       <add name="UmbracoModule" type="Umbraco.Web.UmbracoModule,umbraco" />
       <add name="ClientDependencyModule" type="ClientDependency.Core.Module.ClientDependencyModule, ClientDependency.Core" />
-      
-    <add name="ImageProcessorModule" type="ImageProcessor.Web.HttpModules.ImageProcessingModule, ImageProcessor.Web" /></httpModules>
+      <add name="ImageProcessorModule" type="ImageProcessor.Web.HttpModules.ImageProcessingModule, ImageProcessor.Web" />
+    </httpModules>
     <httpHandlers>
       <remove verb="*" path="*.asmx" />
       <add verb="*" path="*.asmx" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" validate="false" />
@@ -114,8 +106,11 @@
       <add verb="*" path="umbraco/channels/word.aspx" type="umbraco.presentation.channels.wordApi, umbraco" />
       <add verb="*" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core " />
     </httpHandlers>
-    <compilation defaultLanguage="c#" batch="false" targetFramework="4.5" debug="true">
+    <compilation defaultLanguage="c#" debug="true" batch="false" targetFramework="4.5">
       <assemblies>
+        <remove assembly="System.Web.Http" />
+        <remove assembly="System.Net.Http" />
+        <add assembly="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
         <add assembly="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
       </assemblies>
       <buildProviders>
@@ -135,7 +130,7 @@
       <providers>
         <clear />
         <add name="UmbracoMembershipProvider" type="Umbraco.Web.Security.Providers.MembersMembershipProvider, Umbraco" minRequiredNonalphanumericCharacters="0" minRequiredPasswordLength="4" useLegacyEncoding="true" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" defaultMemberTypeAlias="Member" passwordFormat="Hashed" />
-        <add name="UsersMembershipProvider" type="Umbraco.Web.Security.Providers.UsersMembershipProvider, Umbraco" minRequiredNonalphanumericCharacters="0" minRequiredPasswordLength="4" useLegacyEncoding="true" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" passwordFormat="Hashed" />
+        <add name="UsersMembershipProvider" type="Umbraco.Web.Security.Providers.UsersMembershipProvider, Umbraco" minRequiredNonalphanumericCharacters="0" minRequiredPasswordLength="8" useLegacyEncoding="true" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" passwordFormat="Hashed" />
       </providers>
     </membership>
     <!-- Role Provider -->
@@ -145,11 +140,15 @@
         <add name="UmbracoRoleProvider" type="Umbraco.Web.Security.Providers.MembersRoleProvider" />
       </providers>
     </roleManager>
+    <siteMap>
+      <providers>
+        <remove name="MySqlSiteMapProvider" />
+      </providers>
+    </siteMap>
   </system.web>
   <system.webServer>
-    
+    <validation validateIntegratedModeConfiguration="false" />
     <modules runAllManagedModulesForAllRequests="true">
-      <remove name="WebDAVModule" />
       <remove name="UrlRewriteModule" />
       <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter" />
       <remove name="UmbracoModule" />
@@ -161,8 +160,9 @@
       <!-- Needed for login/membership to work on homepage (as per http://stackoverflow.com/questions/218057/httpcontext-current-session-is-null-when-routing-requests) -->
       <remove name="FormsAuthentication" />
       <add name="FormsAuthentication" type="System.Web.Security.FormsAuthenticationModule" />
-      
-    <add name="ImageProcessorModule" type="ImageProcessor.Web.HttpModules.ImageProcessingModule, ImageProcessor.Web" /></modules>
+      <add name="ImageProcessorModule" type="ImageProcessor.Web.HttpModules.ImageProcessingModule, ImageProcessor.Web" />
+      <remove name="WebDAVModule" />
+    </modules>
     <handlers accessPolicy="Read, Write, Script, Execute">
       <remove name="WebServiceHandlerFactory-Integrated" />
       <remove name="ScriptHandlerFactory" />
@@ -179,7 +179,11 @@
       <add verb="*" name="Channels_Word" preCondition="integratedMode" path="umbraco/channels/word.aspx" type="umbraco.presentation.channels.wordApi, umbraco" />
       <add verb="*" name="ClientDependency" preCondition="integratedMode" path="DependencyHandler.axd" type="ClientDependency.Core.CompositeFiles.CompositeDependencyHandler, ClientDependency.Core" />
       <add name="MiniProfiler" path="mini-profiler-resources/*" verb="*" type="System.Web.Routing.UrlRoutingModule" resourceType="Unspecified" preCondition="integratedMode" />
-    <remove name="ExtensionlessUrlHandler-Integrated-4.0" /><remove name="OPTIONSVerbHandler" /><remove name="TRACEVerbHandler" /><add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" /></handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
     <!-- Adobe AIR mime type -->
     <staticContent>
       <remove fileExtension=".air" />
@@ -199,7 +203,12 @@
         <remove name="X-Powered-By" />
       </customHeaders>
     </httpProtocol>
-  <validation validateIntegratedModeConfiguration="false" /></system.webServer>
+    <security>
+      <requestFiltering>
+        <requestLimits maxAllowedContentLength="1073741824" />
+      </requestFiltering>
+    </security>
+  </system.webServer>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <!-- Old asp.net ajax assembly bindings -->
@@ -213,14 +222,14 @@
       </dependentAssembly>
       <!-- Ensure correct version of MVC -->
       <dependentAssembly>
-        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
       </dependentAssembly>
       <!-- Ensure correct version of HtmlAgilityPack -->
-      <dependentAssembly>
-        <assemblyIdentity name="HtmlAgilityPack" publicKeyToken="bd319b19eaf3b43a" culture="neutral" />
-        <bindingRedirect oldVersion="1.4.5.0-1.4.6.0" newVersion="1.4.6.0" />
-      </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Net.Http" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
@@ -230,16 +239,36 @@
         <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+        <assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
@@ -253,4 +282,14 @@
       <urlCompression doStaticCompression="false" doDynamicCompression="false" dynamicCompressionBeforeCache="false" />
     </system.webServer>
   </location>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
 </configuration>
