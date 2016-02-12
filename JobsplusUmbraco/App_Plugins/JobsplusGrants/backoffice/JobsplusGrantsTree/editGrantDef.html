@@ -24,8 +24,8 @@
         <div class="umb-panel-body umb-scrollable row-fluid">
             <div class="tab-content form-horizontal" style="padding-bottom: 90px">
                 <div class="umb-pane">
-
-                    <p>Vytváříte definici pro dotaci "{{grant.Name}}".</p>
+                    
+                    <p>Vytváříte definici <input name="Name" type="text" ng-model="grantDef.Name" required /> pro dotaci "{{grant.Name}}".</p>
                     <p><i>{{grant.Description}}</i></p>
 
 
@@ -57,6 +57,34 @@
 
                     <umb-control-group label="Výše dotace" description="Zadejte měsíční výši dotace v Kč">
                         <input type="number" class="umb-number" ng-model="grantDef.GrantValue" required /> Kč
+                    </umb-control-group>
+
+                    <umb-control-group label="Platné pro ÚP" description="Zvolte, pro které ÚP se dotační program vztahuje">
+                            <!--
+                          - use `value="{{fruit.name}}"` to give the input a real value, in case the form gets submitted
+                            traditionally
+
+                          - use `ng-checked="fruit.selected"` to have the checkbox checked based on some angular expression
+                            (no two-way-data-binding)
+
+                          - use `ng-model="fruit.selected"` to utilize two-way-data-binding. Note that `.selected`
+                            is arbitrary. The property name could be anything and will be created on the object if not present.
+                                            <input type="checkbox"
+                                                   name="selectedEmployDeparts[]"
+                                                   value="{{ed.name}}"
+                                                   ng-model="ed.selected"> {{ed.name}}
+                        <div ng-init="getEmployDeparts(grant.RegionId)">
+                        </div>
+                        -->
+                        <p><strong>{{region.Name}}</strong></p>
+                        <label ng-repeat="ed in employDeparts">
+                            <input type="checkbox"
+                                   name="regionEmployDeparts[]"
+                                   ng-checked="isSelected(ed.Id)"
+                                   ng-click="toggleSelection(ed.Id)"
+                                   value="{{ed.Id}}"> {{ed.Name}}
+                        </label>
+                        <i><small>{{employDepartsSelection}}</small></i>
                     </umb-control-group>
 
                     <div class="umb-tab-buttons" detect-fold>

@@ -22,10 +22,8 @@ namespace Jobsplus.Backoffice.Controllers
         {
 
             var query = new Sql().Select("*").From("JobsplusRegions");
-            //query.OrderBy<Region>(item => item.Name);
             return DatabaseContext.Database.Fetch<Region>(query);
         }
-
 
         public Region GetById(int id)
         {

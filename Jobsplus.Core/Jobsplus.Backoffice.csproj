@@ -218,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\EmployDepartsApiController.cs" />
     <Compile Include="Controllers\RegionsApiController.cs" />
     <Compile Include="Controllers\GrantDefinitionsApiController.cs" />
     <Compile Include="Controllers\DBContextController.cs" />

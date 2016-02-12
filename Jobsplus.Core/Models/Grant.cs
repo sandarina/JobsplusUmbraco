@@ -183,6 +183,7 @@ namespace Jobsplus.Backoffice.Models
         }
     }
 
+    /* DKO: 5.2.2016  tato tabulka nejspis nebude potreba
     [TableName("JobsplusGrantsGrantDefinitions")]
     public class GrantGrantDefinition
     {         
@@ -191,7 +192,7 @@ namespace Jobsplus.Backoffice.Models
         
         [ForeignKey(typeof(GrantDefinition))]
         public int GrantDefinitionId { get; set; }
-    }
+    }*/
 
     [TableName("JobsplusGrantDefEmployDeparts")]
     public class GrantDefEmployDeparts
@@ -225,7 +226,7 @@ namespace Jobsplus.Backoffice.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Okres
+        /// Kraj
         /// </summary>
         [ForeignKey(typeof(Region))]
         public int RegionId { get; set; }
