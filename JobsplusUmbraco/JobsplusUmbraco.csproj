@@ -337,6 +337,8 @@
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\editGrantDef.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.controller.js" />
     <Content Include="App_Plugins\JobsplusGrants\backoffice\JobsplusGrantsTree\edit.html" />
+    <Content Include="App_Plugins\JobsplusGrants\EmployDepartmentEditor\editor.controller.js" />
+    <Content Include="App_Plugins\JobsplusGrants\EmployDepartmentEditor\editor.html" />
     <Content Include="App_Plugins\JobsplusGrants\grants.resource.js" />
     <Content Include="App_Plugins\Grid\Config\FanoeConfig.txt" />
     <Content Include="App_Plugins\Grid\Editors\Views\media_with_description.html" />

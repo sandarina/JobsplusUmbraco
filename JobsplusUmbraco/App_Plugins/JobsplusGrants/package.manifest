@@ -1,11 +1,25 @@
-﻿{
+﻿{ 
+    propertyEditors: [
+        {
+            /*this must be a unique alias*/
+            alias: "JobsplusGrants.EmployDepartmentEditor",
+            /*the name*/
+            name: "Employ Department Editor",
+            /*the HTML file we will load for the editor*/
+            editor: {
+                view: "~/App_Plugins/JobsplusGrants/EmployDepartmentEditor/editor.html"
+            }
+        }
+    ],
     javascript: [
         // Grants - dotace
         "~/App_Plugins/JobsplusGrants/backoffice/JobsplusGrantsTree/edit.controller.js",
         "~/App_Plugins/JobsplusGrants/backoffice/JobsplusGrantsTree/delete.controller.js", // společné i pro definice dotací
         // GrantDefinitions - definice dotací
         "~/App_Plugins/JobsplusGrants/backoffice/JobsplusGrantsTree/editGrantDef.controller.js",
-        // resources - zdroje dat
+        // EmployDepartmentEditor - controller pro editaci dotací
+        "~/App_Plugins/JobsplusGrants//EmployDepartmentEditor/editor.controller.js",
+        // resources - zdroje datbackoffice
         "~/App_Plugins/JobsplusGrants/grants.resource.js"
     ]
 }
