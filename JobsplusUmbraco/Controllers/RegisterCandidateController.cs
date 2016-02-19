@@ -9,12 +9,13 @@ using Umbraco.Web.Mvc;
 using JobsplusUmbraco.Models;
 using System.Net.Mail;
 using Jobsplus.Backoffice;
+using Jobsplus.Backoffice.Controllers;
 
 namespace JobsplusUmbraco.Controllers
 {
     public class RegisterCandidateController : SurfaceController
     {
-        const string _SendToEmail = "info@salmaplus.cz";
+        const string _SendToEmail = JobsplusConstants.DefaultEmail;
         //
         // GET: /RegisterCandidate/
 
@@ -57,7 +58,14 @@ namespace JobsplusUmbraco.Controllers
             member.Comments = model.Comments;
             member.SetValue("RegistrationUP", model.RegistrationUP);
             member.SetValue("RegistrationUPFrom", model.RegistrationUPFrom);
-            member.SetValue("Town", model.Town);
+            member.SetValue("EmployeeDepartment", model.EmployeeDepartmentId);
+
+            if (model.EmployeeDepartmentId.HasValue)
+            {
+                var ctrl = new EmployDepartmentsApiController();
+                model.EmployeeDepartmentName = ctrl.GetById(model.EmployeeDepartmentId.Value).Name;
+            }
+
             // todo: nahrat zivotopis
             if (model.CV != null && model.CV.InputStream != null)
             {
@@ -123,11 +131,11 @@ namespace JobsplusUmbraco.Controllers
                 "<b>Datum narození</b> " +          JobsplusHelpers.GetValueToEmail(model.BirthDate) + "<br />" +
                 "<b>Telefon</b> " +                 JobsplusHelpers.GetValueToEmail(model.Phone) + "<br />" +
                 "<b>Registrován na ÚP:</b> " +      JobsplusHelpers.GetValueToEmail(model.RegistrationUP) + "<br />" +
-                (model.RegistrationUP ? 
-                    "<b>Úřad práce (město)</b> " +  JobsplusHelpers.GetValueToEmail(model.Town) + "<br />" : 
+                (model.RegistrationUP ?
+                    "<b>Úřad práce (kontaktní pracoviště)</b> " + JobsplusHelpers.GetValueToEmail(model.EmployeeDepartmentName) + "<br />" : 
                     "") +
                 (!string.IsNullOrEmpty(model.Comments) ?
-                    "<br /><b>Zpráva od zájemce</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<<br />" : 
+                    "<br /><b>Zpráva od zájemce</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<br />" : 
                     "") + "<br />" +
                 "<p>S pozdravem,<br />Váš JOBSPLUS AUTOMATICKÝ ROZESÍLAČ e-mailů ;-)</p>";
 
@@ -168,10 +176,10 @@ namespace JobsplusUmbraco.Controllers
                 "<b>Telefon</b> " + JobsplusHelpers.GetValueToEmail(model.Phone) + "<br />" +
                 "<b>Registrován na ÚP:</b> " + JobsplusHelpers.GetValueToEmail(model.RegistrationUP) + "<br />" +
                 (model.RegistrationUP ?
-                    "<b>Úřad práce (město)</b> " + JobsplusHelpers.GetValueToEmail(model.Town) + "<br />" :
+                    "<b>Úřad práce (kontaktní pracoviště)</b> " + JobsplusHelpers.GetValueToEmail(model.EmployeeDepartmentName) + "<br />" :
                     "") +
                 (!string.IsNullOrEmpty(model.Comments) ?
-                    "<br /><b>Poznámka</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<<br />" :
+                    "<br /><b>Poznámka</b><br />" + JobsplusHelpers.GetValueToEmail(model.Comments) + "<br />" :
                     "") + "<br />" +
                 "<p>S pozdravem,<br />Váš JOBSPLUS AUTOMATICKÝ ROZESÍLAČ e-mailů ;-)</p>";
             try

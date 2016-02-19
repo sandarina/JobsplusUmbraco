@@ -9,6 +9,7 @@ using Umbraco.Web.Mvc;
 using JobsplusUmbraco.Models;
 using Umbraco.Core.Models;
 using Jobsplus.Backoffice;
+using Jobsplus.Backoffice.Controllers;
 
 namespace JobsplusUmbraco.Controllers
 {
@@ -31,7 +32,13 @@ namespace JobsplusUmbraco.Controllers
             model.RegistrationUP = candidate.GetValue<bool>("RegistrationUP");
             if (candidate.GetValue("RegistrationUPFrom") != null)
                 model.RegistrationUPFrom = candidate.GetValue<DateTime>("RegistrationUPFrom");
-            model.Town = candidate.GetValue<string>("Town");
+            if (candidate.GetValue("EmployeeDepartment") != null)
+            { 
+                var employeeDepartmentId = candidate.GetValue<int>("EmployeeDepartment");
+                model.EmployeeDepartmentId = employeeDepartmentId;
+                var ctrl = new EmployDepartmentsApiController();
+                model.EmployeeDepartmentName = ctrl.GetById(employeeDepartmentId).Name;
+            }
             model.Comments = candidate.Comments;
 
             if (TempData.ContainsKey("EditCandidateCV")) TempData.Remove("EditCandidateCV");
@@ -81,8 +88,15 @@ namespace JobsplusUmbraco.Controllers
             member.SetValue("Phone", model.Phone);
             member.SetValue("RegistrationUP", model.RegistrationUP);
             member.SetValue("RegistrationUPFrom", model.RegistrationUPFrom);
-            member.SetValue("Town", model.Town);
+            member.SetValue("EmployeeDepartment", model.EmployeeDepartmentId);
             member.Comments = model.Comments;
+
+            if (model.EmployeeDepartmentId.HasValue)
+            {
+                var ctrl = new EmployDepartmentsApiController();
+                model.EmployeeDepartmentName = ctrl.GetById(model.EmployeeDepartmentId.Value).Name;
+            }
+
             // todo: nahrat zivotopis
             if (model.CV != null && model.CV.InputStream != null)
             {

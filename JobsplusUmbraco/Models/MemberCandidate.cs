@@ -41,6 +41,12 @@ namespace JobsplusUmbraco.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd. MM. yyyy}", NullDisplayText="")]
         public DateTime? RegistrationUPFrom { get; set; }
 
+        [DisplayName("Úřad práce - identifikátor")]
+        public int? EmployeeDepartmentId { get; set; }
+
+        [DisplayName("Úřad práce - kontaktní pracoviště")]
+        public string EmployeeDepartmentName { get; set; }
+
         [DisplayName("Město")]
         public string Town { get; set; }
 

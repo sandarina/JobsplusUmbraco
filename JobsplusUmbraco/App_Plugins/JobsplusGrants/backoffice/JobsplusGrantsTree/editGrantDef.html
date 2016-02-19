@@ -1,8 +1,7 @@
 ﻿<form name="grantDefForm"
       ng-controller="JobsplusGrants.GrantDefinitionEditController"
       ng-show="loaded"
-      ng-submit="save(grantDef)"
-      val-form-manager>
+      ng-submit="save(grantDef)">
     <umb-panel>
         <umb-header>
 
@@ -24,8 +23,8 @@
         <div class="umb-panel-body umb-scrollable row-fluid">
             <div class="tab-content form-horizontal" style="padding-bottom: 90px">
                 <div class="umb-pane">
-                    
-                    <p>Vytváříte definici <input name="Name" type="text" ng-model="grantDef.Name" required /> pro dotaci "{{grant.Name}}".</p>
+
+                    <p>Vytváříte definici  pro dotaci "{{grant.Name}}".</p>
                     <p><i>{{grant.Description}}</i></p>
 
 
@@ -59,8 +58,12 @@
                         <input type="number" class="umb-number" ng-model="grantDef.GrantValue" required /> Kč
                     </umb-control-group>
 
+                    <umb-control-group label="Poznámka" description="Zadejte podmínky splnění dotace, délku smlouvy na dobu určitou, apod.">
+                        <textarea class="umb-editor" rows="10" ng-model="grantDef.Note"></textarea>
+                    </umb-control-group>
+
                     <umb-control-group label="Platné pro ÚP" description="Zvolte, pro které ÚP se dotační program vztahuje">
-                            <!--
+                        <!--
                           - use `value="{{fruit.name}}"` to give the input a real value, in case the form gets submitted
                             traditionally
 

@@ -1,5 +1,30 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MemberCandidate>
 @using JobsplusUmbraco.Models
+@using Jobsplus.Backoffice.Controllers
+@using Jobsplus.Backoffice.Models
+@using System.Web.Mvc
+@functions {
+    public List<SelectListItem> GetAllEmployeeDeparts()
+    {
+        EmployDepartmentsApiController employDepartsCtrl = new EmployDepartmentsApiController();
+        var eds = employDepartsCtrl.GetAll().OrderBy(i => i.Name);
+        var list = new List<SelectListItem>();
+        list.Add(new SelectListItem()
+        {
+            Text = "--- kotaktní pracoviště ÚP ---",
+            Value = ""
+        });
+        foreach(var ed in eds)
+        {
+            list.Add(new SelectListItem()
+            {
+                Text = ed.Name,
+                Value = ed.Id.ToString()
+            });
+        }
+        return list;
+    }
+}
 <br />
 <div class="row">
     <div class="col-md-2">
@@ -116,7 +141,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-8">
-                        @Html.TextBoxFor(m => m.Town, new { @class = "form-control col-mb-12", placeholder = "Město, pod něž spadá Váš úřad práce" })
+                        @Html.DropDownListFor(m => m.EmployeeDepartmentId, GetAllEmployeeDeparts(), new { @class = "form-control" })
                     </div>
                 </div><br />
                 <div class="row">

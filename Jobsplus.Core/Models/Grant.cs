@@ -175,6 +175,11 @@ namespace Jobsplus.Backoffice.Models
         /// Dotace v CZK
         /// </summary>
         public int GrantValue { get; set; }
+
+        /// <summary>
+        /// Poznámka
+        /// </summary>
+        public string Note { get; set; }
         #endregion
 
         public override string ToString()
