@@ -1,0 +1,70 @@
+﻿@using JobsplusUmbraco.Models
+@using Jobsplus.Backoffice.Models
+@using Jobsplus.Backoffice.Controllers
+@using Umbraco.Core.Persistence
+@model IEnumerable<JobsplusUmbraco.Models.MarketingActual>
+
+@{
+    var success = TempData["MarketingActualsSubmitIsSuccess"] != null;
+}
+
+@if (success)
+{
+    <div class="alert alert-success" role="alert">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> &nbsp;
+                @if (TempData["MarketingActualsSubmitIsSuccess"] == "save") { <span>Inzerát byl uložen!</span> }
+                @if (TempData["MarketingActualsSubmitIsSuccess"] == "delete") { <span>Inzerát vymazán!</span> }
+            </div>
+            <div class="col-md-6 col-sm-6 text-right"><a href="@Url.Action("CloseSuccessMessage", new { url = Request.RawUrl })">Zavřít</a></div>
+        </div>
+    </div>
+ }
+
+<div class="row">
+    <div class="col-md-12"><a href=@("http://" + Request.Url.Authority + "/firma/marketingove-aktuality/detail/") class="btn btn-default violet">Vložit marketingovou aktualitu</a></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("List", "MarketingActuals"))
+        {
+            if (Model.Count() > 0)
+            {
+                <table class="list">
+                    <tr>
+                        <th>Název</th>
+                        <th>Datum vydání</th>
+                        <th>Zveřejněno?</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    @{ var odd = true; }
+                    @foreach (var actual in Model/*Model.lAdvertisements*/)
+                    {
+                        <tr class="@(odd ? "odd": "even")">
+
+                            <td><a href="@actual.Url" target="_blank" title="Zobrazit marketingovou aktualitu na webu...">@actual.Name</a></td>
+                            <td>@actual.Date</td>
+                            <td>@actual.IsPublished</td>
+                            <td class="text-right">
+                                <a href=@("http://" + Request.Url.Authority + "/firma/marketingove-aktuality/detail?ID=" + actual.ID) class=" btn btn-default violet">Detail</a>
+                                @if (actual.IsPublished)
+                                {
+                                    <a href="@Url.Action("Unpublish", new { actual.ID })" class="btn btn-default gray" onclick="return confirm('Opravdu nastavit jako nezveřejněné?')">Nezveřejňovat</a> }
+                                else
+                                {
+                                    <a href="@Url.Action("Publish", new { actual.ID })" class="btn btn-default gray" onclick="return confirm('Opravdu nastavit jako zveřejněné?')">Zveřejnit</a> }
+                            </td>
+                        </tr>
+                        odd = !odd;
+                    }
+                </table>
+            }
+            else
+            {
+                <div class="noAdvertisements">firma nemá zadané žádné marketingové aktuality</div>
+            }
+        }
+    </div>
+</div>
+

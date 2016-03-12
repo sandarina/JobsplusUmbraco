@@ -25,6 +25,8 @@ label {
     color: rgb(164,40,162);
 }
 .date { font-size: 0.8em; color: #aaa; }
+.date a { font-size: 1em; color: #aaa; text-decoration: underline; }
+.date a:hover { text-decoration: none; }
 .btn-default {
 	background: transparent;
 	border: 1px solid rgba(255, 255, 255, 0.75);

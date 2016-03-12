@@ -4,19 +4,9 @@
       ng-submit="save(grantDef)">
     <umb-panel>
         <umb-header>
-
-            <div class="span7">
-                <umb-content-name placeholder="@placeholders_entername"
-                                  ng-model="grantDef.Name" />
-            </div>
-
-            <div class="span5">
-                <div class="btn-toolbar pull-right umb-btn-toolbar">
-                    <umb-options-menu ng-show="currentNode"
-                                      current-node="currentNode"
-                                      current-section="{{currentSection}}">
-                    </umb-options-menu>
-                </div>
+            <div class="umb-headline-editor-wrapper span12 ng-scope">
+                <h1 class="ng-binding">Definice dotace {{grant.Name}}</h1>
+                <p ng-if="grant.Description"><i>Pozn. {{grant.Description}}</i></p>
             </div>
         </umb-header>
 
@@ -24,8 +14,9 @@
             <div class="tab-content form-horizontal" style="padding-bottom: 90px">
                 <div class="umb-pane">
 
-                    <p>Vytváříte definici  pro dotaci "{{grant.Name}}".</p>
-                    <p><i>{{grant.Description}}</i></p>
+                    <umb-control-group label="Název" description="Zadejte název definice dotace">
+                        <input name="Name" type="text" class="umb-editor" ng-model="grantDef.Name" required />
+                    </umb-control-group>
 
 
                     <umb-control-group label="Věk" description="Zadejte věkovou hranici od-do (včetně)">
@@ -87,7 +78,6 @@
                                    ng-click="toggleSelection(ed.Id)"
                                    value="{{ed.Id}}"> {{ed.Name}}
                         </label>
-                        <i><small>{{employDepartsSelection}}</small></i>
                     </umb-control-group>
 
                     <div class="umb-tab-buttons" detect-fold>

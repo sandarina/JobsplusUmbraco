@@ -307,6 +307,7 @@
     <Compile Include="App_Code\JobsplusHelpers.cs" />
     <Compile Include="Controllers\AdvertisementController.cs" />
     <Compile Include="Controllers\AdvertisementReplyFormController.cs" />
+    <Compile Include="Controllers\MarketingActualsController.cs" />
     <Compile Include="Controllers\MemberCompanyController.cs" />
     <Compile Include="Controllers\FindJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Models\AdvertisementList.cs" />
     <Compile Include="Models\AdvertisementReplyForm.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MarketingActual.cs" />
     <Compile Include="Models\MemberCandidate.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\RepliesForm.cs" />
@@ -3235,6 +3237,11 @@
     <Content Include="Views\Partials\Grid\Editors\Embed.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\tMCMarketingActualsList.cshtml" />
+    <Content Include="Views\MarketingActuals\List.cshtml" />
+    <Content Include="Views\MarketingActuals\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

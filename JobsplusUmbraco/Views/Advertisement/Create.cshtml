@@ -1,0 +1,114 @@
+﻿@using JobsplusUmbraco.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<Advertisement>
+
+<div>
+    @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("JobTemplateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <h3>Načíst inzerát ze šablony</h3>
+        </div><br />
+        <div class="row">
+            <div class="form-group col-md-6">
+                @Html.DropDownListFor(m => m.JobTemplateID, Model.slJobTemplate, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-default violet">Načíst</button>
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.AdvertisementController>("AdvertisementSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <h3>O inzerátu</h3>
+        </div><br />
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název inzerátu" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.TypeOfWorkID, Model.slTypeOfWork, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.WorkingFieldID, Model.slWorkingField, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.RequiredEducationID, Model.slRequiredEducation, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.RegionID, Model.slRegion, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "Město" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(m => m.ZTP, new { @class = "RegistrationUP" })
+                    @Html.DisplayNameFor(m => m.ZTP)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", placeholder = "Pravomoce a povinnosti" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control", placeholder = "Kvalifikační požadavky" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control", placeholder = "Firemní benefity" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", placeholder = "Další informace" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-default violet">Vytvořit</button>
+        </div>
+    }
+</div>
+
+
