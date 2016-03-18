@@ -7,7 +7,7 @@
     <br />
     <div class="col-md-12">
         <div class="row">
-            @foreach (var news in newsList.OrderBy("createDate descending"))
+            @foreach (var news in newsList.OrderBy("nDate descending"))
             {
 				var companyNode = Umbraco.Content(news.nCompanyNodeId);
                 <div class="col-sm-6 col-md-4">

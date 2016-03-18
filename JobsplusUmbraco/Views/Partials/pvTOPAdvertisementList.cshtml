@@ -64,9 +64,9 @@
                         </div>
                     </div>
                     <div class="row advertisementBottom">
-                        <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @itemAdvertisement.GetPropertyValue("aRequiredEducation")</div>
-                        <div class="col-md-6 col-sm-6"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
-                        <div class="col-md-2"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue<bool>("aZtp") == true ? "ANO" : "NE") </div>
+                        <div class="col-md-4 col-sm-4"><span>Vzdělání</span> @itemAdvertisement.GetPropertyValue("aRequiredEducation")</div>
+                        <div class="col-md-4 col-sm-4 text-center"><span>Typ</span> @itemAdvertisement.GetPropertyValue("aTypeOfWork")</div>
+                        <div class="col-md-4 text-right"><span>ZTP</span> @(itemAdvertisement.GetPropertyValue<bool>("aZtp") == true ? "ANO" : "NE") </div>
                     </div>
                 </div>
             </div>

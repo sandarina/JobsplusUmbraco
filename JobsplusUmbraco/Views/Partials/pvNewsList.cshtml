@@ -7,7 +7,7 @@
     <div class="col-md-12">
         @{ var newsAll = newsList.First().Children.Where("Visible"); }
         <div class="row">
-            @foreach (var news in newsAll.OrderBy("createDate descending"))
+            @foreach (var news in newsAll.OrderBy("nDate descending"))
             {
 				var companyNode = Umbraco.Content(news.nCompanyNodeId);
                 <div class="col-sm-6 col-md-4">

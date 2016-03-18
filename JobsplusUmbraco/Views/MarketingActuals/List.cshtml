@@ -43,20 +43,33 @@
                     {
                         <tr class="@(odd ? "odd": "even")">
 
-                            <td><a href="@actual.Url" target="_blank" title="Zobrazit marketingovou aktualitu na webu...">@actual.Name</a></td>
-                            <td>@actual.Date</td>
-                            <td>@actual.IsPublished</td>
-                            <td class="text-right">
-                                <a href=@("http://" + Request.Url.Authority + "/firma/marketingove-aktuality/detail?ID=" + actual.ID) class=" btn btn-default violet">Detail</a>
+                            <td>
                                 @if (actual.IsPublished)
                                 {
-                                    <a href="@Url.Action("Unpublish", new { actual.ID })" class="btn btn-default gray" onclick="return confirm('Opravdu nastavit jako nezveřejněné?')">Nezveřejňovat</a> }
+                                    <a href="@actual.Url" target="_blank" title="Zobrazit marketingovou aktualitu na webu...">@actual.Name</a>
+                                }
                                 else
                                 {
-                                    <a href="@Url.Action("Publish", new { actual.ID })" class="btn btn-default gray" onclick="return confirm('Opravdu nastavit jako zveřejněné?')">Zveřejnit</a> }
+                                    <span class="violet-color">@actual.Name</span>
+                                }
                             </td>
-                        </tr>
-                        odd = !odd;
+
+                            <td>@actual.Date</td>
+                            <td>
+                                @if (actual.IsPublished)
+                                {
+                                    <span class="fa fa-check" style="color:green"></span> @Html.ActionLink("změnit", "Unpublish", new { actual.ID }, new { onclick = "return confirm('Opravdu nastavit jako nezveřejněné?')" }); 
+                                }
+                                else
+                                {
+                                    <span class="fa fa-times" style="color:#808080"></span> <a href="@Url.Action("Publish", new { actual.ID })" onclick="return confirm('Opravdu nastavit jako zveřejněné?')">změnit</a>
+                                }
+                            </td>
+                        <td class="text-right">
+                            <a href=@("http://" + Request.Url.Authority + "/firma/marketingove-aktuality/detail?ID=" + actual.ID) class=" btn btn-default violet">Detail</a>
+                        </td>
+                    </tr>
+                                odd = !odd;
                     }
                 </table>
             }

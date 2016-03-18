@@ -8,11 +8,14 @@ using Umbraco.Core.Models;
 using Umbraco.Web;
 using Umbraco.Core.Services;
 using Umbraco.Web.Mvc;
+using Umbraco.Web.Models;
 
 namespace JobsplusUmbraco.Controllers
 {
     public class MarketingActualsController : SurfaceController
     {
+        #region Actions
+        
         // GET: MarketingActuals
         public ActionResult Index()
         {
@@ -23,6 +26,39 @@ namespace JobsplusUmbraco.Controllers
         {
             return PartialView(GetMarketingActualsList());
         }
+
+        public ActionResult Publish(int? id)
+        {
+            if (id.HasValue)
+            {
+                var content = Services.ContentService.GetById(id.Value);
+                Services.ContentService.Publish(content);
+            }
+            return Redirect("/firma/maketingove-aktuality/");
+           // content.
+        }
+
+        public ActionResult Unpublish(int? id)
+        {
+
+            if (id.HasValue)
+            {
+                var content = Services.ContentService.GetById(id.Value);
+                Services.ContentService.UnPublish(content);
+            }
+            return Redirect("/firma/maketingove-aktuality/");
+        }
+        #endregion
+
+        #region Custom Properties
+        public UmbracoHelper umbracoHelper
+        {
+            get
+            {
+                return new UmbracoHelper(UmbracoContext.Current);
+            }
+        }
+        #endregion
 
         #region Methods
 
@@ -36,7 +72,6 @@ namespace JobsplusUmbraco.Controllers
         public IPublishedContent Company()
         {
             var memberCompany = GetMember();
-            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
             // DKO: získá napojení na stránku firmy z nastavení uživatele v členské sekci
             return umbracoHelper.Content(memberCompany.Properties["CompanyPage"].Value);
         }
@@ -51,28 +86,31 @@ namespace JobsplusUmbraco.Controllers
         {
             var actualList = new List<MarketingActual>();
             var company = Company();
-            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
-            var list = CurrentPage.AncestorsOrSelf().First().Descendants("dtNews").Where(c => c.GetPropertyValue<int>("nCompanyNodeId") == company.Id);
-         //       (c => c.DocumentTypeAlias == "dtNews" && c.GetPropertyValue<int>("nCompanyNodeId") == company.Id);//.Where(c => c.GetPropertyValue<int>("nCompanyNodeId") == company.Id); //.Where("nCompanyNodeId == @0", company.Id.ToString()).ToList<IPublishedContent>();
 
+            // DKO pozn.:
+            // UmbracoHelper => pracuje pouze z publikovaným obsahem
+            // ContentService => pracuje s veškerým obsahem, včetně nebulikovaného, vyhozeného v koši, atd.
+            var root = umbracoHelper.TypedContentAtRoot().First(); 
+            var list = Services.ContentService.GetDescendants(root.Id).Where(x => !x.Trashed && x.ContentType.Alias.Equals("dtNews") && x.GetValue<int>("nCompanyNodeId").Equals(company.Id));
+            
             foreach(var item in list)
             {
-                var dItem = item.AsDynamic();
+                DateTime? dt = item.GetValue("nDate") as DateTime?;
                 actualList.Add(
                     new MarketingActual()
                     {
-                        ID = dItem.Id,
-                        Name = dItem.Name,
-                        Date = dItem.nDate,
-                        IsPublished = dItem.Published,
-                        Thumbnail = dItem.nThubnail,
-                        BodyText = dItem.nBodyText
+                        ID = item.Id,
+                        Url = item.Published ? umbracoHelper.NiceUrl(item.Id) : "#",
+                        Name = item.Name,
+                        Date = dt.HasValue ? dt.Value.ToString("dd.MM.yyyy") : "-",
+                        IsPublished = item.Published,
+                        Thumbnail = item.GetValue<ImageCropDataSet>("nThumbnail"),
+                        Description = item.GetValue<string>("nDescription"),
+                        Content = item.GetValue<HtmlString>("nContent")
                     }
                 );
             }
             return actualList;
-            //var list = umbracoHelper.TypedContentAtRoot().Where(c => c.DocumentTypeAlias == "dtNews" && c.Properties["nCompanyNodeId"] == company.Id);
-
         }
         #endregion
     }
