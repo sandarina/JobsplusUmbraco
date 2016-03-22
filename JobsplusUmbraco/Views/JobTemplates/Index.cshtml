@@ -42,7 +42,10 @@
                             <td>@Html.DisplayFor(modelItem => item.JobName)</td>
                             <td class="text-right">
                                 <a href=@("http://" + Request.Url.Authority + "/firma/sablony/detail?ID=" + item.Id) class=" btn btn-default violet">Detail</a>
-                                <a href="@Url.Action("Delete", new { item.Id })" class="btn btn-default gray" onclick="return confirm('Opravdu smazat?')">Smazat</a>
+                                @if (!item.IsGeneralTemplate)
+                                {
+                                    <a href="@Url.Action("Delete", new { item.Id })" class="btn btn-default gray" onclick="return confirm('Opravdu smazat?')">Smazat</a>
+                                }
                             </td>
                         </tr>
                     }

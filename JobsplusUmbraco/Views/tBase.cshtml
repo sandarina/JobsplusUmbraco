@@ -96,7 +96,11 @@
     <!-- TINY MCE EDITOR -->
     <script type="text/javascript" src="/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
-        tinymce.init({ selector: '.tinymce' });
+        tinymce.init({
+            selector: '.tinymce',
+            language: 'cs_CZ',
+            height: 350
+        });
 
         $(function () {
             $('[data-toggle="popover"]').popover()

@@ -79,10 +79,13 @@ namespace JobsplusUmbraco.Controllers
 
         public ActionResult Details(int? id)
         {
+            if (TempData.ContainsKey("CompanyId")) TempData.Remove("CompanyId");
             JobTemplate jobTemplate = null;
             if (id.HasValue)
             {
                 jobTemplate = DBContext.GetJobTemplateById(id.Value);
+                TempData.Add("CompanyId", Company().Id);
+                
                 if (jobTemplate == null)
                     return HttpNotFound();
 
@@ -113,13 +116,22 @@ namespace JobsplusUmbraco.Controllers
                     if (!visibleCompanyIds.Contains(company.Id))
                         visibleCompanyIds.Add(company.Id);
                     jobTemplate.VisibleForCompanyIds = JobsplusHelpers.ArrayToString(visibleCompanyIds.ToArray(), ",");
+                    jobTemplate.UpdatedDate = DateTime.Now;
                 }
                 else
                 {
                     jobTemplate.IsGeneralTemplate = false;
                     jobTemplate.IsVisibleForAll = false;
-                    jobTemplate.VisibleForCompanyIds = company != null ? company.Id.ToString() : " ";
+                        jobTemplate.VisibleForCompanyIds = " ";
                     jobTemplate.TemplateUrl = String.Empty;
+                    jobTemplate.CreatedDate = DateTime.Now;
+                    jobTemplate.UpdatedDate = DateTime.Now;
+                    if (company != null)
+                    {                        
+                        jobTemplate.VisibleForCompanyIds = company.Id.ToString();
+                        jobTemplate.CreatedByCompanyId = company.Id;
+                        jobTemplate.CreatedByCompanyName = company.Name;
+                    } 
                 }
 
                 jobTemplate.JobName = job.Name;

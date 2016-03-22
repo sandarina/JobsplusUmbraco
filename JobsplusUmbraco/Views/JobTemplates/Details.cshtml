@@ -1,8 +1,12 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<JobTemplate>
 @using Jobsplus.Backoffice.Models;
+@{
+    object displayMode = (Model.IsGeneralTemplate) ? null : new {disabled = "disabled" };  
+    var companyId = TempData["CompanyId"] == null ? 0 : int.Parse(TempData["CompanyId"]);
+}
 
 <div class="row">
-    <h2 class="violet-color">Detail šablony</h2>
+    <h2 class="violet-color">Detail @(Model.IsGeneralTemplate ? "obecné " : "")šablony</h2>
 </div><br />
 
 @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
@@ -26,21 +30,21 @@
 @using (Html.BeginUmbracoForm<JobsplusUmbraco.Controllers.JobTemplatesController>("JobTemplateSubmit", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @*Html.AntiForgeryToken()*@
-    
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.IsGeneralTemplate)
     @Html.HiddenFor(m => m.IsVisibleForAll)
     @Html.HiddenFor(m => m.VisibleForCompanyIds)
     @Html.HiddenFor(m => m.TemplateUrl)
+    @Html.HiddenFor(m => m.CreatedByCompanyId)
+    @Html.HiddenFor(m => m.CreatedByCompanyName)
+    @Html.HiddenFor(m => m.CreatedDate)
+    @Html.HiddenFor(m => m.UpdatedDate)
 
 
     <div class="row">
         <div class="form-group col-md-6">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-6">
-            @Html.CheckBoxFor(m => m.IsGeneralTemplate, new { @class = "RegistrationUP", @disabled = "disabled" })
-            Obecná šablona
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony", displayMode })
         </div>
     </div>
     if (TempData["TemplateDoc"] != null && !string.IsNullOrEmpty(TempData["TemplateDoc"].ToString()))
@@ -53,25 +57,32 @@
     }
     <div class="row">
         <div class="form-group col-md-6">
-            @Html.DropDownListFor(m => m.JobId, (IEnumerable<SelectListItem>)ViewData["slJob"], new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.JobId, (IEnumerable<SelectListItem>)ViewData["slJob"], new { @class = "form-control", displayMode })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", placeholder = "Pravomoce a povinnosti" })
+            <p>@Html.LabelFor(m => m.JobDescription)</p>
+            @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control tinymce", placeholder = "Pravomoce a povinnosti", displayMode })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control", placeholder = "Kvalifikační požadavky" })
+            <p>@Html.LabelFor(m => m.JobRequirements)</p>
+            @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control tinymce", placeholder = "Kvalifikační požadavky", displayMode })
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control", placeholder = "Firemní benefity" })
+            <p>@Html.LabelFor(m => m.JobOfferings)</p>
+            @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control tinymce", placeholder = "Firemní benefity", displayMode })
         </div>
     </div>
     <div class="row">
-        <button type="submit" class="btn btn-default violet">Uložit</button>
+        @if (!Model.IsGeneralTemplate && (Model.CreatedByCompanyId.HasValue && Model.CreatedByCompanyId.Value == companyId))
+        { 
+            <button type="submit" class="btn btn-default violet">Uložit</button>
+        }
+        <a href="../" class="btn btn-default gray">Zpět</a>
     </div>
 }

@@ -52,6 +52,7 @@ namespace JobsplusUmbraco.Models
         [DisplayName("ZTP")]
         public bool ZTP { get; set; }
 
+        [AllowHtml]
         [DisplayName("Další informace")]
         public string Content { get; set; }
         
@@ -64,21 +65,24 @@ namespace JobsplusUmbraco.Models
         /// <summary>
         /// Šablona "Pravomoci a povinnosti", web "Vaší náplní práce bude"
         /// </summary>
-        [DisplayName("Pravomoci a povinnosti")]
+        [AllowHtml]
+        [DisplayName("Pravomoce a povinnosti (Náplň práce)")]
         [Required(ErrorMessage = "Zadejte pravomoci a povinnosti.")]
         public string JobDescription { get; set; }
 
         /// <summary>
         /// Šablona "Kvalifikační požadavky", web "Požadujeme"
         /// </summary>
-        [DisplayName("Kvalifikační požadavky")]
+        [AllowHtml]
+        [DisplayName("Kvalifikační požadavky (Požadujeme)")]
         [Required(ErrorMessage = "Zadejte kvalifikační požadavky.")]
         public string JobRequirements { get; set; }
 
         /// <summary>
         /// Šablona "Firemní benefity", web "Nabízíme"
         /// </summary>
-        [DisplayName("Firemní benefity")]
+        [AllowHtml]
+        [DisplayName("Firemní benefity (Nabízíme)")]
         [Required(ErrorMessage = "Zadejte firemní benefity.")]
         public string JobOfferings { get; set; }
 

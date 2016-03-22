@@ -183,13 +183,13 @@ namespace JobsplusUmbraco.Controllers
         public IEnumerable<SelectListItem> GetJobTemplateSelectListItem(string selectItem)
         {
             List<JobTemplate> jobTemplates = new List<JobTemplate>();
-            jobTemplates.Add(new JobTemplate { Id = null, Name = "-- vyberte šablonu --" });
+            jobTemplates.Add(new JobTemplate { Id = 0, Name = "-- vyberte šablonu --" });
             jobTemplates.AddRange(lJobTemplates);
 
             return from s in jobTemplates
                    select new SelectListItem
                    {
-                       Text = s.Name,
+                       Text = s.Name + (s.Id != 0 || s.IsGeneralTemplate ? " (obecná)" : ""),
                        Value = s.Id.ToString(),
                        Selected = s.Id.ToString() == selectItem
                    };
@@ -299,15 +299,15 @@ namespace JobsplusUmbraco.Controllers
 
                 if (TempData.ContainsKey("JobTemplate"))
                 {
-                    JobTemplate jobTemplate = (JobTemplate)TempData["JobTemplate"];
+                    JobTemplate jobTemplate = (JobTemplate)TempData["JobTemplate"]; 
                     if (jobTemplate != null)
                     {
                         advertisement.Name = jobTemplate.JobName;
                         advertisement.JobDescription = jobTemplate.JobDescription;
                         advertisement.JobOfferings = jobTemplate.JobOfferings;
                         advertisement.JobRequirements = jobTemplate.JobRequirements;
-                        if (jobTemplate.Id.HasValue)
-                            advertisement.JobTemplateID = jobTemplate.Id.Value;
+                        if (jobTemplate.Id > 0)
+                            advertisement.JobTemplateID = jobTemplate.Id;
                         ViewData["slJobTemplate"] = GetJobTemplateSelectListItem(jobTemplate.Id.ToString());
                     } 
                 }
@@ -364,7 +364,13 @@ namespace JobsplusUmbraco.Controllers
             var companyContent = CompanyContent();
 
             var contentService = Services.ContentService;
-            var produkt = contentService.CreateContent(model.Name, companyContent.Id, "dtAdvertisement");
+            IContent produkt = null;
+            if (model.ID > 0)
+            {
+                produkt = contentService.GetById(model.ID);// (model.Name, companyContent.Id, "dtAdvertisement");
+            }
+            else
+                produkt = contentService.CreateContent(model.Name, companyContent.Id, "dtAdvertisement");
             produkt.SetValue("aContent", !String.IsNullOrEmpty(model.Content) ? model.Content : " ");
             produkt.SetValue("aTypeOfWork", model.TypeOfWorkID);
             produkt.SetValue("aRegion", model.RegionID);

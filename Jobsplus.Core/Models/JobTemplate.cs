@@ -25,7 +25,7 @@ namespace Jobsplus.Backoffice.Models
 
         #region Properties
         [PrimaryKeyColumn(AutoIncrement = true)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Pracovní pozice
@@ -71,6 +71,7 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Šablona "Pravomoci a povinnosti", web "Vaší náplní práce bude"
         /// </summary>
+        [AllowHtml]
         [DisplayName("Pravomoci a povinnosti")]
         [Required(ErrorMessage = "Zadejte pravomoci a povinnosti.")]
         public string JobDescription { get; set; }
@@ -78,6 +79,7 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Šablona "Kvalifikační požadavky", web "Požadujeme"
         /// </summary>
+        [AllowHtml]
         [DisplayName("Kvalifikační požadavky")]
         [Required(ErrorMessage = "Zadejte kvalifikační požadavky.")]
         public string JobRequirements { get; set; }
@@ -85,13 +87,37 @@ namespace Jobsplus.Backoffice.Models
         /// <summary>
         /// Šablona "Firemní benefity", web "Nabízíme"
         /// </summary>
+        [AllowHtml]
         [DisplayName("Firemní benefity")]
         [Required(ErrorMessage = "Zadejte firemní benefity.")]
         public string JobOfferings { get; set; }
         #endregion
+
+        /// <summary>
+        /// Identifikátor společnosti, která šablonu založila. Null => šablonu založil správce.
+        /// </summary>
+        public int? CreatedByCompanyId { get; set; }
+
+        /// <summary>
+        /// Název společnosti, která šablonu založila, pro případ přerušení vazby přes CreatedByCompanyId - někdo firmu např. smaže. 
+        /// Null => šablonu založil správce.
+        /// </summary>
+        public string CreatedByCompanyName { get; set; }
+
+        /// <summary>
+        /// Datum vytvoření šablony
+        /// </summary>
+        public DateTime CreatedDate { get; set; }
+
+        /// <summary>
+        /// Datum poslední úpravy šablony
+        /// </summary>
+        public DateTime UpdatedDate { get; set; }
         #endregion
 
         private DBContextController DBContext = new DBContextController();
+
+        private bool EnableEditing { get; set; }
 
         #region Method
         public override string ToString()
@@ -109,10 +135,13 @@ namespace Jobsplus.Backoffice.Models
             get { return DBContext.GetJobById(this.JobId); }
         }*/
 
+
         public List<int> GetForCompanyIds()
         {
             if (!String.IsNullOrEmpty(this.VisibleForCompanyIds))
             {
+                //var s = this.VisibleForCompanyIds.Replace("[", "");
+                //s = s.Replace("]", "");
                 var sIds = this.VisibleForCompanyIds.Split(new char[] { ',' });
                 return sIds.Select(id => Convert.ToInt32(id)).ToList();
             }

@@ -84,7 +84,21 @@ namespace Jobsplus.Backoffice.Controllers
         public IEnumerable<JobTemplate> GetAllJobTemplate(int? companyID = null)
         {
             var query = new Sql().Select("*").From("JobsplusJobTemplates");
-            if (companyID.HasValue) query = query.Where<JobTemplate>(x => x.VisibleForCompanyIds.Contains(companyID.Value.ToString())).OrderBy("Name");
+            if (companyID.HasValue)
+            {
+                // DKO: doplňující INFO
+                // jedná se obecnou šablonu viditelnou pro všechny nebo pro tuto firmu
+                // jedná se o šablonu, kterou si založila přihlášená firma pro své vlastní účely
+                /*
+                query = query.Where<JobTemplate>(x => 
+                    (x.IsGeneralTemplate && (x.IsVisibleForAll || x.VisibleForCompanyIds.Equals(companyID.Value.ToString()) || x.VisibleForCompanyIds.Contains("," + companyID.Value.ToString()))) ||
+                    (x.CreatedByCompanyId.HasValue && x.CreatedByCompanyId.Value.Equals(companyID.Value))
+                    ).OrderBy("Name");
+                 */
+                var sQuery = @"(IsGeneralTemplate = 1 AND (IsVisibleForAll = 1 OR (VisibleForCompanyIds = @0 OR VisibleForCompanyIds LIKE '%,@0%'))) 
+                    OR (CreatedByCompanyId IS NOT NULL AND CreatedByCompanyId = @0)";
+                query.Where(sQuery, companyID.Value.ToString());
+            }
             return db.Fetch<JobTemplate>(query); 
         }
 
