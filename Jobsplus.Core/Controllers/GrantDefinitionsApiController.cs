@@ -73,7 +73,7 @@ namespace Jobsplus.Backoffice.Controllers
             if (member == null)
             {
                 result.IsError = true;
-                result.CheckMessage = "Nepodařilo se načíst zájemce o práci";
+                result.CheckMessage = "Nepodařilo se načíst zájemce o práci, jeho profil byl odstraněn.";
                 return result;
             }
             // typ - zájemce o práci?
@@ -153,6 +153,12 @@ namespace Jobsplus.Backoffice.Controllers
             result.GrantDefinitions = DatabaseContext.Database.Fetch<GrantDefinition>(query);
 
             return result;
+        }
+
+        public int CountAllByMember(int memberId)
+        {
+            var defs = GetAllByMember(memberId);
+            return defs.GrantDefinitions == null ? 0 : defs.GrantDefinitions.Count();
         }
     }
 }

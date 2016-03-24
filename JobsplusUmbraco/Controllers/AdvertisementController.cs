@@ -189,7 +189,7 @@ namespace JobsplusUmbraco.Controllers
             return from s in jobTemplates
                    select new SelectListItem
                    {
-                       Text = s.Name + (s.Id != 0 || s.IsGeneralTemplate ? " (obecná)" : ""),
+                       Text = s.Name + (s.Id != 0 && s.IsGeneralTemplate ? " (obecná)" : ""),
                        Value = s.Id.ToString(),
                        Selected = s.Id.ToString() == selectItem
                    };
@@ -370,7 +370,9 @@ namespace JobsplusUmbraco.Controllers
                 produkt = contentService.GetById(model.ID);// (model.Name, companyContent.Id, "dtAdvertisement");
             }
             else
-                produkt = contentService.CreateContent(model.Name, companyContent.Id, "dtAdvertisement");
+            {
+                produkt = contentService.CreateContent(model.Name, companyContent.Id, "dtAdvertisement", Members.GetCurrentMemberId());
+            }
             produkt.SetValue("aContent", !String.IsNullOrEmpty(model.Content) ? model.Content : " ");
             produkt.SetValue("aTypeOfWork", model.TypeOfWorkID);
             produkt.SetValue("aRegion", model.RegionID);

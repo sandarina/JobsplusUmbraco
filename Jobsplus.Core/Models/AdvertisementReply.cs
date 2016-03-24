@@ -95,6 +95,45 @@ namespace Jobsplus.Backoffice.Models
         /// </summary>
         [NullSetting(NullSetting = NullSettings.Null)]
         public bool? IsDiscarded { get; set; }
+
+        public string CandidateGrantDefs 
+        { 
+            get 
+            {
+                var ctrl = new GrantDefinitionsApiController();
+                var result = ctrl.GetAllByMember(this.CandidateId);
+                this.CandidateGrantDefsCount = result.GrantDefinitions == null ? 0 : result.GrantDefinitions.Count();
+                var resultHtml = "<div class=\"" + (result.IsError ? "alert alert-danger" : "alert alert-success") + "\">" + result.CheckMessage + "</div>";
+                if (result.IsError)
+                {
+                    resultHtml += "<p>Nelze určit splnění nároku na dotace.</p>";
+                }
+                else
+                {
+                    resultHtml += "<table style=\"width: 100%\">" +
+                    "<tr><th>Věk zájemce</th><th>Délka evidence na ÚP (poč. měsíců)</th><th>Kontrolní pracoviště ÚP</th></tr>" +
+                    "<tr><td>" + result.Age.ToString() + "</td><td>" + result.EvidenceMonths.ToString() + "</td><td>" + result.EmployDepartment.Name + "</td></tr>" +
+                    "</table><br />" +
+                    "<p>Zájemce splňuje kritéria pro nárok na dotace v počtu: " + CandidateGrantDefsCount.ToString() + "</p><br />";
+                } 
+                if (CandidateGrantDefsCount > 0)
+                {
+                    foreach(var def in result.GrantDefinitions)
+                    {
+                        resultHtml += "<p><strong>" + def.Name + "</strong></p>" +
+                            "<table style=\"width: 100%\">" +
+                    "<tr><th>Věk (od-do)</th><th>Délka dotace</th><th>Výše dotace</th><th>Typ smlouvy</th></tr>" +
+                    "<tr><td>" + def.AgeFrom.ToString() + "-" + def.AgeTo.ToString() + "</td><td>" + def.GrantMonths.ToString() + " měsíců</td><td>" + def.GrantValue.ToString("N0") + " Kč/měsíc</td><td>" + def.ContractType + "</td></tr>" +
+                    (!string.IsNullOrWhiteSpace(def.Note) ? "<tr><td colspan=\"4\"><i>Pozn.: " + def.Note + "</i></td></tr>" : "")  +
+                    "</table><br />";
+                    }
+                    resultHtml += "<p><strong>Kritéria pro splnění nároku na dotace vždy ověřte přímo u zájemce o práci!</strong></p>";
+                }
+                return resultHtml;
+            }
+        }
+
+        public int CandidateGrantDefsCount { get; set; }
         #endregion
 
         private DBContextController DBContext = new DBContextController();

@@ -6,43 +6,49 @@
 
     <div class="umb-panel">
         <div class="umb-panel-header">
-            <h3>Nárok na dotace</h3>
+            <h1>
+                Nárok na dotace
+            </h1>
+        </div>
+
+        <div class="umb-panel-body with-footer">
+            <!-- Preload message -->
+            <div ng-hide="loaded">
+                Načítám zájemce o práci ...
+            </div>
+
+            <!-- Loaded content -->
+            <div ng-show="loaded">
+                <h5>{{model.entity.name}}</h5>
+                <div ng-hide="checkLoaded">
+                    Kontroluji nárok na dotace ...
+                </div>
+                <div ng-show="checkLoaded">
+                    <!-- zpráva o zpracování kontroly nároku na dotace -->
+                    <div ng-class="model.checkResult.IsError ? 'alert alert-error' : 'alert alert-success'">
+                        {{model.checkResult.CheckMessage}}
+                    </div>
+                    <div ng-hide="model.checkResult.IsError">
+                        Splňuje nárok na dotace: {{model.checkResult.GrantDefinitions.length}}
+                        <div ng-repeat="gratDef in model.checkResult.GrantDefinitions">
+                            {{gratDef.Name}}
+                        </div>
+                    </div>
+                    <div ng-show="model.checkResult.IsError">
+                        Nelze určit splnění nároku na dotace.
+                    </div>
+                </div>
+            </div>
+
+            <div class="umb-panel-footer">
+                <div class="umb-el-wrap umb-panel-buttons">
+                    <div class="btn-toolbar umb-btn-toolbar pull-right">
+                        <a href ng-click="close()" class="btn btn-link">
+                            <localize key="general_close">Close</localize>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="umb-panel-body with-footer">
-        <!-- Preload message -->
-        <div ng-hide="loaded">
-            Načítám zájemce o práci ...
-        </div>
-
-        <!-- Loaded content -->
-        <div ng-show="loaded">
-            <h5>{{model.entity.name}}</h5>
-            <div ng-hide="checkLoaded">
-                Kontroluji nárok na dotace ...
-            </div>
-            <div ng-show="checkLoaded">
-                <!-- zpráva o zpracování kontroly nároku na dotace -->
-                <div ng-class="model.checkResult.IsError ? 'alert alert-error' : 'alert alert-success'">
-                    {{model.checkResult.CheckMessage}}
-                </div>
-                <div ng-hide="model.checkResult.IsError">
-                    Splňuje nárok na dotace: {{model.checkResult.GrantDefinitions.length}}
-                </div>
-                <div ng-show="model.checkResult.IsError">
-                    Nelze určit splnění nároku na dotace.
-                </div>
-            </div>
-        </div>
-
-        <div class="umb-panel-footer">
-            <div class="umb-el-wrap umb-panel-buttons">
-                <div class="btn-toolbar umb-btn-toolbar pull-right">
-                    <a href ng-click="close()" class="btn btn-link">
-                        <localize key="general_close">Close</localize>
-                    </a>
-                </div>
-            </div>
-        </div>
 </form>

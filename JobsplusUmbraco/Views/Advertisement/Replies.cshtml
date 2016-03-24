@@ -59,6 +59,7 @@
                     <th>Pozn.</th>
                     <th>Přijato</th>
                     <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                 </tr>
                 @{ var odd = true; }
                 @foreach (var reply in replies)
@@ -97,6 +98,25 @@
                                 <i class="fa fa-times" style="color:red" data-toggle="popover" data-placement="top" data-content="Zamítnuto dne @(@reply.CheckOutDate.HasValue?reply.CheckOutDate.Value.ToString("dd.MM.yyyy"):"-")"></i>
                             }
                         </td>
+                        <td>
+                            <div id="grantDefs_@(reply.Id)" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Nárok na dotace</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @Html.Raw(reply.CandidateGrantDefs)
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>   
+                            <button type="button" class="btn @(reply.CandidateGrantDefsCount > 0 ? "btn-success" : "btn-danger")" data-toggle="modal" data-target="#grantDefs_@(reply.Id)">
+                                Dotace
+                            </button>                         
+                    </td>
                     </tr>
                         odd = !odd;
                 }

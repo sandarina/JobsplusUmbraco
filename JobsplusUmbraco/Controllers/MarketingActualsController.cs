@@ -86,7 +86,7 @@ namespace JobsplusUmbraco.Controllers
             if (!marketingActual.ID.HasValue)
             {
                 var maParent = umbracoHelper.TypedContentAtRoot().First().FirstChild(x => x.ContentType.Alias.Equals("dtNewsList"));
-                ma = contentService.CreateContent(marketingActual.Name, maParent.Id, "dtNews");
+                ma = contentService.CreateContent(marketingActual.Name, maParent.Id, "dtNews", Members.GetCurrentMemberId());
             }
             else
                 ma = contentService.GetById(marketingActual.ID.Value);

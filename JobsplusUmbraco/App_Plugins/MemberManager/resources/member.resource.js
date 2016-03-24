@@ -110,6 +110,9 @@ function memberExtResource($q, $http, umbDataFormatter, umbRequestHelper) {
         getGrantDefinitionByMember: function (memberId) {
             return $http.get("backoffice/JobsplusGrants/GrantDefinitionsApi/GetAllByMember?memberId=" + memberId);
         },
+        getGrantDefinitionsCount: function (memberId) {
+            return $http.get("backoffice/JobsplusGrants/GrantDefinitionsApi/CountAllByMember?memberId=" + memberId);
+        },
     };
 
     function _filterToDictionary(filter) {
