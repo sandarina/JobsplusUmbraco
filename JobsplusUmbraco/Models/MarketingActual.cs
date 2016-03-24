@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Umbraco.Web;
 using Umbraco.Web.Models;
 
@@ -23,6 +24,8 @@ namespace JobsplusUmbraco.Models
         [Required(ErrorMessage = "Zadejte název marketingové aktuality.")]
         public string Name { get; set; }
 
+        public HttpPostedFileBase NewThumbnail { get; set; }
+
         [DisplayName("Náhledový obrázek")]
         [Required(ErrorMessage = "Nahrajte náhledový obrázek")]
         public ImageCropDataSet Thumbnail { get; set; }
@@ -31,6 +34,7 @@ namespace JobsplusUmbraco.Models
         [Required(ErrorMessage = "Zadejte popis marketingové aktuality.")]
         public string Description { get; set; }
 
+        [AllowHtml]
         [DisplayName("Obsah")]
         [Required(ErrorMessage = "Zadejte obsah marketingové aktuality.")]
         public HtmlString Content { get; set; }

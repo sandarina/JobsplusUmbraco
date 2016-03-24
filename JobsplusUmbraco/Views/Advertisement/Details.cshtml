@@ -4,7 +4,9 @@
 @{
     var visibleJobTemplate = TempData["VisibleJobTemplate"] != null;
 }
-
+<div class="row">
+    <h2 class="violet-color">Detail inzerátu</h2>
+</div><br />
 @if (ViewData.ModelState.Values.Any(ms => ms.Errors.Count >= 1))
 {
     <div class="alert alert-danger" role="alert">

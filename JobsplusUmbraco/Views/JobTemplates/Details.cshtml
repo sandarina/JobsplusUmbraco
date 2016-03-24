@@ -2,7 +2,7 @@
 @using Jobsplus.Backoffice.Models;
 @{
     object displayMode = (Model.IsGeneralTemplate) ? null : new {disabled = "disabled" };  
-    var companyId = TempData["CompanyId"] == null ? 0 : int.Parse(TempData["CompanyId"]);
+    var companyId = TempData["CompanyId"] == null ? 0 : Convert.ToInt32(TempData["CompanyId"]);
 }
 
 <div class="row">
@@ -43,37 +43,40 @@
 
 
     <div class="row">
-        <div class="form-group col-md-6">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony", displayMode })
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Name)</div>
+                <div class="col-md-6">@Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Název šablony", displayMode })</div>
+            </div>
         </div>
-    </div>
     if (TempData["TemplateDoc"] != null && !string.IsNullOrEmpty(TempData["TemplateDoc"].ToString()))
     {
         <div class="row">
-            <div class="form-group col-md-6">
-                <p>Formulář pracovní pozice: <a href="@TempData["TemplateDoc"]" class="btn btn-default violet">Zobrazit formulář</a></p>
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Name)</div>
+                <div class="col-md-6"><p>Formulář pracovní pozice: <a href="@TempData["TemplateDoc"]" class="btn btn-default violet">Zobrazit formulář</a></p></div>
             </div>
         </div>
     }
     <div class="row">
-        <div class="form-group col-md-6">
-            @Html.DropDownListFor(m => m.JobId, (IEnumerable<SelectListItem>)ViewData["slJob"], new { @class = "form-control", displayMode })
+        <div class="form-group">
+            <div class="col-md-3">@Html.LabelFor(m => m.JobId)</div>
+            <div class="col-md-6">@Html.DropDownListFor(m => m.JobId, (IEnumerable<SelectListItem>)ViewData["slJob"], new { @class = "form-control", displayMode })</div>
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <p>@Html.LabelFor(m => m.JobDescription)</p>
             @Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control tinymce", placeholder = "Pravomoce a povinnosti", displayMode })
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <p>@Html.LabelFor(m => m.JobRequirements)</p>
             @Html.TextAreaFor(m => m.JobRequirements, new { @class = "form-control tinymce", placeholder = "Kvalifikační požadavky", displayMode })
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
             <p>@Html.LabelFor(m => m.JobOfferings)</p>
             @Html.TextAreaFor(m => m.JobOfferings, new { @class = "form-control tinymce", placeholder = "Firemní benefity", displayMode })
         </div>
@@ -83,6 +86,6 @@
         { 
             <button type="submit" class="btn btn-default violet">Uložit</button>
         }
-        <a href="../" class="btn btn-default gray">Zpět</a>
+        <a href="/firma/sablony/" class="btn btn-default gray">Zpět</a>
     </div>
 }

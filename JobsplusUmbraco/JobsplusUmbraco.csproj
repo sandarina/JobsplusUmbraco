@@ -2220,6 +2220,7 @@
     <Content Include="umbraco_client\Tags\Css\jquery.tagsinput.css" />
     <Content Include="umbraco_client\Tags\Js\jquery.tagsinput.js" />
     <Content Include="umbraco_client\Tags\Js\jquery.tagsinput.min.js" />
+    <Content Include="umbraco_client\Tinymce3\Langs\cs.js" />
     <Content Include="umbraco_client\Tinymce3\Langs\da.js" />
     <Content Include="umbraco_client\Tinymce3\Langs\de.js" />
     <Content Include="umbraco_client\Tinymce3\Langs\en.js" />
@@ -3160,6 +3161,9 @@
     <Content Include="Views\tCompanyAdminIndex.cshtml" />
     <Content Include="Views\tMCAdvertisementCreate.cshtml" />
     <Content Include="Views\tMemberRichtextPage.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Partials\pvMemberBreadcrumbs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
