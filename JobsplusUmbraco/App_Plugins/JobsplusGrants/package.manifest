@@ -19,7 +19,7 @@
         "~/App_Plugins/JobsplusGrants/backoffice/JobsplusGrantsTree/editGrantDef.controller.js",
         // EmployDepartmentEditor - controller pro editaci dotací
         "~/App_Plugins/JobsplusGrants//EmployDepartmentEditor/editor.controller.js",
-        // resources - zdroje datbackoffice
+        // resources - zdroje dat backoffice
         "~/App_Plugins/JobsplusGrants/grants.resource.js"
     ]
 }

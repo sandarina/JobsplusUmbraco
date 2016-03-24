@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Umbraco.Core.Persistence;
+using Umbraco.Web;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 
@@ -53,5 +54,105 @@ namespace Jobsplus.Backoffice.Controllers
         }
         #endregion
 
+        /// <summary>
+        /// Získá všechny definice dotací, na které má nárok člen.
+        /// </summary>
+        /// <param name="memberId">Id člena</param>
+        /// <returns></returns>
+        public MemberGrantDefResult GetAllByMember(int memberId)
+        {
+            var result = new MemberGrantDefResult();
+            result.CheckDate = DateTime.Now;
+
+            // načtení údajů o členovi
+            var memberService = ApplicationContext.Services.MemberService;
+            var member = memberService.GetById(memberId);
+
+            #region Validation member
+            // ověření člena
+            if (member == null)
+            {
+                result.IsError = true;
+                result.CheckMessage = "Nepodařilo se načíst zájemce o práci";
+                return result;
+            }
+            // typ - zájemce o práci?
+            if (member == null || member.ContentTypeAlias != "Candidate")
+            {
+                result.IsError = true;
+                result.CheckMessage = "Nejedná se zájemce o práci!";
+                return result;
+            }
+            #endregion
+            result.Id = member.Id;
+
+            DateTime? birthDate = null;
+            if (member.GetValue("BirthDate") != null)
+            {
+                birthDate = member.GetValue<DateTime>("BirthDate");
+            }
+            else
+            {
+                // věk nelze určit => nelze určit nárok na dotace
+                result.IsError = true;
+                result.CheckMessage = "Zájemce nemá uvedeno datum narození, na jehož základě se určuje nárok na dotace dle věku!";
+                return result;
+            }
+            result.Age = result.CheckDate.Year - birthDate.Value.Year;
+
+            if (!member.GetValue<bool>("RegistrationUP"))
+            {
+                result.IsError = true;
+                result.CheckMessage = "Zájemce uvedl, že NENÍ registrován na ÚP.";
+                return result;
+            }
+
+            int evidenceMonths = 0;
+            if (member.GetValue("RegistrationUPFrom") != null)
+            {
+                var registrationUPFrom = member.GetValue<DateTime>("RegistrationUPFrom");
+                evidenceMonths = ((result.CheckDate.Year - registrationUPFrom.Year) * 12) + result.CheckDate.Month - registrationUPFrom.Month;
+            }
+            else
+            {
+                result.IsError = true;
+                result.CheckMessage = "Zájemce uvedl, že je registrován na ÚP, ale neuvedl od kterého data!";
+                return result;
+            }
+            result.EvidenceMonths = evidenceMonths;
+
+            if (member.GetValue("EmployeeDepartment") != null)
+            {
+                var employeeDepartmentId = member.GetValue<int>("EmployeeDepartment");
+                var ctrl = new EmployDepartmentsApiController();                
+                result.EmployDepartment = ctrl.GetById(employeeDepartmentId);
+                if (result.EmployDepartment == null)
+                {
+                    result.IsError = true;
+                    result.CheckMessage = "Při načtení vybraného ÚP selhalo! EmployeeDepartment.Id = " + employeeDepartmentId.ToString();
+                    return result;
+                }
+            }
+            else
+            {
+                result.IsError = true;
+                result.CheckMessage = "Zájemce uvedl, že je registrován na ÚP, ale neuvedl na kterém ÚP!";
+                return result;
+            }
+
+            // načtení kritérií pro kontrolu nároku na dotace proběhlo v pořádku
+            result.IsError = false;
+            result.CheckMessage = "Zájemce o práci má uvedeny všechny potřebné údaje pro ověření nároku na dotace.";
+
+            var query = new Sql().Select("gd.*").From("JobsplusGrantDefinitions gd").
+                LeftJoin("JobsplusGrantDefEmployDeparts gded").On("gded.GrantDefinitionId = gd.Id").
+                Where(@"
+                    (gd.AgeFrom <= @0 AND gd.AgeTo >= @0) AND
+                    gd.EvidenceMonths <= @1 AND
+                    gded.EmployDepartmentId = @2", result.Age, result.EvidenceMonths, result.EmployDepartment.Id);
+            result.GrantDefinitions = DatabaseContext.Database.Fetch<GrantDefinition>(query);
+
+            return result;
+        }
     }
 }

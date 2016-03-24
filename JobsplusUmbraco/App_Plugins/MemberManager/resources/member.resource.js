@@ -106,6 +106,10 @@ function memberExtResource($q, $http, umbDataFormatter, umbRequestHelper) {
             window.location.href = "Backoffice/MemberManager/MemberApi/GetMembersExport?" +
                     umbRequestHelper.dictionaryToQueryString(querystring);
         },
+        // DEFINICE DOTACÍ zájemce o práci
+        getGrantDefinitionByMember: function (memberId) {
+            return $http.get("backoffice/JobsplusGrants/GrantDefinitionsApi/GetAllByMember?memberId=" + memberId);
+        },
     };
 
     function _filterToDictionary(filter) {

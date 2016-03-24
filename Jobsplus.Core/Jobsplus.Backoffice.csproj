@@ -228,6 +228,7 @@
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\JobTemplate.cs" />
+    <Compile Include="MemberGrantDefResult.cs" />
     <Compile Include="Models\RegisterEvents.cs" />
     <Compile Include="Models\Specialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -348,8 +348,10 @@
     <Content Include="App_Plugins\JobsplusGrants\lang\cs-CZ.xml" />
     <Content Include="App_Plugins\MemberManager\backoffice\dashboard\memberListView.controller.js" />
     <Content Include="App_Plugins\MemberManager\backoffice\dashboard\memberListView.html" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\dotace.html" />
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\edit.html" />
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\filter.html" />
+    <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.dotace.controller.js" />
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.edit.controller.js" />
     <Content Include="App_Plugins\MemberManager\backoffice\dialogs\member\member.filter.controller.js" />
     <Content Include="App_Plugins\MemberManager\css\memberListView.css" />
