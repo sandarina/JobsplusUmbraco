@@ -45,7 +45,7 @@
                             @Html.DropDownListFor(model => model.workingField, Model.slWorkingFields)
                         </div>
                         <div class="col-md-3 text-right">
-                            @Html.CheckBoxFor(model => model.IsZTP) <label for="IsZTP">vhodné pro ZTP</label>
+                            @Html.CheckBoxFor(model => model.IsZTP) <label for="IsZTP">vhodné pro OZP</label>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                         <div class="row advertisementBottom">
                                             <div class="col-md-4 col-sm-6"><span>Vzdělání</span> @(advertisement.RequiredEducation != null ? advertisement.RequiredEducation.Name : "neuvedeno")</div>
                                             <div class="col-md-4 col-sm-6 text-center"><span>Typ</span> @(advertisement.TypeOfWork != null ? advertisement.TypeOfWork.Name : "neuvedeno")</div>
-                                            <div class="col-md-4 text-right"><span>ZTP</span> @(advertisement.ZTP ? "ANO" : "NE") </div>
+                                            <div class="col-md-4 text-right"><span>OZP</span> @(advertisement.ZTP ? "ANO" : "NE") </div>
                                         </div>
                                     </div>
                                 </div>

@@ -12,7 +12,7 @@
 			<div class="container">
 				<div class="row">
                     <div class="tBody_hlText">Práce pro všechny</div>
-                    <div class="tBody_vText">Práce na plný úvazek, stáže, brigády, ztp</div>
+                    <div class="tBody_vText">Práce na plný úvazek, stáže, brigády, ozp</div>
 				</div>
                 
                 @using (Html.BeginForm("tHome", "Home"))
@@ -28,7 +28,7 @@
                         </div>
                         <div class="row btnRedirect">
                             <div class="col-md-8 sIsZTP left">
-                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP)</span><span class="lblIsZTP white fs12 uppercase">vhodné pro ZTP</span></span>
+                                <span><span id="schbIsZTP" class="chbIsZTP">@Html.CheckBoxFor(model => model.IsZTP)</span><span class="lblIsZTP white fs12 uppercase">vhodné pro OZP</span></span>
                             </div>
                             <div class="col-md-4 btnFind">
                                 <span><input type="submit" value="Hledat  >" /></span>

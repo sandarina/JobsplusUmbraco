@@ -49,7 +49,7 @@ namespace JobsplusUmbraco.Models
         [DisplayName("Město")]
         public string City { get; set; }
 
-        [DisplayName("ZTP")]
+        [DisplayName("OZP")]
         public bool ZTP { get; set; }
 
         [AllowHtml]
