@@ -85,6 +85,7 @@ namespace Jobsplus.Backoffice.Controllers
             }
             #endregion
             result.Id = member.Id;
+            result.Phone = member.GetValue<string>("Phone");
 
             DateTime? birthDate = null;
             if (member.GetValue("BirthDate") != null)

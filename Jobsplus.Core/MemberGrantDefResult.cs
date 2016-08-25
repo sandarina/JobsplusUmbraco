@@ -22,6 +22,11 @@ namespace Jobsplus.Backoffice
         /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Telefon zájemnce o práci - Member v systému Umbraco.
+        /// </summary>
+        public string Phone { get; set; }
+
 
         #region Check data and message
         /// <summary>

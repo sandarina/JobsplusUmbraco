@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
+using Umbraco.Core;
 
 namespace Jobsplus.Backoffice.Models
 {
@@ -110,11 +111,13 @@ namespace Jobsplus.Backoffice.Models
                 }
                 else
                 {
-                    resultHtml += "<table style=\"width: 100%\">" +
-                    "<tr><th>Věk zájemce</th><th>Délka evidence na ÚP (poč. měsíců)</th><th>Kontrolní pracoviště ÚP</th></tr>" +
-                    "<tr><td>" + result.Age.ToString() + "</td><td>" + result.EvidenceMonths.ToString() + "</td><td>" + result.EmployDepartment.Name + "</td></tr>" +
-                    "</table><br />" +
-                    "<p>Zájemce splňuje kritéria pro nárok na dotace v počtu: " + CandidateGrantDefsCount.ToString() + "</p><br />";
+                    resultHtml += "<p><strong>" + CandidateName + "</strong></p>" +
+                        "<p><a href=\"mailto:" + CandidateEmail + "\">" + CandidateEmail + "</a>, tel. " + result.Phone + "</p>" +
+                        "<table style=\"width: 100%\">" +
+                        "<tr><th>Věk zájemce</th><th>Délka evidence na ÚP (poč. měsíců)</th><th>Kontrolní pracoviště ÚP</th></tr>" +
+                        "<tr><td>" + result.Age.ToString() + "</td><td>" + result.EvidenceMonths.ToString() + "</td><td>" + result.EmployDepartment.Name + "</td></tr>" +
+                        "</table><br />" +
+                        "<p>Zájemce splňuje kritéria pro nárok na dotace v počtu: " + CandidateGrantDefsCount.ToString() + "</p><br />";
                 } 
                 if (CandidateGrantDefsCount > 0)
                 {
