@@ -20,6 +20,9 @@
     var logoutModel = new PostRedirectModel();
     logoutModel.RedirectUrl = "/";
 
+
+    var changePasswordAfterReset = TempData["ChangePasswordAfterReset"] != null && Convert.ToBoolean(TempData["ChangePasswordAfterReset"]);
+
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
     Html.RequiresJs("/umbraco_client/ui/jquery.js");
@@ -49,11 +52,48 @@
         </div>
         @Html.HiddenFor(m => loginModel.RoleName);
     <button class="btn btn-default violet">Přihlásit se</button>
-
+    <a href="/vip-vstup/obnoveni-hesla/">Zapomněli jste heslo?</a>
     }
 }
 else
 {
+    if (changePasswordAfterReset)
+    {
+        <div>
+            <p>Vaše heslo bylo obnoveno, nyní si nastavte Vaše nové heslo:</p>
+        </div>
+
+        <div class="well">
+        @{
+        var memberId = TempData["ChangePasswordMemberId"] != null ? Convert.ToInt32(TempData["ChangePasswordMemberId"]) : 0;
+        var changePasswordModel = new JobsplusUmbraco.Models.ChangePasswordModel(memberId);
+        }
+        @using (Html.BeginUmbracoForm<LoginController>("HandleChangePassword"))
+        {
+            <div class="form-group">
+                @Html.ValidationSummary("changePassword", true)
+
+                @Html.LabelFor(m => changePasswordModel.ActualPassword, "Heslo")
+                @Html.PasswordFor(m => changePasswordModel.ActualPassword, new { @class = "form-control", placeholder = "Současné heslo" })
+                @Html.ValidationMessageFor(m => changePasswordModel.ActualPassword)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => changePasswordModel.NewPassword, "Nové heslo")
+                @Html.PasswordFor(m => changePasswordModel.NewPassword, new { @class = "form-control", placeholder = "Nové heslo" })
+                @Html.ValidationMessageFor(m => changePasswordModel.NewPassword)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => changePasswordModel.NewPasswordSecond, "Nové heslo (znovu)")
+                @Html.PasswordFor(m => changePasswordModel.NewPasswordSecond, new { @class = "form-control", placeholder = "Nové heslo (znovu)" })
+                @Html.ValidationMessageFor(m => changePasswordModel.NewPasswordSecond)
+            </div>
+            @Html.HiddenFor(m => changePasswordModel.MemberId);
+            <button class="btn btn-default violet">Změnit heslo</button>
+        }
+        </div>
+    }
+    else
+    {
     <div>
         <div class="well">
             <p>Vidíme, že jste již přihlášen(a) jako <b>@loginStatusModel.Name</b>.</p><br />
@@ -78,12 +118,14 @@ else
                     }
                 </div>
                 <div class="col-md-12 text-right">
+                <!--
                     @using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
                     {
                         <button class="btn btn-default gray" style="float:right; margin-left: 5px">Odhlásit</button>
 
                         @Html.HiddenFor(m => Model.Content.Url)
                     }
+                -->
                 @if (roles.Contains("Zájemce o práci"))
                 {
                     <a href="/uzivatel/" class="btn btn-default violet">Můj profil</a>
@@ -96,4 +138,5 @@ else
             </div>
         </div>
     </div>
+    }
 }
