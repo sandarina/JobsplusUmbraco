@@ -97,6 +97,7 @@ namespace Jobsplus.Backoffice.Models
         [NullSetting(NullSetting = NullSettings.Null)]
         public bool? IsDiscarded { get; set; }
 
+        [Ignore]
         public string CandidateGrantDefs 
         { 
             get 
@@ -136,6 +137,7 @@ namespace Jobsplus.Backoffice.Models
             }
         }
 
+        [Ignore]
         public int CandidateGrantDefsCount { get; set; }
         #endregion
 
