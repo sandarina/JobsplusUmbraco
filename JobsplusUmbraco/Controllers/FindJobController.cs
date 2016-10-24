@@ -52,6 +52,22 @@ namespace JobsplusUmbraco.Controllers
             return CurrentTemplate(model);
         }
 
+        public ActionResult tFindBrigade()
+        {
+            if (TempData["AdvertisementListModel"] != null) tFindJob((AdvertisementList)TempData["AdvertisementListModel"]);
+
+            AdvertisementList model = new AdvertisementList();
+            model.Fill();
+            return CurrentTemplate(model);
+        }
+
+        [HttpPost]
+        public ActionResult tFindBrigade(AdvertisementList model)
+        {
+            model.Fill();
+            return CurrentTemplate(model);
+        }     
+
         [HttpPost]
         public ActionResult tFindJob(AdvertisementList model)
         {

@@ -3171,6 +3171,7 @@
     <Content Include="Views\Partials\pvMemberBreadcrumbs.cshtml" />
     <Content Include="Views\MacroPartials\ResetPassword.cshtml" />
     <Content Include="Views\MacroPartials\ChangePasswordForm.cshtml" />
+    <Content Include="Views\tFindBrigade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3178,6 +3179,7 @@
     <Folder Include="tinymce\js\tinymce\langs\" />
     <Folder Include="usercontrols\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\FindBrigade\" />
     <Folder Include="xslt\" />
   </ItemGroup>
   <ItemGroup>
