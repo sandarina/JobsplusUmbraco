@@ -1,5 +1,6 @@
 ﻿@*inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@
 @using JobsplusUmbraco.Models
+@using Jobsplus.Backoffice
 @inherits Umbraco.Web.Mvc.UmbracoViewPage<AdvertisementList>
 @{
     Layout = "tBase.cshtml";
@@ -33,7 +34,7 @@
                             @Html.DropDownListFor(model => model.region, Model.slRegions)
                         </div>
                         <div class="col-md-3 text-right" id="searchTypeOfWorks">
-                            @Html.DropDownListFor(model => model.typeOfWork, Model.slTypeOfWork)
+                            @Html.DropDownListFor(model => model.typeOfWork, Model.slTypeOfWork.Where(p => JobsplusConstants.BrigadeWorkTypes.Contains(p.Text).Equals(false) || p.Text.IsNullOrWhiteSpace()))
                         </div>
                         <div class="col-md-3 text-right">
                             <input type="submit" class="btn btn-default violet" value="Vyhledat" />

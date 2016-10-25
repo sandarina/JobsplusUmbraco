@@ -43,17 +43,22 @@
 		<div class="cBody_tabs">
 			<div class="container">
 				<div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="divTOPAdvertisementList" class="tab">
                             Volné pracovní pozice @{ Html.RenderPartial("pvCountAllAdvertisement"); }
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div id="divTOPBrigadesList" class="tab">
+                            Brigády, stáže a praxe @{ Html.RenderPartial("pvCountAllBrigades"); }
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div id="divTOPCompanyList" class="tab">
                             Firmy @{ Html.RenderPartial("pvCountAllCompany"); }
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div id="divNewsList" class="tab">
                             Marketingové aktuality
                         </div>
@@ -64,12 +69,15 @@
 		<div class="cBody_content">
 			<div class="container">
 				<div class="row">
+                    <div id="TOPAdvertisementList">
+                        @{ Html.RenderPartial("pvTOPAdvertisementList"); }
+                    </div>
+                    <div id="TOPBrigadesList">
+                        @{ Html.RenderPartial("pvTOPBrigadesList"); }
+                    </div>
 					<div id="TOPCompanyList">
 						@{ Html.RenderPartial("pvTOPCompanyList"); }
 					</div>		
-					<div id="TOPAdvertisementList">
-						@{ Html.RenderPartial("pvTOPAdvertisementList"); }
-					</div>
 					<div id="NewsList">
 						@{ Html.RenderPartial("pvNewsList"); }
 					</div>

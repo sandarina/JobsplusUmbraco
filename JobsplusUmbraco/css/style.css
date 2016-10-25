@@ -1188,7 +1188,14 @@ select#typeOfWork {
 	color: white;
 }
 
-#divTOPAdvertisementList {
+    .cBody_tabs .container .row > div {
+        margin: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+#divTOPAdvertisementList,
+#divTOPBrigadesList {
 	border: 1px solid white;
 	padding: 16px 0px;
 	text-transform: uppercase;
@@ -1196,7 +1203,8 @@ select#typeOfWork {
 	font-weight: bold;
 }
 
-#divTOPAdvertisementList.selected {
+#divTOPAdvertisementList.selected,
+#divTOPBrigadesList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
 	border-color: rgb(164,40,162) white white;
@@ -1264,7 +1272,8 @@ select#typeOfWork {
 	background-color: white;
 }
 
-#divAdvertisementList {
+#divAdvertisementList,
+#divBrigadesList {
 	border: 1px solid white;
 	padding: 16px 0px;
 	text-transform: uppercase;
@@ -1272,7 +1281,8 @@ select#typeOfWork {
 	font-weight: bold;
 }
 
-#divAdvertisementList.selected {
+#divAdvertisementList.selected,
+#divBrigadesList.selected {
 	border-width: 4px 0px 0px;
 	border-style: solid;
 	border-color: rgb(164,40,162) white white;

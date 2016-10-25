@@ -1,6 +1,27 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Jobsplus.Backoffice
 @{
     var company = CurrentPage.Parent.Parent;
+
+    var typeOfWork = CurrentPage.aTypeOfWork as string;
+    var isBrigade = JobsplusConstants.BrigadeWorkTypes.Count(p => p == typeOfWork) > 0;
+
+    string positionText = "MÁM ZÁJEM o tuto pozici";
+    if (isBrigade)
+    {
+        switch (typeOfWork.ToLower())
+        {
+            case "praxe":
+                positionText = "MÁM ZÁJEM o tuto praxi";
+                break;
+            case "stáž":
+                positionText = "MÁM ZÁJEM o tuto stáž";
+                break;
+            default:
+                positionText = "MÁM ZÁJEM o tuto brigádu";
+                break;
+        }
+    }
 }
 
 <div class="modal fade" id="advertisementReply">
@@ -12,7 +33,7 @@
             </div>
             <div class="modal-body">
                 <div class="modal-body-in">
-                    @Html.Action("Index", "AdvertisementReplyForm", new { sendToEmail = "info@salmaplus.cz" })
+                    @Html.Action("Index", "AdvertisementReplyForm", new { sendToEmail = JobsplusConstants.DefaultEmail })
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -34,7 +55,7 @@
             @CurrentPage.Name
         </div>
         <div class="col-md-4">
-            <input type="submit" value="MÁM ZÁJEM o tuto pozici >" data-toggle="modal" data-target="#advertisementReply" class="btn btn-default" />
+            <input type="submit" value="@positionText >" data-toggle="modal" data-target="#advertisementReply" class="btn btn-default" />
         </div>
     </div>
     <div class="row">
@@ -58,6 +79,17 @@
             @if (cContent.Any())
             {
                 var cAdvertisement = cContent.First().Children.Where("Visible");
+
+                var countBrigades = (Umbraco.TypedContent(cContent.First().Id) as IPublishedContent).Children
+                    .Where(x =>
+                        x.IsVisible() &&
+                        x.DocumentTypeAlias == "dtAdvertisement" &&
+                        (x.GetPropertyValue("aTypeOfWork") != null && JobsplusConstants.BrigadeWorkTypes.Contains(x.GetPropertyValue("aTypeOfWork")))
+                    )
+                    .Count();
+                
+                var countJobs = cAdvertisement.Count() - countBrigades;
+
                 if (cAdvertisement.Any())
                 {
                     IPublishedContent mediaLogo; IPublishedContent mediaObr;
@@ -88,7 +120,8 @@
                                     { <span class="topSign">TOP</span> }<a class="underline lightblue" href="@company.Url">@company.Name</a>
                                 </h4>
                             </div>
-                            <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @cAdvertisement.Count()</span></div><br />
+                            <div class="row"><span class="countInfoAdvert">Pracovní nabídky: @countJobs</span></div><br />
+                            <div class="row"><span class="countInfoAdvert">Brigády, stáže, praxe: @countBrigades</span></div><br />
                         </div>
                     </div>
                 }

@@ -3172,6 +3172,10 @@
     <Content Include="Views\MacroPartials\ResetPassword.cshtml" />
     <Content Include="Views\MacroPartials\ChangePasswordForm.cshtml" />
     <Content Include="Views\tFindBrigade.cshtml" />
+    <Content Include="Views\Partials\pvCountAllBrigades.cshtml" />
+    <Content Include="Views\Partials\pvTOPBrigadesList.cshtml" />
+    <Content Include="Views\Partials\pvCountCompanyBrigades.cshtml" />
+    <Content Include="Views\Partials\pvCompanyBrigadesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -198,14 +198,18 @@ namespace JobsplusUmbraco.Models
                 }
             }
             #endregion
+            
             if (!String.IsNullOrEmpty(workingField)) 
             {
                 filter.And().Field("aWorkingField", workingField);
             }
+
             if (!String.IsNullOrEmpty(region))
                 filter.And().Field("aRegion", region);
+
             if (!String.IsNullOrEmpty(typeOfWork))
                 filter.And().Field("aTypeOfWork", typeOfWork);
+
             if (IsZTP)
                 filter.And().Field("aZtp", ("1"));
 
@@ -228,10 +232,78 @@ namespace JobsplusUmbraco.Models
                 //Advertisement advertisement = this.DynamicToAdverisement(result);
                 Advertisement advertisement = new Advertisement();
                 advertisement.DynamicToAdverisement(result);
-                if (advertisement != null && advertisement.ID > 0) advertisements.Add(advertisement);
+                if (advertisement != null && advertisement.ID > 0 && !JobsplusConstants.BrigadeWorkTypes.Contains(advertisement.TypeOfWork.Name))
+                    advertisements.Add(advertisement);
             }
             lAdvertisements = advertisements;
              
+        }
+
+        public void FillBrigades()
+        {
+            var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"]; // InternalSearcher
+            //var searcher = ExamineManager.Instance.SearchProviderCollection["AdvertismentSearcher"];
+            var criteria = searcher.CreateSearchCriteria(UmbracoExamine.IndexTypes.Content);
+            Examine.SearchCriteria.IBooleanOperation filter = null;
+
+            criteria.OrderBy(new string[] { "DateCreate" });
+            filter = criteria.NodeTypeAlias("dtAdvertisement");
+
+            #region Hledani v nazvu inzeratu
+            if (!String.IsNullOrWhiteSpace(fulltext))
+            {
+                var values = new List<Examine.SearchCriteria.IExamineValue>();
+                var searchTerms = fulltext.Trim().ToLower().Split(' '); // rozdělení vyhledávaného výrazu na jednotlivé termíny
+                foreach (var term in searchTerms) // přidání každého termínu zvlášť do skupiny vyhledáváných slov v názvu
+                {
+                    if (string.IsNullOrWhiteSpace(term)) continue;
+                    values.Add(term.MultipleCharacterWildcard()); // MultipleCharacterWildcard zajistí relevantnější prohledávání - i uprostřed slov apod.
+                }
+                if (values.Count() > 0)
+                {
+                    filter.And().GroupedOr(new string[] { "nodeName" }, values.ToArray<IExamineValue>());
+                }
+            }
+            #endregion
+
+            if (!String.IsNullOrEmpty(workingField))
+            {
+                filter.And().Field("aWorkingField", workingField);
+            }
+
+            if (!String.IsNullOrEmpty(region))
+                filter.And().Field("aRegion", region);
+
+            if (!String.IsNullOrEmpty(typeOfWork))
+                filter.And().Field("aTypeOfWork", typeOfWork);
+
+            if (IsZTP)
+                filter.And().Field("aZtp", ("1"));
+
+            //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pozice?";
+            if (String.IsNullOrEmpty(region)) region = "";
+            if (String.IsNullOrEmpty(workingField)) workingField = "";
+            if (String.IsNullOrEmpty(typeOfWork)) typeOfWork = "";
+
+            //if (String.IsNullOrEmpty(fulltext)) fulltext = "Pracovní pozice?";
+            if (String.IsNullOrEmpty(region)) region = "Kde?";
+            if (String.IsNullOrEmpty(workingField)) workingField = "Obor?";
+            slRegions = this.GetRegionSelectListItem(region);
+            slWorkingFields = this.GetWorkingFieldSelectListItem(workingField);
+            slTypeOfWork = this.GetTypeOfWorkSelectListItem(typeOfWork);
+
+            List<Advertisement> advertisements = new List<Advertisement>();
+            var searchResult = searcher.Search(filter.Compile());
+            foreach (var result in searchResult)
+            {
+                //Advertisement advertisement = this.DynamicToAdverisement(result);
+                Advertisement advertisement = new Advertisement();
+                advertisement.DynamicToAdverisement(result);
+                if (advertisement != null && advertisement.ID > 0 && JobsplusConstants.BrigadeWorkTypes.Contains(advertisement.TypeOfWork.Name)) 
+                    advertisements.Add(advertisement);
+            }
+            lAdvertisements = advertisements;
+
         }
 
         public void Fill(IEnumerable<IPublishedContent> advertisementList)

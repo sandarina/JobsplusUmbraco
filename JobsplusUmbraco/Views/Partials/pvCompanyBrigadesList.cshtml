@@ -1,9 +1,9 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 
 @using Jobsplus.Backoffice
-@{ 
-	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible"); 
- }
+@{
+    var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible");
+}
 
 @if (cContent.Any())
 {
@@ -11,9 +11,9 @@
                     .Where(x =>
                         x.IsVisible() &&
                         x.DocumentTypeAlias == "dtAdvertisement" &&
-                        (x.GetPropertyValue("aTypeOfWork") != null && JobsplusConstants.BrigadeWorkTypes.Contains(x.GetPropertyValue("aTypeOfWork")).Equals(false))
+                        (x.GetPropertyValue("aTypeOfWork") != null && JobsplusConstants.BrigadeWorkTypes.Contains(x.GetPropertyValue("aTypeOfWork")))
                     );
-    
+
     <div class="col-md-12 advertisementList">
         @foreach (var cAdvertisement in advertisements)
         {

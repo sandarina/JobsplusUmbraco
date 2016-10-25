@@ -1,19 +1,24 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @using Umbraco.Web
 @using Umbraco.Core.Models
+@using Jobsplus.Backoffice
 @{
     var company = CurrentPage.Parent.Parent;
     var region = CurrentPage.aRegion;
     var workingField = CurrentPage.aWorkingField;
+    var typeOfWork = CurrentPage.aTypeOfWork.ToString();
+    var isBrigade = JobsplusConstants.BrigadeWorkTypes.Count(p => p == typeOfWork) > 0;
     var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
-    var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement");
+    var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement").Where(p =>
+        JobsplusConstants.BrigadeWorkTypes.Contains(p.GetPropertyValue<string>("aTypeOfWork")).Equals(isBrigade) &&
+        p.Id != CurrentPage.Id);
 }
 @if (advertisements.Any())
 {
 
     var similarAdvertisement = advertisements.Where("aWorkingField.Contains(\"" + (string)workingField + "\")").Where("aRegion.Contains(\"" + (string)region + "\")");
     //var similarAdvertisement = advertisements.Where("aWorkingField.Contains(\"" + workingField.ToString() + "\") AND aRegion.Contains(\"" + region.ToString() + "\")");
-    
+
     <div class="col-md-12 advertisementList">
         @foreach (var advertisement in similarAdvertisement.OrderBy("createDate descending").OrderBy("aTop descending"))
         {
@@ -52,4 +57,8 @@
             <div class="noAdvertisements">nenalezeny žádné podobné inzeráty</div>
         }
     </div>
+}
+else
+{
+    <div class="noAdvertisements">nenalezeny žádné podobné inzeráty</div>
 }

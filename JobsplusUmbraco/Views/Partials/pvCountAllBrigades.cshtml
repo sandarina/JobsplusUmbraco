@@ -1,0 +1,8 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+@using Jobsplus.Backoffice
+@{ 
+    var advertisements = Umbraco.TypedContentAtXPath("//dtAdvertisement").Where(p => JobsplusConstants.BrigadeWorkTypes.Contains(p.GetPropertyValue("aTypeOfWork").ToString()) == true);
+}
+
+<span class="countInfoTabs">@advertisements.Count()</span>

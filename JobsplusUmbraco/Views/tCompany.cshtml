@@ -58,6 +58,11 @@
                             </div>
                         </div>
                         <div class="col-md-4">
+                            <div id="divBrigadesList" class="tab">
+                                Brigády, stáže, praxe @{ Html.RenderPartial("pvCountCompanyBrigades"); }
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div id="divAboutCompany" class="tab">
                                 O společnosti
                             </div>
@@ -70,6 +75,9 @@
             <div class="container">
                 <div id="advertisementList" class="row">
                     @{ Html.RenderPartial("pvCompanyAdvertisementList"); }
+                </div>
+                <div id="brigadesList" class="row">
+                    @{ Html.RenderPartial("pvCompanyBrigadesList"); }
                 </div>
                 <div id="aboutCompany" class="row">
                     <div class="col-mb-12"><br />

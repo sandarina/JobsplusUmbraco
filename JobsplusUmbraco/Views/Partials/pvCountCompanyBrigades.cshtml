@@ -1,16 +1,17 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @using Jobsplus.Backoffice
-@{ 
-	var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
-    
+@{
+    var cContent = CurrentPage.Children("dtCompanyContent").Where("Visible").First();
+
     var advertisementsCount = (Umbraco.TypedContent(cContent.Id) as IPublishedContent).Children
                     .Where(x =>
                         x.IsVisible() &&
                         x.DocumentTypeAlias == "dtAdvertisement" &&
-                        (x.GetPropertyValue("aTypeOfWork") != null && JobsplusConstants.BrigadeWorkTypes.Contains(x.GetPropertyValue("aTypeOfWork")).Equals(false))
+                        (x.GetPropertyValue("aTypeOfWork") != null && JobsplusConstants.BrigadeWorkTypes.Contains(x.GetPropertyValue("aTypeOfWork")).Equals(true))
                     )
                     .Count();
 }
 
- <span class="countInfoTabs">@advertisementsCount</span>
+<span class="countInfoTabs">@advertisementsCount</span>
+
 

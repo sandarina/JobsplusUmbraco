@@ -4,19 +4,22 @@
         $('#EditCandidateFormSubmit').focus()
     })
 
-	$('#aboutCompany').hide();
+    $('#aboutCompany').hide();
+    $('#brigadesList').hide();
 	$('#advertisementList').show();
-	
-	$('#TOPCompanyList').hide();
+
 	$('#TOPAdvertisementList').show();
+	$('#TOPBrigadesList').hide();
+	$('#TOPCompanyList').hide();
 	$('#NewsList').hide();
 	
 	$('#ListAdvertisemet').hide();
 	
 	$('#detailAdvertisement').show();
 	$('#similar').hide();
-	
+
 	$('#divTOPAdvertisementList').addClass('selected');
+	//$('#divTOPBrigadesList').addClass('selected');
     $('#divAdvertisementList').addClass('selected');
 	$('#divDetailAdvertisement').addClass('selected');
 	
@@ -94,50 +97,82 @@
 	});
 
 	$('#divAdvertisementList').click(function(){
-		$('#aboutCompany').hide();
+	    $('#aboutCompany').hide();
+	    $('#brigadesList').hide();
 		$('#advertisementList').show();
 		
 		$('#divAdvertisementList').addClass('selected');
+		$('#divBrigadesList').removeClass('selected');
 		$('#divAboutCompany').removeClass('selected');
+	});
+
+	$('#divBrigadesList').click(function () {
+	    $('#aboutCompany').hide();
+	    $('#brigadesList').show();
+	    $('#advertisementList').hide();
+
+	    $('#divAdvertisementList').removeClass('selected');
+	    $('#divBrigadesList').addClass('selected');
+	    $('#divAboutCompany').removeClass('selected');
 	});
 		
 	$('#divAboutCompany').click(function(){
-		$('#aboutCompany').show();
+	    $('#aboutCompany').show();
+	    $('#brigadesList').hide();
 		$('#advertisementList').hide();	
 		
 		$('#divAdvertisementList').removeClass('selected');
+		$('#divBrigadesList').removeClass('selected');
 		$('#divAboutCompany').addClass('selected');
 	});
-	
+
+
+	$('#divTOPBrigadesList').click(function () {
+	    $('#TOPAdvertisementList').hide();
+	    $('#TOPBrigadesList').show();
+	    $('#TOPCompanyList').hide();
+	    $('#NewsList').hide();
+
+	    $('#divTOPAdvertisementList').removeClass('selected');
+	    $('#divTOPBrigadesList').addClass('selected');
+	    $('#divTOPCompanyList').removeClass('selected');
+	    $('#divNewsList').removeClass('selected');
+	});
+
+	$('#divTOPAdvertisementList').click(function () {
+	    $('#TOPAdvertisementList').show();
+	    $('#TOPBrigadesList').hide();
+	    $('#TOPCompanyList').hide();
+	    $('#NewsList').hide();
+
+	    $('#divTOPAdvertisementList').addClass('selected');
+	    $('#divTOPBrigadesList').removeClass('selected');
+	    $('#divTOPCompanyList').removeClass('selected');
+	    $('#divNewsList').removeClass('selected');
+	});
 	
 	$('#divTOPCompanyList').click(function(){
-		$('#TOPCompanyList').show();
 		$('#TOPAdvertisementList').hide();
+		$('#TOPBrigadesList').hide();
+		$('#TOPCompanyList').show();
 		$('#NewsList').hide();
 		
-		$('#divTOPCompanyList').addClass('selected');
 		$('#divTOPAdvertisementList').removeClass('selected');
+		$('#divTOPBrigadesList').removeClass('selected');
+		$('#divTOPCompanyList').addClass('selected');
 		$('#divNewsList').removeClass('selected');		
 	});
 	
-	$('#divTOPAdvertisementList').click(function(){
-		$('#TOPCompanyList').hide();
-		$('#TOPAdvertisementList').show();
-		$('#NewsList').hide();
-		
-		$('#divTOPAdvertisementList').addClass('selected');
-		$('#divTOPCompanyList').removeClass('selected');
-		$('#divNewsList').removeClass('selected');	
-	});
-	
 	$('#divNewsList').click(function(){
-		$('#TOPCompanyList').hide();
 		$('#TOPAdvertisementList').hide();
+		$('#TOPBrigadesList').hide();
+		$('#TOPCompanyList').hide();
 		$('#NewsList').show();
-		
-		$('#divNewsList').addClass('selected');
+
 		$('#divTOPAdvertisementList').removeClass('selected');
-		$('#divTOPCompanyList').removeClass('selected');	
+		$('#divTOPBrigadesList').removeClass('selected');
+		$('#divTOPCompanyList').removeClass('selected');
+		$('#divNewsList').addClass('selected');
 	});
 
 })(jQuery);
